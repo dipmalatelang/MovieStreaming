@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".drawer.PrimiumPlan_Activity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/Tb_App"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/color_text_white" />
+
+    <com.kofigyan.stateprogressbar.StateProgressBar
+        android:id="@+id/state_progress_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:spb_maxStateNumber="four"
+        app:spb_stateBackgroundColor="#BDBDBD"
+        app:spb_stateForegroundColor="#DB0082"
+        app:spb_stateNumberBackgroundColor="#808080"
+        app:spb_stateNumberForegroundColor="#eeeeee"
+        app:spb_currentStateDescriptionColor="#DB0082"
+        app:spb_stateDescriptionColor="#808080"
+        app:spb_animateToCurrentProgressState="true"
+        app:spb_descriptionTopSpaceIncrementer="5dp"
+        android:layout_below="@+id/Tb_App"
+        app:spb_checkStateCompleted="true"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_above="@+id/btn_proceed"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/state_progress_id"
+
+        app:srcCompat="@drawable/img" />
+
+    <Button
+        android:id="@+id/btn_proceed"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="Proceed"
+        android:textAllCaps="false"
+        android:textColor="@color/color_text_black"
+        android:background="@drawable/bg_grey_rounded"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<group android:checkableBehavior="single">
+<item
+    android:id="@+id/b_home"
+    android:title="Home"
+    android:icon="@drawable/ic_home_icon"
+    app:cnb_backgroundColor="@color/cardview_dark_background"/>
+    <item
+        android:id="@+id/b_category"
+        android:title="Category"
+        android:icon="@drawable/b_category"
+        app:cnb_backgroundColor="@color/cardview_dark_background"/>
+    <item
+        android:id="@+id/b_allVideo"
+        android:title="All Videos"
+        android:icon="@drawable/b_allvideos"
+        app:cnb_backgroundColor="@color/cardview_dark_background"/>
+    <item
+        android:id="@+id/b_favorites"
+        android:title="Favourites"
+        android:icon="@drawable/b_fav"
+        app:cnb_backgroundColor="@color/cardview_dark_background"/>
+    <item android:id="@+id/b_gallary"
+        android:title="Gallary"
+        android:icon="@drawable/ic_folder"
+        app:cnb_backgroundColor="@color/cardview_dark_background"/>
+</group>
+</menu>

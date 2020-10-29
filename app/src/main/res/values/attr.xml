@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="colorTextWhite" format="color"/>
+        <attr name="colorGreyedText" format="color"/>
+        <attr name="colorWhiteTransparent" format="color"/>
+        <attr name="colorGradiantGreen" format="color"/>
+    </declare-styleable>
+</resources>

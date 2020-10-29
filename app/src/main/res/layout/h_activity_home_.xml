@@ -1,0 +1,73 @@
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/drawerlayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:openDrawer="start"
+    android:background="@drawable/background"
+    android:fitsSystemWindows="true"
+    tools:context=".home.ui.Home_Activity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl_fragment_container">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            app:titleTextColor="@android:color/white">
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/SearchView"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="right"
+                android:layoutDirection="rtl"
+                android:layout_alignParentEnd="true"
+                android:theme="@android:style/Theme.Holo"
+                app:iconifiedByDefault="true"
+                android:layout_marginTop="10dp"
+                app:queryHint="Search here" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <FrameLayout
+            android:id="@+id/frag_con"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+        <com.ismaeldivita.chipnavigation.ChipNavigationBar
+            android:id="@+id/chip_bottom_navigationview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:cnb_menuResource="@menu/bottam_nav_menu"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bottom_round_background"
+            app:cnb_unselectedColor="@color/colorWhite"
+            app:cnb_radius="8dp"
+            app:cnb_orientationMode="horizontal"
+            android:elevation="8dp"/>
+
+
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/design_navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/main_menu"
+        android:layout_gravity="start"
+        android:background="@drawable/background"
+        app:itemTextColor="@color/color_text_white"
+        app:itemIconTint="@color/colorWhite"
+        app:headerLayout="@layout/h_navigation_header"
+        android:touchscreenBlocksFocus="true"
+        />
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

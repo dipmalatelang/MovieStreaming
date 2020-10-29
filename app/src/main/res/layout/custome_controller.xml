@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="#80000000" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+        <ImageView android:id="@+id/exo_rew" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_back_10"/>
+        <ImageView android:id="@+id/exo_play" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_play"/>
+        <ImageView android:id="@+id/exo_pause" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_pause"/>
+        <ImageView android:id="@+id/exo_ffwd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_for_10" android:layout_marginStart="16dp"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+        <LinearLayout android:gravity="bottom" android:padding="8dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:id="@+id/exo_position" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <TextView android:textColor="@color/color_text_grey" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" / "/>
+            <TextView android:id="@+id/exo_duration" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+            <ImageView android:id="@+id/btn_fullscreen" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_fullscreen"/>
+        </LinearLayout>
+        <com.google.android.exoplayer2.ui.DefaultTimeBar android:id="@+id/exo_progress" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="-8dp" app:buffered_color="@color/color_text_grey" app:played_color="#ff0000" app:unplayed_color="@color/black_overlay"/>
+    </LinearLayout>
+</RelativeLayout>

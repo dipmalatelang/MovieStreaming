@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".drawer.Dialog_Pay_Activity">
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+
+        <com.kofigyan.stateprogressbar.StateProgressBar
+            android:id="@+id/state_progress_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:spb_maxStateNumber="four"
+            android:layout_marginTop="10dp"
+            app:spb_currentStateNumber="three"
+            app:spb_stateBackgroundColor="#BDBDBD"
+            app:spb_stateForegroundColor="#DB0082"
+            app:spb_stateNumberBackgroundColor="#808080"
+            app:spb_stateNumberForegroundColor="#eeeeee"
+            app:spb_currentStateDescriptionColor="#DB0082"
+            app:spb_stateDescriptionColor="#808080"
+            app:spb_animateToCurrentProgressState="true"
+            app:spb_descriptionTopSpaceIncrementer="5dp"
+            android:layout_below="@+id/Tb_App"
+            app:spb_checkStateCompleted="true"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            style="@style/Widget.MaterialComponents.CardView"
+            android:background="@drawable/bg_layout_rounded_transparent"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/state_progress_id"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/TVBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="16dp"
+                android:text="LIV Premium"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/color_text_white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/Tv_INR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:text="INR 999"
+                android:textColor="@color/color_text_white"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/Tv_Year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/Tv_INR"
+                android:layout_margin="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Yearly"
+                android:textColor="@color/color_text_white"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="You will be charged INR 999 and after 12 Months"
+                android:layout_below="@+id/Tv_Year"
+                />
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+        android:ems="10"
+        android:hint="Have A coupon code? Enter her"
+        android:inputType="text"
+
+        android:textColorHint="@color/color_text_grey"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
+
+    <TextView
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Apply"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_rounded_transparent"
+        android:text="Avail great offers"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_transparent"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
+
+                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+                android:gravity="center_vertical"
+                android:text=" Credit, Debit &amp; ATM Cards" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_rounded_transparent"
+                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+                android:gravity="center_vertical"
+                android:text=" Netbanking" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_rounded_transparent"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
+                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+                android:gravity="center_vertical"
+                android:text=" Google PlayStore" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_rounded_transparent"
+                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+                android:gravity="center_vertical"
+                android:text=" Wallet" />
+            <HorizontalScrollView
+                android:id="@+id/HSV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TvPaymentMode">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorWhiteTrans"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/IVpaytmLogo"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_google_pay"
+                            android:background="@color/colorWhiteTrans"
+                            android:layout_centerHorizontal="true"
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/IVpaytmLogo"
+                            android:layout_centerHorizontal="true"
+                            android:linksClickable="true"
+                            android:text="GooglePay"
+                            android:textColor="@color/color_text_white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorWhiteTrans"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/IVAmazonLogo"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/colorWhite"
+                            android:src="@drawable/ic_paytm" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/IVAmazonLogo"
+                            android:layout_centerHorizontal="true"
+                            android:linksClickable="true"
+                            android:text="PayTm"
+                            android:textColor="@color/color_text_white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorWhiteTrans"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/PerfectMoney"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/PerfectMoney"
+                            android:layout_centerHorizontal="true"
+                            android:linksClickable="true"
+                            android:text=""
+                            android:textColor="@color/color_text_white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
+
+
+                android:background="@drawable/bg_rounded_transparent"
+                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+                android:gravity="center_vertical"
+                android:text=" UPI" />
+            <HorizontalScrollView
+                android:id="@+id/HV_Wallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TvPaymentMode">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorWhiteTrans"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/IV_GoogleLogo"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_google_pay" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/IV_GoogleLogo"
+                            android:layout_centerHorizontal="true"
+                            android:linksClickable="true"
+                            android:text="Google Pay"
+                            android:textColor="@color/color_text_white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorWhiteTrans"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/IVNeteller"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/colorWhite"
+                            android:src="@drawable/ic_paytm" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/IVNeteller"
+                            android:layout_centerHorizontal="true"
+                            android:linksClickable="true"
+                            android:text="PayTM"
+                            android:textColor="@color/color_text_white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/colorWhiteTrans"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/IVPhonePe"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@color/colorWhite"
+                            android:src="@drawable/ic_phonepe"
+                            android:layout_centerHorizontal="true" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/IVPhonePe"
+                            android:layout_centerHorizontal="true"
+                            android:linksClickable="true"
+                            android:text="PhonePe"
+                            android:textColor="@color/color_text_white"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+
+
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_rounded_transparent"
+                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+                android:gravity="center_vertical"
+                android:text=" LazyPay" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_rounded_transparent"
+                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
+                android:gravity="center_vertical"
+                android:text=" PayPal Billing" />
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
