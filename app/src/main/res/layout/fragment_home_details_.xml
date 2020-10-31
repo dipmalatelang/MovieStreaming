@@ -71,14 +71,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="TextView"
+            android:text="Movie title"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/detail_movie_img" />
 
         <TextView
             android:id="@+id/Tv_info"
@@ -96,23 +93,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:text="Description"
             android:textColor="@color/color_text_grey"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tv_morelikethis"
             app:layout_constraintStart_toStartOf="@+id/Tv_info"
             app:layout_constraintTop_toBottomOf="@+id/Tv_info" />
-
-        <TextView
-            android:id="@+id/tv_morelikethis"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="More Lke This"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Tv_Desc" />
 
         <Button
             android:id="@+id/btn_addfav"
@@ -132,17 +117,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/detail_movie_img" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/homedetails_recyclerview"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Tv_Desc"
+            app:tabTextColor="@color/color_text_white" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_movie"
+            android:layout_width="match_parent"
+            android:layout_height="455dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_morelikethis" />
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout_movie" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

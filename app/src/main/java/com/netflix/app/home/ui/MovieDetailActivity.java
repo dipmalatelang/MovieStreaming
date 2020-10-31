@@ -1,9 +1,4 @@
 package com.netflix.app.home.ui;
-
-
-
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,45 +9,82 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.netflix.app.R;
-import com.netflix.app.category.adapter.CategoryAdapter;
-import com.netflix.app.home.adapter.MovieAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
+import com.netflix.app.home.adapter.MyAdapter;
 import com.netflix.app.home.model.CategoryItem;
-import com.netflix.app.home.model.MovieData;
-import com.netflix.app.utlis.DataSources;
+
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieItemClickListener {
 
-    private ImageView MovieThumbnailImg,MovieCoverImg;
-    private TextView tv_title,tv_description;
+    private ImageView MovieThumbnailImg, MovieCoverImg;
+    private TextView tv_title, tv_description;
     private FloatingActionButton play_fab;
     private RecyclerView homedetails_recyclerview;
+
+    TabLayout tabLayout_movie;
+    ViewPager vp_movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.fragment_home_details_);
         // ini views
         iniViews();
 
-        iniHomedetailsmovie();
+//        iniHomedetailsmovie();
 
+        TabLayout.Tab open = tabLayout_movie.newTab();
+        open.setText("Episodes");
+        tabLayout_movie.addTab(open);
 
+        TabLayout.Tab favorites = tabLayout_movie.newTab();
+        favorites.setText("More Like This");
+
+        tabLayout_movie.addTab(favorites);
+        tabLayout_movie.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final MyAdapter adapter = new MyAdapter(this,getSupportFragmentManager(), tabLayout_movie.getTabCount());
+        vp_movie.setAdapter(adapter);
+
+        vp_movie.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout_movie));
+
+        tabLayout_movie.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                vp_movie.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
+
+
+
     void iniViews() {
+        tabLayout_movie = findViewById(R.id.tabLayout_movie);
+        vp_movie = findViewById(R.id.vp_movie);
+
         play_fab = findViewById(R.id.play_fab);
+
         String movieTitle = getIntent().getExtras().getString("title");
         int imageResourceId = getIntent().getExtras().getInt("imgURL");
         int imagecover = getIntent().getExtras().getInt("imgCover");
@@ -62,7 +94,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 //        MovieCoverImg = findViewById(R.id.detail_movie_cover);
 //        Glide.with(this).load(imagecover).into(MovieCoverImg);
         tv_title = findViewById(R.id.detail_movie_title);
-        tv_title.setText(movieTitle);
+//        tv_title.setText(movieTitle);
 
 //        getSupportActionBar().setTitle(movieTitle);
 //        tv_description = findViewById(R.id.detail_movie_desc);
@@ -70,7 +102,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         MovieThumbnailImg.setAnimation(AnimationUtils.loadAnimation(this,R.anim.scale_animation));
         play_fab.setAnimation(AnimationUtils.loadAnimation(this,R.anim.scale_animation));
 
-        homedetails_recyclerview = findViewById(R.id.homedetails_recyclerview);
+//        homedetails_recyclerview = findViewById(R.id.homedetails_recyclerview);
 
         play_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,11 +119,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
     }
 
-    private void iniHomedetailsmovie() {
-        MovieAdapter movieAdapter = new MovieAdapter(this, DataSources.getmovie(),this);
-        homedetails_recyclerview.setAdapter(movieAdapter);
-        homedetails_recyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-    }
+
+
     @Override
     public void onBackPressed()
     {

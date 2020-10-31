@@ -7,4 +7,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gender">Gender</string>
 
+    <string-array name="Season">
+        <item>Season 1</item>
+        <item>Season 2</item>
+        <item>Season 3</item>
+        <item>Season 4</item>
+    </string-array>
+
 </resources>

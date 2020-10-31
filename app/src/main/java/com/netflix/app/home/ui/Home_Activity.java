@@ -29,6 +29,7 @@ import com.netflix.app.drawer.RedeemGiftVoucher_Activity;
 import com.netflix.app.drawer.ReferEarn_Activity;
 import com.netflix.app.favorites.Favorites_Fragment;
 
+import com.netflix.app.gallary.Gallary_Fragment;
 import com.netflix.app.videos.AllVideos_Fragment;
 
 public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener , FragmentChangeListener {
@@ -78,9 +79,11 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
                         fragment = new Favorites_Fragment();
                         break;
                     case R.id.b_gallary:
-                        Intent gallaryintent = new Intent(Home_Activity.this, Gallary_Activity.class);
-                        startActivity(gallaryintent);
+                        fragment = new Gallary_Fragment();
                         break;
+//                        Intent gallaryintent = new Intent(Home_Activity.this, Gallary_Activity.class);
+//                        startActivity(gallaryintent);
+
 
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container,fragment).commit();

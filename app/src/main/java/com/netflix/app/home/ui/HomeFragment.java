@@ -65,7 +65,6 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
     private ViewPager sliderpager;
     private TabLayout indicator;
     private RecyclerView movie_recyclerview ;
-    private TextView Tv_seeall;
     private ProgressBar progressBar;
 
 
@@ -81,17 +80,17 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 //        InMovies();
 
 
-        Tv_seeall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Fragment someFragment = new HomeVideoPlay_Fragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.rl_fragment_container, someFragment ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-            }
-        });
+//        Tv_seeall.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Fragment someFragment = new HomeVideoPlay_Fragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.rl_fragment_container, someFragment ); // give your fragment container id in first parameter
+//                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+//                transaction.commit();
+//            }
+//        });
 
         return  view;
     }
@@ -108,7 +107,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         sliderpager = view.findViewById(R.id.sliderpager);
         indicator = view.findViewById(R.id.indicator);
 //        movie_recyclerview = view.findViewById(R.id.movie_recyclerview);
-        Tv_seeall = view.findViewById(R.id.Tv_seeall);
+//        Tv_seeall = view.findViewById(R.id.Tv_seeall);
         mainCategoryRecycler = view.findViewById(R.id.main_recycler);
         progressBar =view.findViewById(R.id.progressBar);
 
@@ -198,7 +197,6 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
                         Imgslide =response.body();
                         SliderPagerAdapter adapter = new SliderPagerAdapter(getContext(),Imgslide);
                         sliderpager.setAdapter(adapter);
-
                         progressBar.setVisibility(View.GONE);
 
 
