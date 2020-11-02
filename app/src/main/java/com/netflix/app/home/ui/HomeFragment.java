@@ -59,12 +59,12 @@ import static android.content.ContentValues.TAG;
 
 
 public class HomeFragment extends Fragment implements MovieItemClickListener {
-    private List<SlidePojo> Imgslide;
+    private List<SlidePojo> Imgslide= new ArrayList<>();
     MainRecyclerAdapter mainRecyclerAdapter;
     RecyclerView mainCategoryRecycler;
     private ViewPager sliderpager;
     private TabLayout indicator;
-    private RecyclerView movie_recyclerview ;
+
     private ProgressBar progressBar;
 
 
@@ -77,37 +77,16 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         iniViews(view);
         iniSlider();
         getSliderData();
-//        InMovies();
-
-
-//        Tv_seeall.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Fragment someFragment = new HomeVideoPlay_Fragment();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.rl_fragment_container, someFragment ); // give your fragment container id in first parameter
-//                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-//                transaction.commit();
-//            }
-//        });
-
         return  view;
     }
 
-//    private void InMovies() {
-//        MovieAdapter movieAdapter = new MovieAdapter(getContext(), DataSources.getmovie(),HomeFragment.this);
-//        movie_recyclerview.setAdapter(movieAdapter);
-//        movie_recyclerview.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-//    }
+
 
 
 
     private void iniViews(View view) {
         sliderpager = view.findViewById(R.id.sliderpager);
         indicator = view.findViewById(R.id.indicator);
-//        movie_recyclerview = view.findViewById(R.id.movie_recyclerview);
-//        Tv_seeall = view.findViewById(R.id.Tv_seeall);
         mainCategoryRecycler = view.findViewById(R.id.main_recycler);
         progressBar =view.findViewById(R.id.progressBar);
 
@@ -142,7 +121,6 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         allCategoryList.add(new AllCategory("Best of Oscars", categoryItemList2));
         allCategoryList.add(new AllCategory("Movies Dubbed in Hindi", categoryItemList3));
 
-
         setMainCategoryRecycler(allCategoryList);
     }
 
@@ -171,9 +149,6 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
                 movieImageView,"sharedName");
 
         startActivity(intent,options.toBundle());
-
-
-
         // i l make a simple test to see if the click works
 
         Toast.makeText(getContext(),"item clicked : " + movie.getItemId(),Toast.LENGTH_LONG).show();

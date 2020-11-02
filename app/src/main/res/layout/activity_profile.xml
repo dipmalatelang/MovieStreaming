@@ -10,9 +10,9 @@
 
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/Tb_App"
             android:layout_width="match_parent"
@@ -35,6 +35,7 @@
             android:hint="Name">
 
             <com.google.android.material.textfield.TextInputEditText
+               android:id="@+id/Et_Name"
                 android:layout_width="match_parent"
                 android:textColor="@color/color_text_white"
                 android:layout_height="wrap_content"
@@ -60,6 +61,7 @@
             android:hint="Email">
 
             <com.google.android.material.textfield.TextInputEditText
+               android:id="@+id/Et_Email"
                 android:layout_width="match_parent"
                 android:textColor="@color/color_text_white"
                 android:layout_height="wrap_content"
@@ -87,6 +89,7 @@
             android:hint="Mobile No">
 
             <com.google.android.material.textfield.TextInputEditText
+               android:id="@+id/Et_Mobile"
                 android:layout_width="match_parent"
                 android:textColor="@color/color_text_white"
                 android:layout_height="wrap_content"
@@ -113,6 +116,7 @@
             android:hint="Password">
 
             <com.google.android.material.textfield.TextInputEditText
+               android:id="@+id/Et_Password"
                 android:layout_width="match_parent"
                 android:textColor="@color/color_text_white"
                 android:layout_height="wrap_content"
@@ -136,6 +140,7 @@
             android:hint="Date of Birth">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Et_DOB"
                 android:layout_width="match_parent"
                 android:textColor="@color/color_text_white"
                 android:layout_height="wrap_content"

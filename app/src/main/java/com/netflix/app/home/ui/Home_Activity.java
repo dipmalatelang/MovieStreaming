@@ -81,8 +81,9 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
                     case R.id.b_gallary:
                         fragment = new Gallary_Fragment();
                         break;
-//                        Intent gallaryintent = new Intent(Home_Activity.this, Gallary_Activity.class);
-//                        startActivity(gallaryintent);
+                    default:
+                        return ;
+
 
 
                 }
