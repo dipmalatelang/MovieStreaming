@@ -1,4 +1,4 @@
-package com.netflix.app.home.adapter;
+package com.netflix.app.home.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

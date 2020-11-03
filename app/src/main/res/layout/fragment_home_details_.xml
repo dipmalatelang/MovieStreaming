@@ -100,7 +100,7 @@
             app:layout_constraintTop_toBottomOf="@+id/Tv_info" />
 
         <Button
-            android:id="@+id/btn_addfav"
+            android:id="@+id/btn_addback"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,12 +108,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/detail_movie_img" />
 
-        <Button
-            android:id="@+id/btn_share"
+        <CheckBox
+            android:id="@+id/btn_fev"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_fav_unselected"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:button="@null"
+            android:visibility="visible"
+            android:background="@drawable/ic_fav_unselected"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/detail_movie_img" />
 

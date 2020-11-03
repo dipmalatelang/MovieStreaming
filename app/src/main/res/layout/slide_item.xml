@@ -29,7 +29,7 @@
             app:elevation="6dp"
             app:fabSize="normal"
 
-            android:foregroundTint="@color/colorBackgroundlight"
+        android:foregroundTint="@color/colorBackgroundlight"
             android:backgroundTint="#33000000"
             android:outlineSpotShadowColor="@color/colorWhiteTrans"
             app:layout_constraintBottom_toBottomOf="@+id/slide_img"

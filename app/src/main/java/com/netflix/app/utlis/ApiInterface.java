@@ -2,7 +2,7 @@ package com.netflix.app.utlis;
 
 
 
-import com.netflix.app.home.adapter.SlidePojo;
+import com.netflix.app.home.model.SlidePojo;
 
 import java.util.List;
 

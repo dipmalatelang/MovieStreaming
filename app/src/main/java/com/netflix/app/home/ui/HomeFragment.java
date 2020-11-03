@@ -11,7 +11,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -26,7 +25,6 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -34,17 +32,14 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.netflix.app.R;
 import com.netflix.app.home.adapter.MainRecyclerAdapter;
-import com.netflix.app.home.adapter.MovieAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
-import com.netflix.app.home.adapter.SlidePojo;
+import com.netflix.app.home.model.SlidePojo;
 import com.netflix.app.home.adapter.SliderPagerAdapter;
 import com.netflix.app.home.model.AllCategory;
 import com.netflix.app.home.model.CategoryItem;
-import com.netflix.app.home.model.MovieData;
 
 import com.netflix.app.utlis.ApiCall;
 import com.netflix.app.utlis.ApiInterface;
-import com.netflix.app.utlis.DataSources;
 
 import java.util.ArrayList;
 import java.util.List;

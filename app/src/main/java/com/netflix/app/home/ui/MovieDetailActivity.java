@@ -1,9 +1,14 @@
 package com.netflix.app.home.ui;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +32,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     private ImageView MovieThumbnailImg, MovieCoverImg;
     private TextView tv_title, tv_description;
     private FloatingActionButton play_fab;
-    private RecyclerView homedetails_recyclerview;
-
+    private CheckBox btn_fev;
+    private Button btn_addback;
     TabLayout tabLayout_movie;
     ViewPager vp_movie;
 
@@ -37,11 +42,37 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.fragment_home_details_);
-        // ini views
         iniViews();
+        tabView();
+        String item_fav_status = "0";
+        btn_addback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MovieDetailActivity.this,Home_Activity.class);
+                startActivity(i);
 
-//        iniHomedetailsmovie();
+            }
+        });
 
+        btn_fev.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    btn_fev.setBackgroundResource(R.drawable.ic_heart_shape_silhouette);
+                    //Show "Saved to favourite" toast
+                } else {
+                    btn_fev.setBackgroundResource(R.drawable.ic_fav_unselected);
+
+                    //Show "Removed from favourite" toast
+                }
+            }
+        });
+
+
+
+
+    }
+    void tabView(){
         TabLayout.Tab open = tabLayout_movie.newTab();
         open.setText("Episodes");
         tabLayout_movie.addTab(open);
@@ -82,6 +113,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     void iniViews() {
         tabLayout_movie = findViewById(R.id.tabLayout_movie);
         vp_movie = findViewById(R.id.vp_movie);
+        btn_fev = findViewById(R.id.btn_fev);
+        btn_addback =findViewById(R.id.btn_addback);
 
         play_fab = findViewById(R.id.play_fab);
 
@@ -109,7 +142,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
             public void onClick(View v) {
                 Intent intent = new Intent(MovieDetailActivity.this,PlayMovieActivity.class);
                 startActivity(intent);
-
                 Toast.makeText(MovieDetailActivity.this, "Click movie detail activity", Toast.LENGTH_SHORT).show();
 
 
@@ -119,17 +151,12 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
     }
 
-
-
     @Override
     public void onBackPressed()
     {
         // code here to show dialog
         super.onBackPressed();  // optional depending on your needs
     }
-
-
-
 
     @Override
     public void onMovieClick(CategoryItem movie, ImageView movieImageView) {
