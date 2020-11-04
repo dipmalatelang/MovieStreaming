@@ -27,13 +27,6 @@ public class CategoryItemRecyclerAdapter extends RecyclerView.Adapter<CategoryIt
     }
 
     MovieItemClickListener movieItemClickListener;
-    
-    
-
-
-
-
-
 
     @NonNull
     @Override
