@@ -7,17 +7,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
-
 import com.google.android.material.navigation.NavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.netflix.app.R;
@@ -32,7 +29,7 @@ import com.netflix.app.favorites.Favorites_Fragment;
 import com.netflix.app.gallary.Gallary_Fragment;
 import com.netflix.app.videos.AllVideos_Fragment;
 
-public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener , FragmentChangeListener {
+public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     NavigationView design_navigation_view;
@@ -45,21 +42,29 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.h_activity_home_);
         getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container,new HomeFragment()).commit();
 
+        iniView();
+        initoolbar();
+        bottomMenu();
+
+
+
+    }
+
+    void iniView(){
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawerlayout);
         chip_bottom_navigationview = findViewById(R.id.chip_bottom_navigationview);
         rl_fragment_container  = findViewById(R.id.rl_fragment_container);
         design_navigation_view = findViewById(R.id.design_navigation_view);
+    }
+    void initoolbar(){
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         design_navigation_view.setNavigationItemSelectedListener(this);
 
-        bottomMenu();
-
     }
-
     private void bottomMenu() {
         chip_bottom_navigationview.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
@@ -93,7 +98,6 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 
         });
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
@@ -153,12 +157,5 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
         return true;
     }
 
-    @Override
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();;
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_fragment_container, fragment, fragment.toString());
-        fragmentTransaction.addToBackStack(fragment.toString());
-        fragmentTransaction.commit();
-    }
+
 }

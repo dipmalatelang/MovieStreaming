@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:cardCornerRadius="6dp"
     android:layout_margin="1dp"
+    android:id="@+id/constraintlayout"
     android:background="@drawable/background"
     app:cardBackgroundColor="?attr/colorWhiteTransparent"
     tools:context=".drawer.DialogActivity">
@@ -30,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
-
         android:layout_marginEnd="16dp"
         android:hint="Enter your mobile number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,11 +38,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Tv_code"
+            android:id="@+id/Et_mobileNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-
+            android:maxLength="10"
             android:textColor="@color/color_text_white"
             android:textColorHint="@color/color_text_white" />
 
@@ -50,7 +50,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/Btn_apply"
+        android:id="@+id/Btn_Proceed"
         android:layout_width="150dp"
         android:layout_height="35dp"
         android:layout_below="@+id/TV_text"

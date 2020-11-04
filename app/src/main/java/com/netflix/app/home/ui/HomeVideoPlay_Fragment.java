@@ -67,12 +67,8 @@ public class HomeVideoPlay_Fragment extends Fragment implements MovieItemClickLi
 
 
 
-    public void showOtherFragment()
-    {
-        Fragment fr=new HomeVideoPlay_Fragment();
-        FragmentChangeListener fc=(FragmentChangeListener)getActivity();
-        fc.replaceFragment(fr);
-    }
+
+
 
     @Override
     public void onMovieClick(CategoryItem movie, ImageView movieImageView) {

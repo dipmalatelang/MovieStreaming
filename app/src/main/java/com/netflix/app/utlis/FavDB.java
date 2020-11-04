@@ -10,7 +10,7 @@ import android.util.Log;
 public class FavDB extends SQLiteOpenHelper {
 
     private static int DB_VERSION = 1;
-    private static String DATABASE_NAME = "CoffeeDB";
+    private static String DATABASE_NAME = "DB";
     private static String TABLE_NAME = "favoriteTable";
     public static String KEY_ID = "id";
     public static String ITEM_TITLE = "itemTitle";
@@ -18,7 +18,7 @@ public class FavDB extends SQLiteOpenHelper {
     public static String FAVORITE_STATUS = "fStatus";
     // dont forget write this spaces
     private static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
-            + KEY_ID + " TEXT," + ITEM_TITLE+ " TEXT,"
+            + KEY_ID + " UNIQUE," + ITEM_TITLE+ " TEXT,"
             + ITEM_IMAGE + " TEXT," + FAVORITE_STATUS+" TEXT)";
 
     public FavDB(Context context) { super(context,DATABASE_NAME,null,DB_VERSION);}
@@ -79,7 +79,7 @@ public class FavDB extends SQLiteOpenHelper {
 
     public Cursor select_all_favorite_list() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "SELECT * FROM "+TABLE_NAME+" WHERE "+FAVORITE_STATUS+" ='1'";
+        String sql = "SELECT * FROM "+TABLE_NAME+" WHERE "+FAVORITE_STATUS+" ='1'" ;
         return db.rawQuery(sql,null,null);
     }
 

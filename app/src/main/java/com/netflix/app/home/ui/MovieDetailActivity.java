@@ -25,6 +25,7 @@ import com.netflix.app.R;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.adapter.MyAdapter;
 import com.netflix.app.home.model.CategoryItem;
+import com.netflix.app.utlis.FavDB;
 
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieItemClickListener {
@@ -36,6 +37,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     private Button btn_addback;
     TabLayout tabLayout_movie;
     ViewPager vp_movie;
+    private FavDB favDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     btn_fev.setBackgroundResource(R.drawable.ic_heart_shape_silhouette);
+                    favDB  = new FavDB(MovieDetailActivity.this);
+//                    String imageResourceId = String.valueOf(getIntent().getExtras().getInt("imgURL"));
+
+//                    favDB.insertIntoTheDatabase("",imageResourceId,"","1");
+
                     //Show "Saved to favourite" toast
                 } else {
                     btn_fev.setBackgroundResource(R.drawable.ic_fav_unselected);
@@ -135,7 +142,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         MovieThumbnailImg.setAnimation(AnimationUtils.loadAnimation(this,R.anim.scale_animation));
         play_fab.setAnimation(AnimationUtils.loadAnimation(this,R.anim.scale_animation));
 
-//        homedetails_recyclerview = findViewById(R.id.homedetails_recyclerview);
 
         play_fab.setOnClickListener(new View.OnClickListener() {
             @Override
