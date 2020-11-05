@@ -1,9 +1,6 @@
 package com.netflix.app.utlis;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.netflix.app.R;
-import com.netflix.app.home.adapter.MovieAdapter;
 import com.netflix.app.home.model.MovieData;
 
 import java.util.ArrayList;

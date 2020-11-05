@@ -54,13 +54,13 @@ public class PlayMovieActivity extends AppCompatActivity {
     /* access modifiers changed from: protected */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_play_movie);
-        this.playerView = (PlayerView) findViewById(R.id.player_view);
-        this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        this.btn_fullscreen = (ImageView) this.playerView.findViewById(R.id.btn_fullscreen);
+        setContentView(R.layout.activity_play_movie);
+        this.playerView = findViewById(R.id.player_view);
+        this.progressBar = findViewById(R.id.progressBar);
+        this.btn_fullscreen = this.playerView.findViewById(R.id.btn_fullscreen);
         getWindow().setFlags(1024, 1024);
         Uri videoUrl = Uri.parse(URL);
-        this.simpleExoPlayer = ExoPlayerFactory.newSimpleInstance((Context) this, new DefaultTrackSelector((TrackSelection.Factory) new AdaptiveTrackSelection.Factory(new DefaultBandwidthMeter())), new DefaultLoadControl());
+        this.simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(new DefaultBandwidthMeter())), new DefaultLoadControl());
         ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource(videoUrl, new DefaultHttpDataSourceFactory("exoplayer_video"), new DefaultExtractorsFactory(), null, null);
         this.playerView.setPlayer(this.simpleExoPlayer);
         this.playerView.setKeepScreenOn(true);

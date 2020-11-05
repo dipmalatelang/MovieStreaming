@@ -71,7 +71,7 @@ public class FavDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "UPDATE " + TABLE_NAME + " SET  "+ FAVORITE_STATUS+" ='0' WHERE "+KEY_ID+"="+id+"";
         db.execSQL(sql);
-        Log.d("remove", id.toString());
+        Log.d("remove", id);
 
     }
 

@@ -12,7 +12,7 @@ import com.netflix.app.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Gallary_Fragment#newInstance} factory method to
+ * Use the  factory method to
  * create an instance of this fragment.
  */
 public class Gallary_Fragment extends Fragment {

@@ -38,7 +38,7 @@ public class PrimiumPlan_Activity extends BaseActivity {
         iniToolBar();
         String[] descriptionData = {"Plans", "Sign In", "Pay", "Watch"};
 
-        StateProgressBar stateProgressBar = (StateProgressBar) findViewById(R.id.state_progress_id);
+        StateProgressBar stateProgressBar = findViewById(R.id.state_progress_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
         btn_proceed.setOnClickListener(new View.OnClickListener() {
 

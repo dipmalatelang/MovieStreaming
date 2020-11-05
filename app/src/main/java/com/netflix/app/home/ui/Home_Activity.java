@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -42,8 +41,12 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.h_activity_home_);
         getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container,new HomeFragment()).commit();
 
+
+        /*TODO Create iniView for  view id*/
         iniView();
+        /*TODO Create initoolbar for  custom toolbar*/
         initoolbar();
+        /*TODO Create bottomMenu for  bottom menu bar*/
         bottomMenu();
 
 
@@ -98,6 +101,8 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 
         });
     }
+
+    /*TODO Create onNavigationItemSelected for  navigation item */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())

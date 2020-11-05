@@ -14,13 +14,9 @@
         <color name="colorSell">#FF2727</color>
         <color name="colorBackgroundlight">#081A30</color>
         <color name="colorblue">#00DEFA</color>
-
         <color name="black_overlay">#66000000</color>
         <color name="color_tabs">#08FFFFFF</color>
         <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#B3B3B3</color>
-
-//31a374
-
         <color name="color_text_white">#FFF</color>
         <color name="color_text_grey">#B3B3B3</color>
         <color name="color_Closed">#ACACAC</color>

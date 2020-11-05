@@ -11,7 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
-
+/*TODO Create ApiInterface  for Slider image*/
 public interface ApiInterface {
     @FormUrlEncoded
     @POST("Api/Slider.php")

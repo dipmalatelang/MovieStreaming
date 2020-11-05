@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+/*TODO Create ApiCall  for Slider image url to get APi Data*/
 public class ApiCall {
     public static final String BASE_API = "http://www.netonplay.in/";
     public static Retrofit retrofit = null;
