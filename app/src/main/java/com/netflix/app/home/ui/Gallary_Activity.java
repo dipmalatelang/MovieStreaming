@@ -4,23 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.databinding.DataBindingUtil;
 import com.netflix.app.R;
+import com.netflix.app.databinding.ActivityGallaryBinding;
 
 public class Gallary_Activity extends Activity {
-
-
+    ActivityGallaryBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gallary_);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_gallary_);
 
-        Button btn_backpress = findViewById(R.id.btn_backpress);
-        btn_backpress.setOnClickListener(new View.OnClickListener() {
+        binding.btnBackpress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

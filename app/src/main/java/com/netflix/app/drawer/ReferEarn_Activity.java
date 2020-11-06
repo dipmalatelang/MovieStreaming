@@ -7,27 +7,30 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.netflix.app.R;
+import com.netflix.app.databinding.ActivityReferEarnBinding;
 
 public class ReferEarn_Activity extends AppCompatActivity {
-    private Toolbar Tb_App;
+    ActivityReferEarnBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_refer_earn_);
-        Tb_App =findViewById(R.id.Tb_App);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_refer_earn_);
+
+        /* ToDo create iniToolBar to add custom toolbar */
         iniToolBar();
     }
     void iniToolBar(){
-        setSupportActionBar(Tb_App);
+        setSupportActionBar(binding.TbApp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(this, R.color.color_text_white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-        Tb_App.setTitle("Refer & Earn");
+        binding.TbApp.setTitle("Refer & Earn");
 
     }
 

@@ -5,19 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.netflix.app.R;
+import com.netflix.app.databinding.HFavoriteFragmentBinding;
 import com.netflix.app.home.adapter.FavAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.model.CategoryItem;
@@ -28,10 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Favorites_Fragment extends Fragment implements MovieItemClickListener {
-    RecyclerView favorite_recyclerview;
     private List<FavItem> favItemList = new ArrayList<>();
     private FavAdapter favAdapter;
     private FavDB favDB;
+    private HFavoriteFragmentBinding binding;
+    private View view;
 
 
 
@@ -40,27 +40,22 @@ public class Favorites_Fragment extends Fragment implements MovieItemClickListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.h_favorite_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.h_favorite_fragment,container,false);
+        view = binding.getRoot();
         favDB = new FavDB(getContext());
-        favorite_recyclerview = view.findViewById(R.id.favorite_recyclerview);
-        favorite_recyclerview.setHasFixedSize(true);
-        favorite_recyclerview.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
+        binding.favoriteRecyclerview.setHasFixedSize(true);
+        binding.favoriteRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
 
+        /* ToDo loadData for favorites */
         loadData();
-//        iniFavorites();
 
-        // add item touch helper
+        /* ToDo add item touch helper */
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(favorite_recyclerview); // set swipe to recyclerview
+        itemTouchHelper.attachToRecyclerView(binding.favoriteRecyclerview); // set swipe to recyclerview
         return view;
     }
 
-//    private void iniFavorites(){
-//        MovieAdapter movieAdapter = new MovieAdapter(getContext(), DataSources.getmovie(), Favorites_Fragment.this);
-//        favorite_recyclerview.setAdapter(movieAdapter);
-//        favorite_recyclerview.setHasFixedSize(true);
-//        favorite_recyclerview.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
-//    }
+
 
 
     private void loadData() {
@@ -85,7 +80,7 @@ public class Favorites_Fragment extends Fragment implements MovieItemClickListen
         }
 
         favAdapter = new FavAdapter(getActivity(), favItemList);
-        favorite_recyclerview.setAdapter(favAdapter);
+        binding.favoriteRecyclerview.setAdapter(favAdapter);
 
     }
 

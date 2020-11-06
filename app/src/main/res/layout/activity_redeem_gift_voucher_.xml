@@ -1,66 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    tools:context=".drawer.RedeemGiftVoucher_Activity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/Tb_App"
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/app_name"
-        app:titleTextColor="@color/color_text_white" />
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        tools:context=".drawer.RedeemGiftVoucher_Activity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/Tb_App"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/color_text_white" />
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        style="@style/TextInputLayoutStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
-
-        android:layout_marginEnd="16dp"
-        android:hint="Enter Gift Voucher Code here"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Tv_code"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_text_white"
-            android:textColorHint="@color/color_text_white" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="50dp"
+
+            android:layout_marginEnd="16dp"
+            android:hint="Enter Gift Voucher Code here"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Tv_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_text_white"
+                android:textColorHint="@color/color_text_white" />
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/Btn_apply"
-        android:layout_width="150dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/TV_text"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/bg_grey_rounded"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="Proceed"
-        android:textColor="@color/color_text_black"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        <Button
+            android:id="@+id/Btn_apply"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/TV_text"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_grey_rounded"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Proceed"
+            android:textColor="@color/color_text_black"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

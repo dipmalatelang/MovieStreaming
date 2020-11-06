@@ -7,57 +7,40 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.netflix.app.R;
+import com.netflix.app.databinding.ActivityProfileBinding;
 import com.netflix.app.utlis.BaseActivity;
 
 import java.util.Calendar;
 
 public class Profile_Activity extends BaseActivity implements View.OnClickListener {
 
-    Toolbar Tb_App;
-    EditText Et_Name,Et_Email,Et_Mobile,Et_Password,Et_DOB;
-    RadioGroup radiogroup;
-    Button Btn_apply;
-    RelativeLayout relativeLayout;
+
+    ActivityProfileBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        Tb_App = findViewById(R.id.Tb_App);
 
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_profile);
+        binding.BtnApply.setOnClickListener(this);
+        binding.EtDOB.setOnClickListener(this);
 
-        Et_Name = findViewById(R.id.Et_Name);
-        Et_Email = findViewById(R.id.Et_Email);
-        Et_Mobile = findViewById(R.id.Et_Mobile);
-        Et_Password = findViewById(R.id.Et_Password);
-        Et_DOB = findViewById(R.id.Et_DOB);
-        Btn_apply = findViewById(R.id.Btn_apply);
-        relativeLayout = findViewById(R.id.relativeLayout);
-        Btn_apply.setOnClickListener(this);
-        Et_DOB.setOnClickListener(this);
-
-
-
+        /* ToDo create iniToolBar to add custom toolbar */
         iniToolBar();
     }
    void iniToolBar(){
-       setSupportActionBar(Tb_App);
+       setSupportActionBar(binding.TbApp);
        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        getSupportActionBar().setDisplayShowHomeEnabled(true);
        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.color_text_white), PorterDuff.Mode.SRC_ATOP);
        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-       Tb_App.setTitle("Profile");
+       binding.TbApp.setTitle("Profile");
 
     }
     @Override
@@ -72,40 +55,40 @@ public class Profile_Activity extends BaseActivity implements View.OnClickListen
 
         {
             case R.id.Btn_apply:
-                String password = Et_Password.getText().toString();
-                String email = Et_Email.getText().toString();
+                String password = binding.EtPassword.getText().toString().trim();
+                String email = binding.EtEmail.getText().toString().trim();
 
-                if(TextUtils.isEmpty(Et_Name.getText().toString())){
-                    snackBar(relativeLayout,"Enter your Name");
+                if(TextUtils.isEmpty(binding.EtName.getText().toString().trim())){
+                    snackBar(binding.relativeLayoutProfile,"Enter your Name");
                 }
-                else if(TextUtils.isEmpty(Et_Email.getText().toString())){
-                    snackBar(relativeLayout,"Enter your Email");
+                else if(TextUtils.isEmpty(binding.EtEmail.getText().toString().trim())){
+                    snackBar(binding.relativeLayoutProfile,"Enter your Email");
                 }
                 else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    snackBar(relativeLayout,"Please Enter Valid Email Address");
+                    snackBar(binding.relativeLayoutProfile,"Please Enter Valid Email Address");
                 }
 
-                else if(TextUtils.isEmpty(Et_Mobile.getText().toString())){
-                    snackBar(relativeLayout,"Enter your Mobile Number");
+                else if(TextUtils.isEmpty(binding.EtDOB.getText().toString().trim())){
+                    snackBar(binding.relativeLayoutProfile,"Enter your Mobile Number");
                 }
 
-                else  if(TextUtils.isEmpty(Et_DOB.getText().toString())){
-                    snackBar(relativeLayout,"Enter your Date Of Birth");
+                else  if(TextUtils.isEmpty(binding.EtDOB.getText().toString().trim())){
+                    snackBar(binding.relativeLayoutProfile,"Enter your Date Of Birth");
                 }
-                else if (TextUtils.isEmpty(Et_Password.getText().toString())){
-                    snackBar(relativeLayout,"Enter your password");
+                else if (TextUtils.isEmpty(binding.EtPassword.getText().toString().trim())){
+                    snackBar(binding.relativeLayoutProfile,"Enter your password");
                 }
                 else if (password.length() < 6){
-                    snackBar(relativeLayout,"password must be at least 6 characters");
+                    snackBar(binding.relativeLayoutProfile,"password must be at least 6 characters");
                 }
                 else if(!password.matches("[a-zA-Z0-9.? ]*")){
-                    snackBar(relativeLayout,"Special characters are not allowed");
+                    snackBar(binding.relativeLayoutProfile,"Special characters are not allowed");
                 }
-                else if(Et_Mobile.length() < 10){
-                    snackBar(relativeLayout,"Enter correct Moible Number");
+                else if(binding.EtMobile.length() < 10){
+                    snackBar(binding.relativeLayoutProfile,"Enter correct Moible Number");
                 }
                 else {
-                    snackBar(relativeLayout,"Data Successfully Save ");
+                    snackBar(binding.relativeLayoutProfile,"Data Successfully Save ");
                 }
 
                 break;
@@ -141,7 +124,7 @@ public class Profile_Activity extends BaseActivity implements View.OnClickListen
             sDay = String.valueOf(day);
         }
 
-        Et_DOB.setText(new StringBuilder().append(sDay)
+        binding.EtDOB.setText(new StringBuilder().append(sDay)
                 .append("-").append(sMonth).append("-").append(year)
                 .append(" "));
     };

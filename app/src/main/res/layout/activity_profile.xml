@@ -1,232 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".drawer.Profile_Activity">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/Tb_App"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        tools:context=".drawer.Profile_Activity">
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_profile"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            app:title="@string/app_name"
-            app:titleTextColor="@color/color_text_white"
-            android:background="@color/colorBackground" />
+            android:layout_height="match_parent">
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField_Name"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            app:helperTextEnabled="true"
-            app:errorEnabled="true"
-            android:hint="Name">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Et_Name"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/Tb_App"
                 android:layout_width="match_parent"
-                android:textColor="@color/color_text_white"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:text="Test"
-                android:textColorHint="@color/colorWhite"
-                android:maxLines="1"
-                />
+                android:layout_height="40dp"
+                app:title="@string/app_name"
+                app:titleTextColor="@color/color_text_white"
+                android:background="@color/colorBackground" />
 
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField_Email"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:helperTextEnabled="true"
-            app:errorEnabled="true"
-            android:layout_below="@+id/textField_Name"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:hint="Email ID">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Et_Email"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textField_Name"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
-                android:textColor="@color/color_text_white"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-            android:text="Test@gmail.com"
-                android:textColorHighlight="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
-                android:maxLines="1"
-                />
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                app:helperTextEnabled="true"
+                app:errorEnabled="true"
+                android:hint="Name">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Et_Name"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/color_text_white"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:text="Test"
+                    android:textColorHint="@color/colorWhite"
+                    android:maxLines="1" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField_mobile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:helperTextEnabled="true"
-            app:errorEnabled="true"
-            app:counterEnabled="true"
-            app:counterMaxLength="10"
-            android:layout_below="@+id/textField_Email"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            style="@style/TextInputLayoutStyle"
-            android:hint="Mobile Number">
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Et_Mobile"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textField_Email"
+                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
-                android:textColor="@color/color_text_white"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:text="9765848598"
-                android:textColorHint="@color/colorWhite"
-                android:maxLines="1"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:helperTextEnabled="true"
+                app:errorEnabled="true"
+                android:layout_below="@+id/textField_Name"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:hint="Email ID">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField_Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:helperTextEnabled="true"
-            app:errorEnabled="true"
-            app:counterEnabled="true"
-            app:counterMaxLength="6"
-            android:layout_below="@+id/textField_mobile"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            app:endIconMode="password_toggle"
-            style="@style/TextInputLayoutStyle"
-            android:hint="Password">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Et_Email"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/color_text_white"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:text="Test@gmail.com"
+                    android:textColorHighlight="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:maxLines="1" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Et_Password"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textField_mobile"
                 android:layout_width="match_parent"
-                android:textColor="@color/color_text_white"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textColorHint="@color/colorWhite"
+                app:helperTextEnabled="true"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="10"
+                android:layout_below="@+id/textField_Email"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                style="@style/TextInputLayoutStyle"
+                android:hint="Mobile Number">
 
-                android:maxLines="1"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField_DOB"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:helperTextEnabled="true"
-            app:errorEnabled="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_below="@+id/textField_Password"
-            android:hint="Date of Birth">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Et_Mobile"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/color_text_white"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:text="9765848598"
+                    android:textColorHint="@color/colorWhite"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/Et_DOB"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textField_Password"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperTextEnabled="true"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="6"
+                android:layout_below="@+id/textField_mobile"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                app:endIconMode="password_toggle"
+                style="@style/TextInputLayoutStyle"
+                android:hint="Password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Et_Password"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/color_text_white"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/colorWhite"
+
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textField_DOB"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:helperTextEnabled="true"
+                app:errorEnabled="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/textField_Password"
+                android:hint="Date of Birth">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Et_DOB"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/color_text_white"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:text="03-03-1996"
+                    android:textColorHint="@color/colorWhite"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/TV_Gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_below="@+id/textField_DOB"
+                android:text="@string/gender" />
+
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="1dp"
+                android:layout_below="@+id/TV_Gender"
+                android:textColor="@color/colorWhite">
+
+                <RadioButton
+                    android:id="@+id/radiobtn_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorWhite"
+                    android:text="male"
+                    android:textColor="@color/colorWhite" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorWhite"
+                    android:text="Female"
+
+                    android:textColor="@color/colorWhite" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/TV_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/radiogroup"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_layout_rounded_transparent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="No Premium Plan is Active"
+                android:textAlignment="center"
+
                 android:textColor="@color/color_text_white"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:text="03-03-1996"
-                android:textColorHint="@color/colorWhite"
-                android:maxLines="1"
-                />
+                app:drawableStartCompat="@drawable/ic_premium_icon"
+                app:errorEnabled="true"
+                app:helperTextEnabled="true" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/Btn_apply"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/bg_grey_rounded"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Save Changes"
+                android:layout_below="@+id/TV_text"
 
-        <TextView
-            android:id="@+id/TV_Gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_below="@+id/textField_DOB"
-            android:text="@string/gender"/>
-
-
-
-        <RadioGroup
-            android:id="@+id/radiogroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="1dp"
-            android:layout_below="@+id/TV_Gender"
-            android:textColor="@color/colorWhite">
-
-            <RadioButton
-                android:id="@+id/radiobtn_male"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/colorWhite"
-                android:text="male"
-                android:textColor="@color/colorWhite" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/colorWhite"
-                android:text="Female"
-
-                android:textColor="@color/colorWhite" />
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/TV_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/radiogroup"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_layout_rounded_transparent"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="No Premium Plan is Active"
-            android:textAlignment="center"
-
-            android:textColor="@color/color_text_white"
-            app:drawableStartCompat="@drawable/ic_premium_icon"
-            app:errorEnabled="true"
-            app:helperTextEnabled="true" />
-
-        <Button
-            android:id="@+id/Btn_apply"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="40dp"
-            android:background="@drawable/bg_grey_rounded"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="Save Changes"
-            android:layout_below="@+id/TV_text"
-
-            android:textColor="@color/color_text_black" />
+                android:textColor="@color/color_text_black" />
 
 
+        </RelativeLayout>
 
-    </RelativeLayout>
 
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</layout>
 
 

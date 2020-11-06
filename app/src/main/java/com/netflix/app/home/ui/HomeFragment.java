@@ -3,88 +3,63 @@ package com.netflix.app.home.ui;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
-
-
 import android.os.Bundle;
-
-
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
-
-
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
-
-
-import com.google.android.material.tabs.TabLayout;
 import com.netflix.app.R;
+import com.netflix.app.databinding.HFragmentHomeBinding;
 import com.netflix.app.home.adapter.MainRecyclerAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.model.SlidePojo;
 import com.netflix.app.home.adapter.SliderPagerAdapter;
 import com.netflix.app.home.model.AllCategory;
 import com.netflix.app.home.model.CategoryItem;
-
 import com.netflix.app.utlis.ApiCall;
 import com.netflix.app.utlis.ApiInterface;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import static android.content.ContentValues.TAG;
 
 
 public class HomeFragment extends Fragment implements MovieItemClickListener {
     private List<SlidePojo> Imgslide= new ArrayList<>();
-    MainRecyclerAdapter mainRecyclerAdapter;
-    RecyclerView mainCategoryRecycler;
-    private ViewPager sliderpager;
-    private TabLayout indicator;
+    private MainRecyclerAdapter mainRecyclerAdapter;
 
-    private ProgressBar progressBar;
+    //Initialize variable
+    private HFragmentHomeBinding binding;
+    private View hview;
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.h_fragment_home_, container, false);
+        // Assign variable
+        binding = DataBindingUtil.inflate(inflater,R.layout.h_fragment_home_
+        ,container,false);
 
-        iniViews(view);
+        hview = binding.getRoot();
+        iniViews(hview);
         iniSlider();
         getSliderData();
-        return  view;
+        return  hview;
+
     }
 
-
-
-
-
     private void iniViews(View view) {
-        sliderpager = view.findViewById(R.id.sliderpager);
-        indicator = view.findViewById(R.id.indicator);
-        mainCategoryRecycler = view.findViewById(R.id.main_recycler);
-        progressBar =view.findViewById(R.id.progressBar);
-
 
         List<CategoryItem> categoryItemList = new ArrayList<>();
         categoryItemList.add(new CategoryItem(1, R.drawable.hollywood5));
@@ -119,16 +94,13 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         setMainCategoryRecycler(allCategoryList);
     }
 
+    /* ToDo nested recycler view setMainCategoryRecycler */
     private void setMainCategoryRecycler(List<AllCategory> allCategoryList) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mainCategoryRecycler.setLayoutManager(layoutManager);
+        binding.mainRecycler.setLayoutManager(layoutManager);
         mainRecyclerAdapter = new MainRecyclerAdapter(getContext(), allCategoryList,HomeFragment.this);
-        mainCategoryRecycler.setAdapter(mainRecyclerAdapter);
+        binding.mainRecycler.setAdapter(mainRecyclerAdapter);
     }
-
-
-
-
 
 
     public void onMovieClick(CategoryItem movie, ImageView movieImageView) {
@@ -152,7 +124,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
     }
 
-    //getSliderDataAPiforslideimage
+    /* ToDo getSliderDataAPiforslideimage */
     public void getSliderData() {
         String slider = "slide";
         ApiInterface apiInterface = ApiCall.getApiData().create(ApiInterface.class);
@@ -166,8 +138,8 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
                         Log.d(TAG, "onResponsesizeofjsondata: "+response.body().size());
                         Imgslide =response.body();
                         SliderPagerAdapter adapter = new SliderPagerAdapter(getContext(),Imgslide);
-                        sliderpager.setAdapter(adapter);
-                        progressBar.setVisibility(View.GONE);
+                        binding.sliderpager.setAdapter(adapter);
+                        binding.progressBar.setVisibility(View.GONE);
 
 
                     }
@@ -182,16 +154,15 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
 
     }
+
+    /* ToDo iniSlider setTimer for slide */
     private void iniSlider() {
 
         // setup timer
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(),4000,6000);
-        indicator.setupWithViewPager(sliderpager,true);
+        binding.indicator.setupWithViewPager(binding.sliderpager,true);
     }
-
-
-
 
     class SliderTimer extends TimerTask {
 
@@ -201,11 +172,11 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
                 getActivity().runOnUiThread(new Runnable(){
                     @Override
                     public void run(){
-                        if (sliderpager.getCurrentItem()<Imgslide.size()-1) {
-                            sliderpager.setCurrentItem(sliderpager.getCurrentItem()+1);
+                        if (binding.sliderpager.getCurrentItem()<Imgslide.size()-1) {
+                            binding.sliderpager.setCurrentItem(binding.sliderpager.getCurrentItem()+1);
                         }
                         else
-                            sliderpager.setCurrentItem(0);
+                            binding.sliderpager.setCurrentItem(0);
                     }
                 });
 

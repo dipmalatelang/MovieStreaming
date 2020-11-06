@@ -8,39 +8,32 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-
+import androidx.databinding.DataBindingUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.netflix.app.R;
+import com.netflix.app.databinding.ActivityPrimiumPlanBinding;
 import com.netflix.app.home.ui.Home_Activity;
 import com.netflix.app.utlis.BaseActivity;
 
 public class PrimiumPlan_Activity extends BaseActivity {
-    Toolbar Tb_App;
-    Button btn_proceed;
 
-
+    ActivityPrimiumPlanBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_primium_plan_);
-        Tb_App = findViewById(R.id.Tb_App);
-        btn_proceed =findViewById(R.id.btn_proceed);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_primium_plan_);
 
+        /* ToDo create iniToolBar to add custom toolbar */
         iniToolBar();
         String[] descriptionData = {"Plans", "Sign In", "Pay", "Watch"};
-
         StateProgressBar stateProgressBar = findViewById(R.id.state_progress_id);
         stateProgressBar.setStateDescriptionData(descriptionData);
-        btn_proceed.setOnClickListener(new View.OnClickListener() {
+        binding.btnProceed.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -102,13 +95,13 @@ public class PrimiumPlan_Activity extends BaseActivity {
     }
 
     void iniToolBar(){
-        setSupportActionBar(Tb_App);
+        setSupportActionBar(binding.TbApp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(this, R.color.color_text_white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-        Tb_App.setTitle("Premium Plans");
+        binding.TbApp.setTitle("Premium Plans");
 
     }
 

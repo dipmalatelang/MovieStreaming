@@ -2,7 +2,6 @@ package com.netflix.app.home.model;
 
 public class CategoryItem {
 
-// here i am taking only image url. and this is as integer because i am using it from drawable file.
 
     Integer itemId;
     Integer imageUrl;

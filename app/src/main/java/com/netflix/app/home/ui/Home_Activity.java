@@ -3,21 +3,20 @@ package com.netflix.app.home.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.netflix.app.R;
 import com.netflix.app.category.Category_Fragment;
+import com.netflix.app.databinding.HActivityHomeBinding;
 import com.netflix.app.drawer.PrimiumPlan_Activity;
 import com.netflix.app.drawer.PrivacyPolicy_Activity;
 import com.netflix.app.drawer.Profile_Activity;
@@ -29,21 +28,17 @@ import com.netflix.app.gallary.Gallary_Fragment;
 import com.netflix.app.videos.AllVideos_Fragment;
 
 public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
-    NavigationView design_navigation_view;
-    RelativeLayout rl_fragment_container;
-    ChipNavigationBar  chip_bottom_navigationview;
+
+    HActivityHomeBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.h_activity_home_);
+        binding = DataBindingUtil.setContentView(this,R.layout.h_activity_home_);
         getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container,new HomeFragment()).commit();
 
 
-        /*TODO Create iniView for  view id*/
-        iniView();
+
         /*TODO Create initoolbar for  custom toolbar*/
         initoolbar();
         /*TODO Create bottomMenu for  bottom menu bar*/
@@ -53,23 +48,17 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 
     }
 
-    void iniView(){
-        toolbar = findViewById(R.id.toolbar);
-        drawerLayout = findViewById(R.id.drawerlayout);
-        chip_bottom_navigationview = findViewById(R.id.chip_bottom_navigationview);
-        rl_fragment_container  = findViewById(R.id.rl_fragment_container);
-        design_navigation_view = findViewById(R.id.design_navigation_view);
-    }
+
     void initoolbar(){
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerlayout,binding.toolbar,R.string.open, R.string.close);
+        binding.drawerlayout.addDrawerListener(toggle);
         toggle.syncState();
-        design_navigation_view.setNavigationItemSelectedListener(this);
+        binding.designNavigationView.setNavigationItemSelectedListener(this);
 
     }
     private void bottomMenu() {
-        chip_bottom_navigationview.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+        binding.chipBottomNavigationview.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int i) {
                 Fragment fragment = null;
@@ -153,12 +142,11 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
                 break;
             case R.id.m_logout:
                 finish();
-//                FirebaseAuth.getInstance().signOut();
                 break;
 
 
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
+        binding.drawerlayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
