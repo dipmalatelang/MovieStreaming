@@ -1,5 +1,4 @@
-package com.netflix.app.utlis;
-
+package com.netflix.app.networks;
 
 
 import com.netflix.app.home.model.SlidePojo;
@@ -16,9 +15,6 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("Api/Slider.php")
     Call<List<SlidePojo>> getSlideData(@Field(value = "Slider", encoded = true) String Slider);
-
-
-
 
 
 }

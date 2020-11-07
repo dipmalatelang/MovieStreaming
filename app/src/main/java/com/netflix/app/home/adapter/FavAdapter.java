@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.netflix.app.R;
 import com.netflix.app.utlis.FavDB;
-import com.netflix.app.utlis.FavItem;
+import com.netflix.app.home.model.FavItem;
 
 import java.util.List;
 

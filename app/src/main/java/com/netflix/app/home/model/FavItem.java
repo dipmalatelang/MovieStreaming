@@ -1,4 +1,4 @@
-package com.netflix.app.utlis;
+package com.netflix.app.home.model;
 
 public class FavItem {
     private String item_title;

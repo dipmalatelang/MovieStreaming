@@ -21,7 +21,7 @@ import com.netflix.app.home.adapter.FavAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.model.CategoryItem;
 import com.netflix.app.utlis.FavDB;
-import com.netflix.app.utlis.FavItem;
+import com.netflix.app.home.model.FavItem;
 
 import java.util.ArrayList;
 import java.util.List;

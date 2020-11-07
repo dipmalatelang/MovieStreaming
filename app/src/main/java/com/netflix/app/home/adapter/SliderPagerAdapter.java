@@ -18,10 +18,8 @@ import com.bumptech.glide.Glide;
 import com.netflix.app.R;
 import com.netflix.app.home.model.SlidePojo;
 import com.netflix.app.utlis.FavDB;
-import com.netflix.app.utlis.FavItem;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SliderPagerAdapter extends PagerAdapter {
