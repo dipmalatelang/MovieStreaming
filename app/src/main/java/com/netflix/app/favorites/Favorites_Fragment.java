@@ -1,25 +1,31 @@
 package com.netflix.app.favorites;
 
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.netflix.app.R;
 import com.netflix.app.databinding.HFavoriteFragmentBinding;
 import com.netflix.app.home.adapter.FavAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.model.CategoryItem;
+import com.netflix.app.home.viewmodels.FavoriteFragmentViewModel;
 import com.netflix.app.utlis.FavDB;
 import com.netflix.app.home.model.FavItem;
 
@@ -33,6 +39,8 @@ public class Favorites_Fragment extends Fragment implements MovieItemClickListen
     private HFavoriteFragmentBinding binding;
     private View view;
 
+    private FavoriteFragmentViewModel mfavoriteFragmentViewModel;
+
 
 
     @Override
@@ -42,6 +50,17 @@ public class Favorites_Fragment extends Fragment implements MovieItemClickListen
 
         binding = DataBindingUtil.inflate(inflater,R.layout.h_favorite_fragment,container,false);
         view = binding.getRoot();
+
+        mfavoriteFragmentViewModel = ViewModelProviders.of(this).get(FavoriteFragmentViewModel.class);
+        // init Retrive data from Repository SlideDataRepository
+        mfavoriteFragmentViewModel.init();
+        mfavoriteFragmentViewModel.getFavData().observe(this, new Observer<List<FavItem>>() {
+            @Override
+            public void onChanged(List<FavItem> favItems) {
+
+            }
+        });
+
         favDB = new FavDB(getContext());
         binding.favoriteRecyclerview.setHasFixedSize(true);
         binding.favoriteRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));

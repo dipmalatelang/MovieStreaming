@@ -1,8 +1,10 @@
 package com.netflix.app.home.viewmodels;
 
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
 import com.netflix.app.home.model.SlidePojo;
 import com.netflix.app.home.repositories.SlideDataRepository;
 
@@ -20,6 +22,7 @@ public class HomeFragmentViewModel extends ViewModel {
         SlideDataRepository mRepo = SlideDataRepository.getInstance();
         mSlidePojo = mRepo.getSlideDataImage(slider);
     }
+
 
     public LiveData<List<SlidePojo>> getSlideData(){
         return  mSlidePojo;

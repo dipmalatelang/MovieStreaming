@@ -14,10 +14,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SlideDataRepository {
+
     private static SlideDataRepository instance;
     ApiInterface apiInterface;
 
-    private ArrayList<SlidePojo> dataslideImage = new ArrayList<>();
 
     public static SlideDataRepository getInstance() {
         if (instance == null) {
@@ -36,10 +36,8 @@ public class SlideDataRepository {
             @Override
             public void onResponse(Call<List<SlidePojo>> call, Response<List<SlidePojo>> response) {
                 if (response.code() == 200) {
-
                     data.postValue(response.body());
-                }
-                else {
+                } else {
                     data.postValue(null);
                 }
             }

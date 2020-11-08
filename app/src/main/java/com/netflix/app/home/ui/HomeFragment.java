@@ -38,10 +38,10 @@ import static android.content.ContentValues.TAG;
 
 
 public class HomeFragment extends Fragment implements MovieItemClickListener {
-    private List<SlidePojo> Imgslide = new ArrayList<>();
     private MainRecyclerAdapter mainRecyclerAdapter;
+
+    //Initialize HomeFragmentViewModel for Viewmodel class
     private HomeFragmentViewModel mhomeFragmentViewModel;
-    private SliderPagerAdapter sliderPagerAdapter;
 
     //Initialize variable
     private HFragmentHomeBinding binding;
@@ -55,20 +55,23 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.h_fragment_home_, container, false);
         hview = binding.getRoot();
 
+
+        // Assign variable mhomeFragmentViewModel for HomeFragmentViewModel
+
         mhomeFragmentViewModel = ViewModelProviders.of(this).get(HomeFragmentViewModel.class);
+        // init Retrive data from Repository SlideDataRepository
         mhomeFragmentViewModel.init("slider");
+        // observe the changes  getSlideData
         mhomeFragmentViewModel.getSlideData().observe(this, new Observer<List<SlidePojo>>() {
             @Override
             public void onChanged(List<SlidePojo> slidePojos) {
                 if (slidePojos != null) {
-                    Toast.makeText(getContext(), "list " + slidePojos.size(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onChanged: " + slidePojos.size());
-                    Imgslide.addAll(slidePojos);
-                    sliderPagerAdapter = new SliderPagerAdapter(getContext(), Imgslide);
+                    SliderPagerAdapter  sliderPagerAdapter = new SliderPagerAdapter(getContext(), mhomeFragmentViewModel.getSlideData().getValue());
                     binding.sliderpager.setAdapter(sliderPagerAdapter);
                     binding.progressBar.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getContext(), "data not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Data not found", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "not found: ");
                 }
             }
@@ -77,7 +80,6 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
         iniViews(hview);
         iniSlider();
-//        getSliderData();
         return hview;
 
     }
@@ -147,36 +149,8 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
     }
 
-    /* ToDo getSliderDataAPiforslideimage */
-//    public void getSliderData() {
-//        String slider = "slide";
-//        ApiInterface apiInterface = ApiCall.getApiData().create(ApiInterface.class);
-//        Call<List<SlidePojo>> call = apiInterface.getSlideData(slider);
-//        call.enqueue(new Callback<List<SlidePojo>>() {
-//            @Override
-//            public void onResponse(Call<List<SlidePojo>> call, Response<List<SlidePojo>> response) {
-//                if (response.code() ==200){
-//                    for(int i=0;i<response.body().size();i++)
-//                    {
-//                        Log.d(TAG, "onResponsesizeofjsondata: "+response.body().size());
-//                        Imgslide =response.body();
-//                        sliderPagerAdapter = new SliderPagerAdapter(getContext(),Imgslide);
-//                        binding.sliderpager.setAdapter(sliderPagerAdapter);
-//                        binding.progressBar.setVisibility(View.GONE);
-//
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<SlidePojo>> call, Throwable t) {
-//
-//            }
-//        });
-//
-//
-//    }
+
+
 
     /* ToDo iniSlider setTimer for slide */
     private void iniSlider() {
@@ -195,7 +169,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (binding.sliderpager.getCurrentItem() < Imgslide.size() - 1) {
+                        if (binding.sliderpager.getCurrentItem() < mhomeFragmentViewModel.getSlideData().getValue().size() - 1) {
                             binding.sliderpager.setCurrentItem(binding.sliderpager.getCurrentItem() + 1);
                         } else
                             binding.sliderpager.setCurrentItem(0);
