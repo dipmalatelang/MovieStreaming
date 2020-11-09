@@ -18,8 +18,8 @@
 
         android:theme="@style/AppThemestyle">
         <activity android:name=".home.ui.PlayMovieActivity"
-            android:configChanges="orientation|screenSize|layoutDirection" >
-            <intent-filter>
+            android:screenOrientation="fullSensor">
+        <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
