@@ -3,6 +3,8 @@ package com.netflix.app.home.ui;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -48,6 +50,8 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import com.netflix.app.R;
 import com.netflix.app.databinding.ActivityPlayMovieBinding;
+import com.netflix.app.home.adapter.MainRecyclerAdapter;
+import com.netflix.app.home.model.AllCategory;
 
 import java.util.List;
 
@@ -89,13 +93,11 @@ public class PlayMovieActivity extends AppCompatActivity {
 
 
         binding.playerView.setPlayer(this.simpleExoPlayer);
-        binding.playerView.setControllerAutoShow(false);
         binding.playerView.setControllerShowTimeoutMs(0);
         binding.playerView.setUseArtwork(false);
         simpleExoPlayer.prepare(extractorMediaSource);
         simpleExoPlayer.setPlayWhenReady(true);
         simpleExoPlayer.setTextOutput(new ComponentListener());
-
         binding.playerView.setKeepScreenOn(true);
         this.simpleExoPlayer.setPlayWhenReady(true);
         this.simpleExoPlayer.addListener(new Player.EventListener() {
@@ -176,14 +178,11 @@ public class PlayMovieActivity extends AppCompatActivity {
         btn_lock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn_subtitles.setVisibility(View.GONE);
                 seekbar.setVisibility(View.GONE);
                 next.setVisibility(View.GONE);
                 linearlayout_medium.setVisibility(View.GONE);
-                exo_episode.setVisibility(View.GONE);
                 btn_back.setVisibility(View.GONE);
                 binding.playerView.setKeepScreenOn(true);
-                Tv_subtitle.setVisibility(View.GONE);
                 linear_bottom.setVisibility(View.GONE);
                 exo_progress.setVisibility(View.GONE);
                 btn_unlock.setVisibility(View.VISIBLE);
@@ -196,11 +195,9 @@ public class PlayMovieActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                btn_subtitles.setVisibility(View.VISIBLE);
                 seekbar.setVisibility(View.VISIBLE);
                 next.setVisibility(View.VISIBLE);
                 linearlayout_medium.setVisibility(View.VISIBLE);
-                exo_episode.setVisibility(View.VISIBLE);
                 btn_back.setVisibility(View.VISIBLE);
                 btn_unlock.setVisibility(View.GONE);
                 btn_lock.setVisibility(View.VISIBLE);
@@ -226,7 +223,10 @@ public class PlayMovieActivity extends AppCompatActivity {
         });
 
 
+
+
     }
+
 
     private void initBrigthnessSeekbar() {
         int cBrightness = Settings.System.getInt(getContentResolver()

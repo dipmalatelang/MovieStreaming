@@ -169,6 +169,7 @@
                     android:drawableStart="@drawable/ic_episodes"
                     android:text="Episodes"
                     android:textAllCaps="false"
+                    android:visibility="invisible"
                     android:textSize="10sp" />
 
                 <Button
@@ -180,6 +181,7 @@
                     android:background="@null"
                     android:drawableStart="@drawable/hplib_ic_subtitle"
                     android:text="Subtitles"
+                    android:visibility="invisible"
                     android:textAllCaps="false"
                     android:textSize="10sp" />
 

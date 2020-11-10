@@ -17,7 +17,6 @@
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/player_view"
-            android:background="@color/color_text_black"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:controller_layout_id="@layout/custome_controller"
@@ -25,6 +24,7 @@
             app:hide_on_touch="true"
             app:player_layout_id="@layout/exo_simple_player_view"
             app:resize_mode="fit"
+            app:auto_show="true"
             app:rewind_increment="10000"
             app:show_timeout="5000"
             app:use_controller="true" />

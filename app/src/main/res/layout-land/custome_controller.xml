@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_color">
+        android:background="@color/color_text_black">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -145,15 +145,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btn_lock"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:layout_gravity="right"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="20dp"
                     android:background="@null"
                     android:drawableStart="@drawable/hplib_ic_unlock"
                     android:text="Screen Lock"
@@ -166,6 +165,8 @@
                     android:layout_gravity="right"
                     android:layout_marginEnd="10dp"
                     android:background="@null"
+                    android:visibility="invisible"
+                    android:layout_weight="1"
                     android:drawableStart="@drawable/ic_episodes"
                     android:text="Episodes"
                     android:textAllCaps="false"
@@ -178,6 +179,8 @@
                     android:layout_gravity="right"
                     android:layout_marginEnd="10dp"
                     android:background="@null"
+                    android:visibility="gone"
+
                     android:drawableStart="@drawable/hplib_ic_subtitle"
                     android:text="Subtitles"
                     android:textAllCaps="false"
@@ -187,7 +190,6 @@
                     android:id="@+id/next"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right"
                     android:layout_marginEnd="20dp"
                     android:background="@null"
                     android:drawableStart="@drawable/hplib_ic_next"
