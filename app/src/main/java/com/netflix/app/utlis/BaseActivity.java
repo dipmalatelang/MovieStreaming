@@ -1,6 +1,6 @@
 package com.netflix.app.utlis;
 
-import android.Manifest;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.View;
@@ -27,9 +27,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /*TODO Set Data to Sharedprefrence*/
-    public void setPref(Context context, String key, String value) {
+    public void setPref(Context context, String key, long value) {
         SharedPreferences.Editor editor = getPrefData(context).edit();
-        editor.putString(key, value);
+        editor.putString(key, String.valueOf(value));
         editor.apply();
     }
 

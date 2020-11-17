@@ -28,7 +28,7 @@
             app:resize_mode="fit"
             app:surface_type="texture_view"
             app:rewind_increment="10000"
-            app:show_timeout="1000"
+            app:show_timeout="500"
             app:use_controller="true" />
 
         <ProgressBar

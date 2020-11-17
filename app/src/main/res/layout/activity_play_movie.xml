@@ -26,7 +26,7 @@
             app:resize_mode="fit"
             app:auto_show="true"
             app:rewind_increment="10000"
-            app:show_timeout="5000"
+            app:show_timeout="500"
             app:use_controller="true" />
 
         <ProgressBar

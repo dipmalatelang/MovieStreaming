@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.SearchView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -25,18 +26,22 @@ import com.netflix.app.drawer.ReferEarn_Activity;
 import com.netflix.app.favorites.Favorites_Fragment;
 
 import com.netflix.app.gallary.Gallary_Fragment;
+import com.netflix.app.home.adapter.MoreAdapter;
+import com.netflix.app.home.adapter.MovieAdapter;
 import com.netflix.app.videos.AllVideos_Fragment;
 
-public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
+public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     HActivityHomeBinding binding;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this,R.layout.h_activity_home_);
-        getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container,new HomeFragment()).commit();
 
+        getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container,new HomeFragment()).commit();
 
 
         /*TODO Create initoolbar for  custom toolbar*/
@@ -151,4 +156,14 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
     }
 
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        MovieAdapter adapter ;
+        return false;
+    }
 }

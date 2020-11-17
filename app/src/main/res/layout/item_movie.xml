@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="125dp"
     android:layout_height="wrap_content"
-    android:layout_marginRight="8dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackgroundBorderless">
@@ -15,9 +14,9 @@
         style="@style/CardView"
         android:layout_width="0dp"
         android:layout_height="175dp"
-        android:padding="5dp"
         android:background="@drawable/bottom_round_background"
         android:scaleType="centerCrop"
+        android:paddingLeft="5dp"
         app:layout_constraintBottom_toTopOf="@+id/item_movie_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
