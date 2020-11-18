@@ -15,28 +15,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemestyle"
+        android:name=".RtfApplication"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".home.ui.PlayMovieActivity"
-            android:screenOrientation="fullSensor">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="fullSensor"
+            android:exported="true">
 
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
             android:name=".home.ui.Home_Activity"
             android:theme="@style/AppThemestyle">
 
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
 
 
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity android:name=".main.MainActivity" />
         <activity android:name=".home.ui.MovieDetailActivity" />
@@ -47,6 +45,7 @@
         <activity android:name=".drawer.RedeemGiftVoucher_Activity" />
         <activity android:name=".drawer.ReferEarn_Activity" />
         <activity android:name=".drawer.Profile_Activity" />
+
     </application>
 
 </manifest>

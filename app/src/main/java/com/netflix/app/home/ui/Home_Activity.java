@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.SearchView;
@@ -26,13 +27,18 @@ import com.netflix.app.drawer.ReferEarn_Activity;
 import com.netflix.app.favorites.Favorites_Fragment;
 
 import com.netflix.app.gallary.Gallary_Fragment;
-import com.netflix.app.home.adapter.MoreAdapter;
+
 import com.netflix.app.home.adapter.MovieAdapter;
+import com.netflix.app.utlis.SharedPrefs;
 import com.netflix.app.videos.AllVideos_Fragment;
+
+import static com.netflix.app.home.ui.PlayMovieActivity.LAST_MINUTE_VIDEO_PLAYED;
+import static com.netflix.app.home.ui.PlayMovieActivity.LAST_VIDEO_PLAYED;
 
 public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     HActivityHomeBinding binding;
+    long mLastPosition;
 
 
     @Override
@@ -42,7 +48,10 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
         binding = DataBindingUtil.setContentView(this,R.layout.h_activity_home_);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container,new HomeFragment()).commit();
-
+        SharedPrefs.getInstance().getLastActivePlayed(LAST_VIDEO_PLAYED,false);
+        SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED,mLastPosition);
+        Log.d("TAG", "onCreate: "+SharedPrefs.getInstance().getLastActivePlayed(LAST_VIDEO_PLAYED,false));
+        Log.d("TAG", "onCreateplayvideo: "+SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED,mLastPosition));
 
         /*TODO Create initoolbar for  custom toolbar*/
         initoolbar();
@@ -59,7 +68,7 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerlayout,binding.toolbar,R.string.open, R.string.close);
         binding.drawerlayout.addDrawerListener(toggle);
         toggle.syncState();
-        binding.designNavigationView.setNavigationItemSelectedListener(this);
+        binding.designnavigationview.setNavigationItemSelectedListener(this);
 
     }
     private void bottomMenu() {

@@ -1,13 +1,9 @@
 package com.netflix.app.home.ui;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,20 +13,16 @@ import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
 
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
@@ -39,30 +31,25 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.SampleStream;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.text.Cue;
 import com.google.android.exoplayer2.text.TextRenderer;
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import com.google.android.exoplayer2.util.Util;
 import com.netflix.app.R;
 import com.netflix.app.databinding.ActivityPlayMovieBinding;
-import com.netflix.app.utlis.BaseActivity;
-
+import com.netflix.app.utlis.SharedPrefs;
 
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
 
 
-public class PlayMovieActivity extends BaseActivity {
+public class PlayMovieActivity extends AppCompatActivity {
     public static final String URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
     public static final String STREAM_URL = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
     private SimpleExoPlayer simpleExoPlayer;
@@ -73,7 +60,10 @@ public class PlayMovieActivity extends BaseActivity {
     private DefaultTimeBar exo_progress;
     private ImageButton btn_unlock, btn_back;
     long mLastPosition;
-    String videoposotion;
+    long lastvideo;
+
+    public static String LAST_VIDEO_PLAYED = "lastposition";
+    public static String LAST_MINUTE_VIDEO_PLAYED = "lastminuteposition";
 
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -82,6 +72,8 @@ public class PlayMovieActivity extends BaseActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_play_movie);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+
         initView();
         initBrigthnessSeekbar();
 
@@ -95,7 +87,7 @@ public class PlayMovieActivity extends BaseActivity {
 
 
                 Toast.makeText(PlayMovieActivity.this, "next ", Toast.LENGTH_SHORT).show();
-                Uri videoUrl = Uri.parse(STREAM_URL);
+                Uri videoUrl = Uri.parse(URL);
                 ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource(videoUrl, new DefaultHttpDataSourceFactory("exoplayer_video"), new DefaultExtractorsFactory(), null, null);
                 binding.playerView.setPlayer(PlayMovieActivity.this.simpleExoPlayer);
                 binding.playerView.setKeepScreenOn(true);
@@ -179,6 +171,7 @@ public class PlayMovieActivity extends BaseActivity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
+
             }
 
             @Override
@@ -215,13 +208,14 @@ public class PlayMovieActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
+
         if (simpleExoPlayer == null) {
             simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
             binding.playerView.setPlayer(simpleExoPlayer);
-
             DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "exo-demo"));
-            ExtractorMediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(URL));
+            ExtractorMediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(STREAM_URL));
             simpleExoPlayer.prepare(mediaSource);
+            simpleExoPlayer.setPlayWhenReady(true);
             simpleExoPlayer.addListener(new Player.EventListener() {
                 public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
                 }
@@ -261,23 +255,14 @@ public class PlayMovieActivity extends BaseActivity {
                 }
 
                 public void onSeekProcessed() {
-//                simpleExoPlayer.setPlayWhenReady(true);
-//                simpleExoPlayer.getPlaybackState();
+
+
                 }
 
             });
-
-
         }
 
-        videoposotion = getPref(this, "videolastposition");
-        // Seek to the last position of the player.
-        simpleExoPlayer.seekTo(Long.parseLong(videoposotion));
-        Log.d("TAG", "onStart: " + mLastPosition);
-
-        // Put the player into the last state we were in.
-        simpleExoPlayer.setPlayWhenReady(true);
-
+        Toast.makeText(this, "video playing", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -299,14 +284,25 @@ public class PlayMovieActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        simpleExoPlayer.seekTo(SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED,lastvideo));
+        simpleExoPlayer.setPlayWhenReady(true);
+        Log.d("TAG", "onResume: " + SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED,lastvideo));
+
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         simpleExoPlayer.setPlayWhenReady(true);
         mLastPosition = simpleExoPlayer.getCurrentPosition();
         Log.d("TAG", "onStop: " + mLastPosition);
-        setPref(this, "videolastposition", simpleExoPlayer.getCurrentPosition());
+        SharedPrefs.getInstance().setlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED, mLastPosition);
         simpleExoPlayer.setPlayWhenReady(false);
 
 
     }
+
+
 }
