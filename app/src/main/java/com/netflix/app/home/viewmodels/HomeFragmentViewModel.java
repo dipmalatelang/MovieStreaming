@@ -5,26 +5,26 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.netflix.app.home.model.SlidePojo;
+import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.home.repositories.SlideDataRepository;
 
 import java.util.List;
 
 public class HomeFragmentViewModel extends ViewModel {
 
-    private MutableLiveData<List<SlidePojo>> mSlidePojo;
+    private MutableLiveData<List<AllVideo>> mSlidePojo;
 
-    public  void init(String slider){
+    public  void init(){
 
         if(mSlidePojo !=null){
             return;
         }
         SlideDataRepository mRepo = SlideDataRepository.getInstance();
-        mSlidePojo = mRepo.getSlideDataImage(slider);
+        mSlidePojo = mRepo.getSlideDataImage();
     }
 
 
-    public LiveData<List<SlidePojo>> getSlideData(){
+    public LiveData<List<AllVideo>> getSlideData(){
         return  mSlidePojo;
     }
 }

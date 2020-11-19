@@ -1,5 +1,6 @@
 package com.netflix.app.home.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AllCategory {
@@ -7,7 +8,7 @@ public class AllCategory {
     String categoryTitle;
     List<CategoryItem> categoryItemList;
 
-    public AllCategory(String categoryTitle, List<CategoryItem> categoryItemList) {
+    public AllCategory(String categoryTitle, ArrayList<CategoryItem> categoryItemList) {
         this.categoryTitle = categoryTitle;
         this.categoryItemList = categoryItemList;
     }

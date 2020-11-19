@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -44,13 +45,19 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.netflix.app.R;
 import com.netflix.app.databinding.ActivityPlayMovieBinding;
+import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.utlis.SharedPrefs;
 
 import java.util.List;
+import java.util.jar.Attributes;
+
+import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER;
+import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
 
 
 public class PlayMovieActivity extends AppCompatActivity {
-    public static final String URL = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
+    String URL = "VideoURl";
+    String NAME = "VideoURlName";
     public static final String STREAM_URL = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
     private SimpleExoPlayer simpleExoPlayer;
     private ActivityPlayMovieBinding binding;
@@ -59,11 +66,15 @@ public class PlayMovieActivity extends AppCompatActivity {
     private LinearLayout linearlayout_medium, linear_bottom;
     private DefaultTimeBar exo_progress;
     private ImageButton btn_unlock, btn_back;
+     TextView Tv_subtitle;
     long mLastPosition;
     long lastvideo;
 
+
     public static String LAST_VIDEO_PLAYED = "lastposition";
     public static String LAST_MINUTE_VIDEO_PLAYED = "lastminuteposition";
+    String bannerVideo;
+    String name;
 
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -72,9 +83,14 @@ public class PlayMovieActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_play_movie);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-
         initView();
+        URL =SharedPrefs.getInstance().getString(VIDEO_BANNER, bannerVideo);
+        NAME =SharedPrefs.getInstance().getString(VIDEO_BANNER_Name,name);
+
+
+        Tv_subtitle.setText(NAME);
+        Log.d("TAG", "onCreateplayactivityvideobannerurl: "+URL+" "+NAME);
+
         initBrigthnessSeekbar();
 
         getWindow().setFlags(1024, 1024);
@@ -193,6 +209,7 @@ public class PlayMovieActivity extends AppCompatActivity {
         linear_bottom = findViewById(R.id.linear_bottom);
         exo_progress = findViewById(R.id.exo_progress);
         btn_back = findViewById(R.id.btn_back);
+        Tv_subtitle =findViewById(R.id.Tv_subtitle);
     }
 
     public class ComponentListener implements TextRenderer.Output {
@@ -208,12 +225,11 @@ public class PlayMovieActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
         if (simpleExoPlayer == null) {
             simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultTrackSelector());
             binding.playerView.setPlayer(simpleExoPlayer);
             DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "exo-demo"));
-            ExtractorMediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(STREAM_URL));
+            ExtractorMediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(URL));
             simpleExoPlayer.prepare(mediaSource);
             simpleExoPlayer.setPlayWhenReady(true);
             simpleExoPlayer.addListener(new Player.EventListener() {
@@ -286,9 +302,9 @@ public class PlayMovieActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        simpleExoPlayer.seekTo(SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED,lastvideo));
+        simpleExoPlayer.seekTo(SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED, lastvideo));
         simpleExoPlayer.setPlayWhenReady(true);
-        Log.d("TAG", "onResume: " + SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED,lastvideo));
+        Log.d("TAG", "onResume: " + SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED, lastvideo));
 
     }
 

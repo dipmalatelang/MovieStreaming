@@ -8,11 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /*TODO Create ApiCall  for Slider image url to get APi Data*/
 public class ApiClient {
-    public static final String BASE_API = "http://www.netonplay.in/";
+    public static final String BASE_API = "http://35.224.23.178:8886/";
     public static Retrofit retrofit = null;
 
 
-    public static ApiInterface getApiData() {
+    public static Api getApiData() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -23,11 +23,11 @@ public class ApiClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-                .create(ApiInterface.class);
+                .create(Api.class);
 
     }
 
-         public static ApiInterface createApiCall(){
+         public static Api createApiCall(){
           return getApiData();
 }
 

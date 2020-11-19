@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.netflix.app.R;
 import com.netflix.app.home.model.AllCategory;
+import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.home.model.CategoryItem;
 import com.netflix.app.home.ui.HomeVideoPlay_Fragment;
 import java.util.List;

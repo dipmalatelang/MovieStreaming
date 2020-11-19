@@ -1,6 +1,7 @@
 package com.netflix.app.networks;
 
 
+import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.home.model.SlidePojo;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import retrofit2.http.POST;
 public interface ApiInterface {
     @FormUrlEncoded
     @POST("Api/Slider.php")
-    Call<List<SlidePojo>> getSlideData(@Field(value = "Slider", encoded = true) String Slider);
+    Call<List<AllVideo>> getSlideData(@Field(value = "Slider", encoded = true) String Slider);
 
 
 }
