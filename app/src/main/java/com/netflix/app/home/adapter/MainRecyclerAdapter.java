@@ -16,7 +16,10 @@ import com.netflix.app.R;
 import com.netflix.app.home.model.AllCategory;
 import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.home.model.CategoryItem;
+import com.netflix.app.home.model.VideoTypePojo;
 import com.netflix.app.home.ui.HomeVideoPlay_Fragment;
+
+import java.util.ArrayList;
 import java.util.List;
 import static androidx.constraintlayout.motion.widget.MotionScene.TAG;
 
@@ -24,14 +27,17 @@ import static androidx.constraintlayout.motion.widget.MotionScene.TAG;
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.MainViewHolder> {
 
     private Context context;
-    private List<AllCategory> allCategoryList;
-    MovieItemClickListener movieItemClickListener;
 
-    public MainRecyclerAdapter(Context context, List<AllCategory> allCategoryList, MovieItemClickListener movieItemClickListener) {
+    public MainRecyclerAdapter(Context context, List<VideoTypePojo> mlist, MovieItemClickListener movieItemClickListener) {
         this.context = context;
-        this.allCategoryList = allCategoryList;
+        this.mlist = mlist;
         this.movieItemClickListener = movieItemClickListener;
     }
+
+    private List<VideoTypePojo> mlist;
+    MovieItemClickListener movieItemClickListener;
+
+
 
 
     @NonNull
@@ -43,15 +49,27 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
 
-        holder.categoryTitle.setText(allCategoryList.get(position).getCategoryTitle());
-        setCatItemRecycler(holder.itemRecycler, allCategoryList.get(position).getCategoryItemList());
-
-    }
+//        holder.categoryTitle.setText(mlist.get(position).getVideotype());
+//        Log.d(TAG, "onBindViewHoldermainrecyclerview: "+mlist.get(position).getVideotype());
+//        setCatItemRecycler(holder.itemRecycler, mlist.get(position).getVlist());
+//        List<AllVideo> categoryItemList = new ArrayList<>();
+//        for(int i =0 ;i<categoryItemList.size();i++){
+//            if((categoryItemList.get(0).getVideoType().equalsIgnoreCase("MOVIE")))
+//            {
+//                holder.categoryTitle.setText(categoryItemList.get(position).getVideoType());
+//
+//            }
+//
+//            Log.d(TAG, "onBindViewHolder: "+mlist.get(position).getVideoType());
+//        }
+//        setCatItemRecycler(holder.itemRecycler, categoryItemList);
+//
+ }
 
 
     @Override
     public int getItemCount() {
-        return allCategoryList.size();
+        return mlist.size();
     }
 
     public static final class MainViewHolder extends RecyclerView.ViewHolder{
@@ -75,7 +93,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                 AppCompatActivity activity = (AppCompatActivity) itemView.getContext();
                 Fragment myFragment = new HomeVideoPlay_Fragment();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container, myFragment).addToBackStack(null).commit();
-                
+
             }
         });
 
@@ -84,11 +102,18 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         }
     }
 
-    private void setCatItemRecycler(RecyclerView recyclerView, List<CategoryItem> categoryItemList){
+
+
+    private void setCatItemRecycler(RecyclerView recyclerView, List<AllVideo> categoryItemList){
 
         CategoryItemRecyclerAdapter itemRecyclerAdapter = new CategoryItemRecyclerAdapter(context, categoryItemList,movieItemClickListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         recyclerView.setAdapter(itemRecyclerAdapter);
 
     }
+
+
 }
+
+
+

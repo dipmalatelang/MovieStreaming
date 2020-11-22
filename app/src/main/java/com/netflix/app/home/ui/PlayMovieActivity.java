@@ -45,11 +45,10 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.netflix.app.R;
 import com.netflix.app.databinding.ActivityPlayMovieBinding;
-import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.utlis.SharedPrefs;
 
 import java.util.List;
-import java.util.jar.Attributes;
+
 
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER;
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
@@ -66,7 +65,7 @@ public class PlayMovieActivity extends AppCompatActivity {
     private LinearLayout linearlayout_medium, linear_bottom;
     private DefaultTimeBar exo_progress;
     private ImageButton btn_unlock, btn_back;
-     TextView Tv_subtitle;
+    TextView Tv_subtitle;
     long mLastPosition;
     long lastvideo;
 
@@ -84,12 +83,12 @@ public class PlayMovieActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_play_movie);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         initView();
-        URL =SharedPrefs.getInstance().getString(VIDEO_BANNER, bannerVideo);
-        NAME =SharedPrefs.getInstance().getString(VIDEO_BANNER_Name,name);
+        URL = SharedPrefs.getInstance().getString(VIDEO_BANNER, bannerVideo);
+        NAME = SharedPrefs.getInstance().getString(VIDEO_BANNER_Name, name);
 
 
         Tv_subtitle.setText(NAME);
-        Log.d("TAG", "onCreateplayactivityvideobannerurl: "+URL+" "+NAME);
+        Log.d("TAG", "onCreateplayactivityvideobannerurl: " + URL + " " + NAME);
 
         initBrigthnessSeekbar();
 
@@ -146,7 +145,7 @@ public class PlayMovieActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlayMovieActivity.this, MovieDetailActivity.class);
+                Intent intent = new Intent(PlayMovieActivity.this, Home_Activity.class);
                 startActivity(intent);
             }
         });
@@ -209,7 +208,7 @@ public class PlayMovieActivity extends AppCompatActivity {
         linear_bottom = findViewById(R.id.linear_bottom);
         exo_progress = findViewById(R.id.exo_progress);
         btn_back = findViewById(R.id.btn_back);
-        Tv_subtitle =findViewById(R.id.Tv_subtitle);
+        Tv_subtitle = findViewById(R.id.Tv_subtitle);
     }
 
     public class ComponentListener implements TextRenderer.Output {

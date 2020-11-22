@@ -29,6 +29,7 @@ import com.netflix.app.favorites.Favorites_Fragment;
 import com.netflix.app.gallary.Gallary_Fragment;
 
 import com.netflix.app.home.adapter.MovieAdapter;
+import com.netflix.app.home.model.AllCategory;
 import com.netflix.app.utlis.SharedPrefs;
 import com.netflix.app.videos.AllVideos_Fragment;
 

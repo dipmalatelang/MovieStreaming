@@ -13,6 +13,7 @@ import com.netflix.app.R;
 import com.netflix.app.databinding.FragmentMoreBinding;
 import com.netflix.app.home.adapter.MoreAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
+import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.home.model.CategoryItem;
 import com.netflix.app.utlis.DataSources;
 
@@ -40,8 +41,9 @@ public class MoreFragment extends Fragment implements MovieItemClickListener {
         binding.recyclerviewMore.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
     }
 
+
     @Override
-    public void onMovieClick(CategoryItem movie, ImageView movieImageView) {
+    public void onMovieClick(AllVideo movie, ImageView movieImageView) {
 
     }
 }

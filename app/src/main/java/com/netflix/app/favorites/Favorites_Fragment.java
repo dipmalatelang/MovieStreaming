@@ -32,7 +32,7 @@ import com.netflix.app.home.model.FavItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Favorites_Fragment extends Fragment implements MovieItemClickListener {
+public class Favorites_Fragment extends Fragment  {
     private List<FavItem> favItemList = new ArrayList<>();
     private FavAdapter favAdapter;
     private FavDB favDB;
@@ -123,9 +123,6 @@ public class Favorites_Fragment extends Fragment implements MovieItemClickListen
     };
 
 
-    @Override
-    public void onMovieClick(CategoryItem movie, ImageView movieImageView) {
 
-    }
 }
 

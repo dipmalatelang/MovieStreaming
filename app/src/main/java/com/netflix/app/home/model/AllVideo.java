@@ -9,6 +9,8 @@ import java.util.List;
 
 
 public class AllVideo implements SerializedName, Parcelable {
+
+
     public static final Creator<AllVideo> CREATOR = new Creator<AllVideo>() {
         public AllVideo createFromParcel(Parcel in) {
             return new AllVideo(in);
@@ -82,6 +84,7 @@ public class AllVideo implements SerializedName, Parcelable {
         this.genresModels = in.createTypedArrayList(GenresModel.CREATOR);
         this.directorModels = in.createTypedArrayList(DirectorModel.CREATOR);
     }
+
 
 
 
@@ -223,4 +226,6 @@ public class AllVideo implements SerializedName, Parcelable {
     public void setDirectorModels(ArrayList<DirectorModel> directorModels2) {
         this.directorModels = directorModels2;
     }
+
+
 }

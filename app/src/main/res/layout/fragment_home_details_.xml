@@ -83,13 +83,14 @@
 
             <TextView
                 android:id="@+id/Tv_info"
-
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="Info:-"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/detail_movie_title"
                 app:layout_constraintTop_toBottomOf="@+id/detail_movie_title" />
 
             <TextView
@@ -97,9 +98,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="Description"
                 android:textColor="@color/color_text_grey"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/Tv_info"
                 app:layout_constraintTop_toBottomOf="@+id/Tv_info" />
 
@@ -130,6 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

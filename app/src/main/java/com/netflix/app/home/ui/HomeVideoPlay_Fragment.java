@@ -16,6 +16,7 @@ import com.netflix.app.R;
 import com.netflix.app.databinding.FragmentHomeVideoPlayBinding;
 import com.netflix.app.home.adapter.MovieAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
+import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.home.model.CategoryItem;
 import com.netflix.app.utlis.DataSources;
 
@@ -32,27 +33,31 @@ public class HomeVideoPlay_Fragment extends Fragment implements MovieItemClickLi
         view = binding.getRoot();
 
         /*ToDo iniAllVideos for all video recycler view */
-        iniAllVideos();
+//        iniAllVideos();
         return view;
     }
-    private void iniAllVideos(){
-        MovieAdapter movieAdapter = new MovieAdapter(getContext(), DataSources.getmovie(), HomeVideoPlay_Fragment.this);
-        binding.allVideosRecyclerview.setAdapter(movieAdapter);
-        binding.allVideosRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
-    }
+//    private void iniAllVideos(){
+//        MovieAdapter movieAdapter = new MovieAdapter(getContext(), , HomeVideoPlay_Fragment.this);
+//        binding.allVideosRecyclerview.setAdapter(movieAdapter);
+//        binding.allVideosRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
+//    }
+
+
 
     @Override
-    public void onMovieClick(CategoryItem movie, ImageView movieImageView) {
-        Intent intent = new Intent(getContext(),MovieDetailActivity.class);
-        intent.putExtra("title",movie.getItemId());
-        intent.putExtra("imgURL",movie.getImageUrl());
-//        intent.putExtra("imgCover",movie.getCoverPhoto());
-        //  animation
+    public void onMovieClick(AllVideo movie, ImageView movieImageView) {
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        // send movie information to deatilActivity
+        intent.putExtra("title", movie.getTitle());
+        intent.putExtra("imgURL", movie.getThumbs());
+        intent.putExtra("imgDescription",movie.getDescription());
+        intent.putExtra("imginfo",movie.getCastModels());
+        intent.putExtra("videourl",movie.getVdoUrl());
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(),
                 movieImageView,"sharedName");
 
         startActivity(intent,options.toBundle());
-        Toast.makeText(getContext(),"item clicked : " + movie.getItemId(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),"item clicked : " + movie.getChannelId(),Toast.LENGTH_LONG).show();
 
     }
 }

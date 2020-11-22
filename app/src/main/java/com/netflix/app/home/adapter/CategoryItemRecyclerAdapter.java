@@ -1,6 +1,7 @@
 package com.netflix.app.home.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,10 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.netflix.app.R;
-import com.netflix.app.home.model.CategoryItem;
+import com.netflix.app.home.model.AllVideo;
+import com.netflix.app.home.model.VideoTypePojo;
 
 import java.util.List;
 
@@ -18,15 +21,19 @@ import java.util.List;
 public class CategoryItemRecyclerAdapter extends RecyclerView.Adapter<CategoryItemRecyclerAdapter.CategoryItemViewHolder> {
 
      Context context;
-     List<CategoryItem> categoryItemList;
+     List<AllVideo> categoryItemList;
+    MovieItemClickListener movieItemClickListener;
 
-    public CategoryItemRecyclerAdapter(Context context, List<CategoryItem> categoryItemList, MovieItemClickListener movieItemClickListener) {
+
+    public CategoryItemRecyclerAdapter(Context context, List<AllVideo> categoryItemList, MovieItemClickListener movieItemClickListener) {
         this.context = context;
         this.categoryItemList = categoryItemList;
         this.movieItemClickListener = movieItemClickListener;
     }
 
-    MovieItemClickListener movieItemClickListener;
+
+
+
 
     @NonNull
     @Override
@@ -38,12 +45,16 @@ public class CategoryItemRecyclerAdapter extends RecyclerView.Adapter<CategoryIt
     @Override
     public void onBindViewHolder(@NonNull CategoryItemViewHolder holder, int position) {
 
-            holder.itemImage.setImageResource(categoryItemList.get(position).getImageUrl());
+
+        Glide.with(context).load(categoryItemList.get(position).getThumbs()).into(holder.itemImage);
+        Log.d("TAG", "NNNNNNNNNN: "+categoryItemList.get(position).getThumbs());
+
     }
 
     @Override
     public int getItemCount() {
-        return categoryItemList.size();
+//        return categoryItemList.size();
+        return 0;
     }
 
     public  final class CategoryItemViewHolder extends RecyclerView.ViewHolder{

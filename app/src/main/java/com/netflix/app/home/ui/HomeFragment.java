@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.netflix.app.R;
 import com.netflix.app.databinding.HFragmentHomeBinding;
 import com.netflix.app.home.adapter.MainRecyclerAdapter;
@@ -28,14 +31,24 @@ import com.netflix.app.home.model.SlidePojo;
 import com.netflix.app.home.adapter.SliderPagerAdapter;
 import com.netflix.app.home.model.AllCategory;
 import com.netflix.app.home.model.CategoryItem;
+import com.netflix.app.home.model.VideoTypePojo;
+import com.netflix.app.home.viewmodels.AllVideosFragmentViewModel;
 import com.netflix.app.home.viewmodels.HomeFragmentViewModel;
 import com.netflix.app.networks.Api;
 import com.netflix.app.networks.Constant;
+import com.netflix.app.utlis.VideoHeader;
+import com.netflix.app.utlis.VideoHeaderItem;
+import com.netflix.app.utlis.VideoTypeItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,6 +66,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
     //Initialize HomeFragmentViewModel for Viewmodel class
     private HomeFragmentViewModel mhomeFragmentViewModel;
+    private AllVideosFragmentViewModel mallVideosFragmentViewModel;
 
     //Initialize variable
     private HFragmentHomeBinding binding;
@@ -69,28 +83,59 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
         // Assign variable mhomeFragmentViewModel for HomeFragmentViewModel
         mhomeFragmentViewModel = ViewModelProviders.of(this).get(HomeFragmentViewModel.class);
+        mallVideosFragmentViewModel = ViewModelProviders.of(this).get(AllVideosFragmentViewModel.class);
         // init Retrive data from Repository SlideDataRepository
         mhomeFragmentViewModel.init();
+        mallVideosFragmentViewModel.init();
         // observe the changes  getSlideData
         mhomeFragmentViewModel.getSlideData().observe(this, new Observer<List<AllVideo>>() {
             @Override
             public void onChanged(List<AllVideo> allVideos) {
                 Log.d(TAG, "onChanged: " + allVideos.size());
-                if(allVideos != null)
-                {
+                if (allVideos != null) {
                     SliderPagerAdapter sliderPagerAdapter = new SliderPagerAdapter(getContext(), mhomeFragmentViewModel.getSlideData().getValue());
 
                     binding.sliderpager.setAdapter(sliderPagerAdapter);
                     binding.progressBar.setVisibility(View.GONE);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(getContext(), "Data not found", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
+        mallVideosFragmentViewModel.getAllData().observe(this, new Observer<List<AllVideo>>() {
+            @Override
+            public void onChanged(List<AllVideo> allCategoryList) {
+
+                ArrayList<AllVideo> webseries = new ArrayList<>();
+                for (AllVideo al : allCategoryList) {
+                    if (al.getVideoType().equalsIgnoreCase("WEBSERIES")) {
+                        webseries.add(al);
+
+//                    } else if (al.getVideoType().equalsIgnoreCase("SORTMOVIE")) {
+//                        sortvideo.add(al);
+//                    } else if (al.getVideoType().equalsIgnoreCase("MOVIE")) {
+//                        movie.add(al);
+//                    } else if (al.getVideoType().equalsIgnoreCase("SINGLEVIDEO")) {
+//                        music.add(al);
+                    } else {
+//                        webseries.add(null);
+                        Log.d(TAG, "onChanged: data not found");
+
+                    }
+
+                }
+
+
+                List<VideoTypeItem> videoTypeItems = new ArrayList<>();
+                videoTypeItems.add(new VideoHeader("WEBSERIES"));
+                Log.d(TAG, "videoTypeItems: " + videoTypeItems);
+//              videoTypeItems.add(new VideoHeaderItem(webseries, getContext()));
+
+            }
+
+        });
         iniViews(hview);
         iniSlider();
         return hview;
@@ -100,71 +145,16 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
     private void iniViews(View view) {
 
-        List<CategoryItem> categoryItemList = new ArrayList<>();
-        categoryItemList.add(new CategoryItem(1, R.drawable.hollywood5));
-        categoryItemList.add(new CategoryItem(1, R.drawable.hollywood4));
-        categoryItemList.add(new CategoryItem(1, R.drawable.hollywood5));
-        categoryItemList.add(new CategoryItem(1, R.drawable.hollywood4));
-        categoryItemList.add(new CategoryItem(1, R.drawable.hollywood5));
-        categoryItemList.add(new CategoryItem(1, R.drawable.hollywood4));
-
-        // added in second category
-        List<CategoryItem> categoryItemList2 = new ArrayList<>();
-        categoryItemList2.add(new CategoryItem(1, R.drawable.bestofoscar1));
-        categoryItemList2.add(new CategoryItem(1, R.drawable.bestofoscar2));
-        categoryItemList2.add(new CategoryItem(1, R.drawable.bestofoscar1));
-        categoryItemList2.add(new CategoryItem(1, R.drawable.bestofoscar2));
-        categoryItemList2.add(new CategoryItem(1, R.drawable.bestofoscar1));
-        categoryItemList2.add(new CategoryItem(1, R.drawable.bestofoscar2));
-
-        // added in 3rd category
-        List<CategoryItem> categoryItemList3 = new ArrayList<>();
-        categoryItemList3.add(new CategoryItem(1, R.drawable.moviedubbedinhindi1));
-        categoryItemList3.add(new CategoryItem(1, R.drawable.moviedubbedinhindi2));
-        categoryItemList3.add(new CategoryItem(1, R.drawable.moviedubbedinhindi1));
-        categoryItemList3.add(new CategoryItem(1, R.drawable.moviedubbedinhindi2));
-        categoryItemList3.add(new CategoryItem(1, R.drawable.moviedubbedinhindi1));
-        categoryItemList3.add(new CategoryItem(1, R.drawable.moviedubbedinhindi2));
-        List<AllCategory> allCategoryList = new ArrayList<>();
-      allCategoryList.add(new AllCategory("Hollywood", (ArrayList<CategoryItem>) categoryItemList));
-      allCategoryList.add(new AllCategory("Best of Oscars", (ArrayList<CategoryItem>) categoryItemList2));
-        allCategoryList.add(new AllCategory("Movies Dubbed in Hindi", (ArrayList<CategoryItem>) categoryItemList3));
-
-        setMainCategoryRecycler(allCategoryList);
     }
 
     /* ToDo nested recycler view setMainCategoryRecycler */
-    private void setMainCategoryRecycler(List<AllCategory> allCategoryList) {
+    private void setMainCategoryRecycler(List<VideoTypePojo> alv) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.mainRecycler.setLayoutManager(layoutManager);
-        mainRecyclerAdapter = new MainRecyclerAdapter(getContext(), allCategoryList, HomeFragment.this);
+        mainRecyclerAdapter = new MainRecyclerAdapter(getContext(), alv, HomeFragment.this);
+        Log.d(TAG, "setMainCategoryRecycler: " + alv.get(0).getVideotype());
         binding.mainRecycler.setAdapter(mainRecyclerAdapter);
-//        parseJson();
     }
-
-
-    public void onMovieClick(CategoryItem movie, ImageView movieImageView) {
-
-
-        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
-        // send movie information to deatilActivity
-        intent.putExtra("title", movie.getItemId());
-        intent.putExtra("imgURL", movie.getImageUrl());
-//        intent.putExtra("imgCover",movie.getCoverPhoto());
-        // lets crezte the animation
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(),
-                movieImageView, "sharedName");
-
-        startActivity(intent, options.toBundle());
-        // i l make a simple test to see if the click works
-
-        Toast.makeText(getContext(), "item clicked : " + movie.getItemId(), Toast.LENGTH_LONG).show();
-        // it works great
-
-
-    }
-
-
 
 
     /* ToDo iniSlider setTimer for slide */
@@ -174,6 +164,32 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
         binding.indicator.setupWithViewPager(binding.sliderpager, true);
+    }
+
+    @Override
+    public void onMovieClick(AllVideo video, ImageView movieImageView) {
+
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        // send movie information to deatilActivity
+        intent.putExtra("title", video.getTitle());
+        intent.putExtra("imgURL", video.getThumbs());
+        intent.putExtra("imgDescription", video.getDescription());
+        intent.putExtra("imginfo", video.getCastModels());
+        intent.putExtra("videourl", video.getVdoUrl());
+
+
+        Log.d(TAG, "onMovieClickclick: " + video.getTitle());
+
+        // lets crezte the animation
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(),
+                movieImageView, "sharedName");
+
+        startActivity(intent, options.toBundle());
+        // i l make a simple test to see if the click works
+        Toast.makeText(getContext(), "item clicked : " + video.getChannelId(), Toast.LENGTH_LONG).show();
+        // it works great
+
+
     }
 
     class SliderTimer extends TimerTask {
@@ -197,71 +213,5 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         }
     }
 
-
-
-//    private void parseJson() {
-//        ((Api) new Retrofit.Builder().
-//                baseUrl(Constant.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build().
-//                create(Api.class)).getAllVideos().enqueue(new Callback<List<AllVideo>>() {
-//            public void onResponse(Call<List<AllVideo>> call, Response<List<AllVideo>> response) {
-////                progressBar.setVisibility(8);
-////                HomeFragment.this.nestedScrollView.setVisibility(0);
-//                if (response.isSuccessful() && response.body() != null) {
-//                    ArrayList<AllVideo> music = new ArrayList<>();
-//                    ArrayList<AllVideo> alvdo = new ArrayList<>(response.body());
-//                    ArrayList<AllVideo> allV = new ArrayList<>();
-//                    for (int i = alvdo.size() - 1; i >= 0; i--) {
-//                        allV.add(alvdo.get(i));
-//                    }
-//                    System.out.println("the size" + allV.size());
-//                    ArrayList<AllVideo> webseries = new ArrayList<>();
-//                    ArrayList<AllVideo> sortvideo = new ArrayList<>();
-//                    ArrayList<AllVideo> movie = new ArrayList<>();
-//                    Iterator<AllVideo> it = allV.iterator();
-//                    while (it.hasNext()) {
-//                        AllVideo al = it.next();
-//                        if (al.getVideoType().equalsIgnoreCase("WEBSERIES")) {
-//                            webseries.add(al);
-//                        } else if (al.getVideoType().equalsIgnoreCase("SORTMOVIE")) {
-//                            sortvideo.add(al);
-//                        } else if (al.getVideoType().equalsIgnoreCase("MOVIE")) {
-//                            movie.add(al);
-//                        } else if (al.getVideoType().equalsIgnoreCase("SINGLEVIDEO")) {
-//                            music.add(al);
-//                        }
-//                    }
-//                    List<AllVideo> allCategoryList = new ArrayList<>();
-//
-//                    allCategoryList.add(new AllVideo("WEBSERIES", webseries));
-//
-//                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//                    binding.mainRecycler.setLayoutManager(layoutManager);
-//                    mainRecyclerAdapter = new MainRecyclerAdapter(getContext(), allCategoryList, HomeFragment.this);
-//                    binding.mainRecycler.setAdapter(mainRecyclerAdapter);
-//
-////                    shortVideoRecyclerView.setAdapter(new ComanAdapter(sortvideo, HomeFragment.this.getContext()));
-////                    HomeFragment homeFragment = HomeFragment.this;
-////                    WeSeriesAdapter unused = homeFragment.weSeriesAdapter = new WeSeriesAdapter(webseries, homeFragment.getContext());
-////                    webSeriesRecyclerView.setAdapter(HomeFragment.this.weSeriesAdapter);
-////                    movieRecyclerView.setAdapter(new MoviesAdapter(movie, HomeFragment.this.getContext()));
-////                    musicRecyclerView.setAdapter(new ComanAdapter(music, HomeFragment.this.getContext()));
-////                    System.out.println("music" + music.size());
-////                    mRecyclerView.setAdapter(new ComanAdapter(allV, HomeFragment.this.getContext()));
-////                    previewRecycler.setAdapter(new PerviewAdapter(allV, HomeFragment.this.getContext()));
-////                    audioRecycler.setAdapter(new AudioAdapter(music, HomeFragment.this.getContext()));
-//                    PrintStream printStream = System.out;
-//                    StringBuilder sb = new StringBuilder();
-//                    ArrayList<AllVideo> arrayList = music;
-//                    sb.append("alllView");
-////                    sb.append(allVideos.size());
-//                    printStream.println(sb.toString());
-//                }
-//            }
-//
-//            public void onFailure(Call<List<AllVideo>> call, Throwable t) {
-//                Toast.makeText(HomeFragment.this.getContext(), "Oops! Something went wrong!", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
 
 }
