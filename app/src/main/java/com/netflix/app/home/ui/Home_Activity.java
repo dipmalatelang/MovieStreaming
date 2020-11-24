@@ -66,6 +66,7 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
 
     void initoolbar(){
 
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerlayout,binding.toolbar,R.string.open, R.string.close);
         binding.drawerlayout.addDrawerListener(toggle);
         toggle.syncState();

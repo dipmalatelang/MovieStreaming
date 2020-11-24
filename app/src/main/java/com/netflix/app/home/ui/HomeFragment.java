@@ -2,11 +2,18 @@ package com.netflix.app.home.ui;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,9 +22,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -26,6 +37,7 @@ import com.netflix.app.R;
 import com.netflix.app.databinding.HFragmentHomeBinding;
 import com.netflix.app.home.adapter.MainRecyclerAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
+import com.netflix.app.home.adapter.VideoArrayAdapter;
 import com.netflix.app.home.model.AllVideo;
 import com.netflix.app.home.model.SlidePojo;
 import com.netflix.app.home.adapter.SliderPagerAdapter;
@@ -61,7 +73,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends Fragment implements MovieItemClickListener {
+public class HomeFragment extends ListFragment implements MovieItemClickListener {
     private MainRecyclerAdapter mainRecyclerAdapter;
 
     //Initialize HomeFragmentViewModel for Viewmodel class
@@ -77,8 +89,12 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Assign variable
+        setHasOptionsMenu(true);
         binding = DataBindingUtil.inflate(inflater, R.layout.h_fragment_home_, container, false);
         hview = binding.getRoot();
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.topToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
         // Assign variable mhomeFragmentViewModel for HomeFragmentViewModel
@@ -91,7 +107,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         mhomeFragmentViewModel.getSlideData().observe(this, new Observer<List<AllVideo>>() {
             @Override
             public void onChanged(List<AllVideo> allVideos) {
-                Log.d(TAG, "onChanged: " + allVideos.size());
+//                Log.d(TAG, "onChanged: " + allVideos.size());
                 if (allVideos != null) {
                     SliderPagerAdapter sliderPagerAdapter = new SliderPagerAdapter(getContext(), mhomeFragmentViewModel.getSlideData().getValue());
 
@@ -131,12 +147,18 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
                 List<VideoTypeItem> videoTypeItems = new ArrayList<>();
                 videoTypeItems.add(new VideoHeader("WEBSERIES"));
                 Log.d(TAG, "videoTypeItems: " + videoTypeItems);
-//              videoTypeItems.add(new VideoHeaderItem(webseries, getContext()));
+                videoTypeItems.add(new VideoHeaderItem(webseries, getContext()));
+                Log.d(TAG, "videoTypeItemswebseries: " + webseries.size());
+//                VideoArrayAdapter adapter = new VideoArrayAdapter(getContext(),videoTypeItems);
+//                setListAdapter(adapter);
+
 
             }
 
         });
         iniViews(hview);
+
+
         iniSlider();
         return hview;
 
@@ -145,7 +167,55 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
     private void iniViews(View view) {
 
+
     }
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.top_bar_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+
+        SearchView searchView = new SearchView(((AppCompatActivity) getContext()).getSupportActionBar().getThemedContext());
+
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        item.setActionView(searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchView.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                          }
+                                      }
+        );
+
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.t_upcoming:
+//                startActivity(new Intent(getContext(), InitAuthSDKActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     /* ToDo nested recycler view setMainCategoryRecycler */
     private void setMainCategoryRecycler(List<VideoTypePojo> alv) {

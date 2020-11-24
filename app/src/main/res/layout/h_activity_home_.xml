@@ -27,17 +27,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 app:titleTextColor="@android:color/white">
 
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/SearchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:gravity="right"
-                    android:layoutDirection="rtl"
-                    android:layout_alignParentEnd="true"
-                    android:theme="@android:style/Theme.Holo"
-                    app:iconifiedByDefault="true"
-                    android:layout_marginTop="10dp"
-                    app:queryHint="Search here" />
+
             </com.google.android.material.appbar.MaterialToolbar>
 
             <FrameLayout
@@ -46,6 +36,7 @@
                 android:layout_height="match_parent">
 
             </FrameLayout>
+
 
             <com.ismaeldivita.chipnavigation.ChipNavigationBar
                 android:id="@+id/chip_bottom_navigationview"

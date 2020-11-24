@@ -1,6 +1,7 @@
 package com.netflix.app.home.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,9 @@ public class VideoArrayAdapter extends ArrayAdapter<VideoTypeItem> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
          return getItem(position).getView(inflater, convertView);
+
     }
 
     @Override
@@ -37,6 +40,7 @@ public class VideoArrayAdapter extends ArrayAdapter<VideoTypeItem> {
 
     @Override
     public int getViewTypeCount() {
+        Log.d("TAG", "count: "+ItemType.values().length);
         return ItemType.values().length;
     }
     public enum ItemType{

@@ -9,8 +9,8 @@
     app:cnb_backgroundColor="@color/cardview_dark_background"/>
     <item
         android:id="@+id/b_category"
-        android:title="Category"
-        android:icon="@drawable/b_category"
+        android:title="Trending"
+        android:icon="@drawable/trending"
         app:cnb_backgroundColor="@color/cardview_dark_background"/>
     <item
         android:id="@+id/b_allVideo"

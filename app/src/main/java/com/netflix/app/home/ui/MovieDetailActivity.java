@@ -26,6 +26,10 @@ import com.netflix.app.home.model.CategoryItem;
 import com.netflix.app.utlis.FavDB;
 import com.netflix.app.utlis.SharedPrefs;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER;
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
 
@@ -118,7 +122,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
     }
 
-    void iniViews() {
+    void iniViews()  {
         detail_movie_title = findViewById(R.id.detail_movie_title);
         Tv_Desc = findViewById(R.id.Tv_Desc);
         Tv_info = findViewById(R.id.Tv_info);
@@ -127,13 +131,15 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         movieTitle = getIntent().getExtras().getString("title");
         imagedesc = getIntent().getExtras().getString("imgDescription");
         info = getIntent().getExtras().getString("imginfo");
+
+
         videoUrl = getIntent().getExtras().getString("videourl");
         Genres =getIntent().getExtras().getString("Genres");
         Director = getIntent().getExtras().getString("director");
         img =getIntent().getExtras().getString("imgURL");
 
         Glide.with(this).load(img).into(detail_movie_img);
-        Log.d("TAG", "OOOOOOO: "+img);
+        Log.d("TAG", "OOOOOOO: "+info);
 
 
 
@@ -141,7 +147,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         detail_movie_title.setText(movieTitle);
 //        getSupportActionBar().setTitle(movieTitle);
         Tv_info.setText("Description :" + imagedesc + "\n" +"Info :" + info);
-        Tv_Desc.setText("GENERS :" + Genres + "\n" +"Director :" +Director);
+//        Tv_Desc.setText("GENERS :" + Genres + "\n" +"Director :" +Director);
+
+
+
 
         // setup animation
         binding.detailMovieImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));

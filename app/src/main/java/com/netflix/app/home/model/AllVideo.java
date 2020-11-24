@@ -2,13 +2,14 @@ package com.netflix.app.home.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
+
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class AllVideo implements SerializedName, Parcelable {
+public class AllVideo implements SerializedName, Parcelable , Comparable<AllVideo> {
 
 
     public static final Creator<AllVideo> CREATOR = new Creator<AllVideo>() {
@@ -34,8 +35,8 @@ public class AllVideo implements SerializedName, Parcelable {
     private ArrayList<GenresModel> genresModels;
     @SerializedName("id")
 
-    /* renamed from: id */
-    private String f4396id;
+
+    private String id;
     @SerializedName("likes")
     private String likes;
     @SerializedName("thumbs")
@@ -50,23 +51,23 @@ public class AllVideo implements SerializedName, Parcelable {
     private String views;
 
     public AllVideo(String id, String title2, String description2, String likes2, Integer channelId2, String views2, String videoType2, String thumbs2, String vdoUrl2, ArrayList<EpisodeModel> episodeModels2, ArrayList<CastModel> castModels2, ArrayList<GenresModel> genresModels2, ArrayList<DirectorModel> directorModels2) {
-        this.f4396id = id;
-        this.title = title2;
-        this.description = description2;
-        this.likes = likes2;
-        this.channelId = channelId2;
-        this.views = views2;
-        this.videoType = videoType2;
-        this.thumbs = thumbs2;
-        this.vdoUrl = vdoUrl2;
-        this.episodeModels = episodeModels2;
-        this.castModels = castModels2;
-        this.genresModels = genresModels2;
-        this.directorModels = directorModels2;
+        id = id;
+        title = title2;
+        description = description2;
+        likes = likes2;
+        channelId = channelId2;
+        views = views2;
+        videoType = videoType2;
+        thumbs = thumbs2;
+        vdoUrl = vdoUrl2;
+        episodeModels = episodeModels2;
+       castModels = castModels2;
+       genresModels = genresModels2;
+       directorModels = directorModels2;
     }
 
     protected AllVideo(Parcel in) {
-        this.f4396id = in.readString();
+        id = in.readString();
         this.title = in.readString();
         this.description = in.readString();
         this.likes = in.readString();
@@ -86,10 +87,8 @@ public class AllVideo implements SerializedName, Parcelable {
     }
 
 
-
-
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.f4396id);
+        dest.writeString(id);
         dest.writeString(this.title);
         dest.writeString(this.description);
         dest.writeString(this.likes);
@@ -126,9 +125,8 @@ public class AllVideo implements SerializedName, Parcelable {
     }
 
 
-
     public void setId(String id) {
-        this.f4396id = id;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -228,4 +226,12 @@ public class AllVideo implements SerializedName, Parcelable {
     }
 
 
+    @Override
+    public int compareTo(AllVideo o) {
+        return this.getViews().compareTo(o.getViews());
+    }
+
+
+
 }
+

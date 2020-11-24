@@ -67,24 +67,7 @@ public class AllVideos_Fragment extends Fragment implements MovieItemClickListen
 
             }
         });
-//        mhomeFragmentViewModel.getSlideData().observe(this, new Observer<List<AllVideo>>() {
-//            @Override
-//            public void onChanged(List<AllVideo> allVideos) {
-//                Log.d(TAG, "onChanged: " + allVideos.size());
-//                if(allVideos != null)
-//                {
-//                    SliderPagerAdapter sliderPagerAdapter = new SliderPagerAdapter(getContext(), mhomeFragmentViewModel.getSlideData().getValue());
-//
-//                    binding.sliderpager.setAdapter(sliderPagerAdapter);
-//                    binding.progressBar.setVisibility(View.GONE);
-//                }
-//                else
-//                {
-//                    Toast.makeText(getContext(), "Data not found", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
+
 
 
         /* ToDo iniAllVideos to set all video in recycler view */

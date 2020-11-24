@@ -1,6 +1,7 @@
 package com.netflix.app.utlis;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,15 +13,18 @@ import com.netflix.app.R;
 import com.netflix.app.home.adapter.VideoArrayAdapter.ItemType;
 import com.netflix.app.home.model.AllVideo;
 
+import java.util.ArrayList;
+
 public class VideoHeaderItem implements  VideoTypeItem{
 
 
-    AllVideo allVideo;
+    ArrayList<AllVideo> allVideo;
     Context context;
 
-    public VideoHeaderItem(AllVideo allVideo, Context context) {
+    public VideoHeaderItem(ArrayList<AllVideo> allVideo, Context context) {
         this.allVideo = allVideo;
         this.context = context;
+        Log.d("TAG", "getViewVVVVVVVVVVV: "+allVideo.get(0).getThumbs());
     }
 
     @Override
@@ -38,7 +42,11 @@ public class VideoHeaderItem implements  VideoTypeItem{
 
         }
         ImageView item_image = v.findViewById(R.id.item_image);
-        Glide.with(context).load(allVideo.getThumbs()).into(item_image);
+        for (int i = 0; i <allVideo.size() ; i++) {
+            Glide.with(context).load(allVideo.get(i).getThumbs()).into(item_image);
+            Log.d("TAG", "getViewVVVVVVVVVVV: "+allVideo.get(i).getThumbs());
+
+        }
 
 
 
