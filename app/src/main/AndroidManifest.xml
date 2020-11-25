@@ -9,32 +9,33 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".RtfApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemestyle"
-        android:name=".RtfApplication"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".home.ui.PlayMovieActivity"
-            android:screenOrientation="fullSensor"
+        <activity android:name=".upcoming.Upcoming_Activity"
+            android:theme="@style/AppThemestyle"
             android:exported="true">
 
-
+        </activity>
+        <activity
+            android:name=".home.ui.PlayMovieActivity"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
 
         </activity>
         <activity
             android:name=".home.ui.Home_Activity"
             android:theme="@style/AppThemestyle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".main.MainActivity" />
         <activity android:name=".home.ui.MovieDetailActivity" />
@@ -45,6 +46,7 @@
         <activity android:name=".drawer.RedeemGiftVoucher_Activity" />
         <activity android:name=".drawer.ReferEarn_Activity" />
         <activity android:name=".drawer.Profile_Activity" />
+
 
     </application>
 

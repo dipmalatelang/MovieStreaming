@@ -1,6 +1,6 @@
 package com.netflix.app.category.adapter;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -15,19 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.netflix.app.R;
-import com.netflix.app.category.Category_Fragment;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.model.AllVideo;
-import com.netflix.app.home.model.MovieData;
-import com.netflix.app.home.ui.MovieDetailActivity;
 import com.netflix.app.home.ui.PlayMovieActivity;
 import com.netflix.app.utlis.SharedPrefs;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER;
@@ -60,7 +54,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
         myViewHolder.TvTitle.setText(mlist.get(i).getTitle());
+        myViewHolder.item_movie_desc.setText(mlist.get(i).getDescription());
         Glide.with(mcontext).load(mlist.get(i).getThumbs()).into(myViewHolder.ImgMovie);
+        Glide.with(mcontext).load(mlist.get(i).getThumbs()).into(myViewHolder.channelLogo);
 
 
 
@@ -74,8 +70,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        private TextView TvTitle;
-        private ImageView ImgMovie;
+        private TextView TvTitle, item_movie_desc;
+        private ImageView ImgMovie ;
+        private CircularImageView channelLogo;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -83,6 +80,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             super(itemView);
             TvTitle = itemView.findViewById(R.id.item_movie_title);
             ImgMovie = itemView.findViewById(R.id.item_movie_img);
+            item_movie_desc = itemView.findViewById(R.id.item_movie_desc);
+            channelLogo = itemView.findViewById(R.id.channelLogo);
+            item_movie_desc = itemView.findViewById(R.id.item_movie_desc);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

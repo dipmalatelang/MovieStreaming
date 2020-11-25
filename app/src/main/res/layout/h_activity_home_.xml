@@ -27,7 +27,6 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 app:titleTextColor="@android:color/white">
 
-
             </com.google.android.material.appbar.MaterialToolbar>
 
             <FrameLayout

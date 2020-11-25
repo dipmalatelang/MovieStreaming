@@ -10,8 +10,8 @@
 
     <item
         android:id="@+id/t_upcoming"
-        android:icon="@drawable/b_category"
-        android:title="Videocall"
+        android:icon="@drawable/ic_tv"
+        android:title="Upcoming"
         android:orderInCategory="2"
         app:showAsAction="always"
         />

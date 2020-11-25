@@ -4,31 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         tools:context=".home.ui.PlayMovieActivity">
-        <com.google.android.exoplayer2.ui.SubtitleView
-            android:id="@+id/subtitles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/player_view"
-            android:background="@color/color_text_black"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/background_color"
             app:controller_layout_id="@layout/custome_controller"
             app:fastforward_increment="10000"
             app:hide_on_touch="true"
             app:player_layout_id="@layout/exo_simple_player_view"
             app:resize_mode="fit"
-            app:surface_type="texture_view"
             app:rewind_increment="10000"
             app:show_timeout="500"
+            app:surface_type="texture_view"
             app:use_controller="true" />
 
         <ProgressBar

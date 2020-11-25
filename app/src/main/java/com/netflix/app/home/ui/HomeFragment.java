@@ -28,47 +28,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.netflix.app.R;
+
 import com.netflix.app.databinding.HFragmentHomeBinding;
 import com.netflix.app.home.adapter.MainRecyclerAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
-import com.netflix.app.home.adapter.VideoArrayAdapter;
 import com.netflix.app.home.model.AllVideo;
-import com.netflix.app.home.model.SlidePojo;
 import com.netflix.app.home.adapter.SliderPagerAdapter;
-import com.netflix.app.home.model.AllCategory;
-import com.netflix.app.home.model.CategoryItem;
 import com.netflix.app.home.model.VideoTypePojo;
 import com.netflix.app.home.viewmodels.AllVideosFragmentViewModel;
 import com.netflix.app.home.viewmodels.HomeFragmentViewModel;
-import com.netflix.app.networks.Api;
-import com.netflix.app.networks.Constant;
-import com.netflix.app.utlis.VideoHeader;
-import com.netflix.app.utlis.VideoHeaderItem;
-import com.netflix.app.utlis.VideoTypeItem;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import com.netflix.app.upcoming.Upcoming_Activity;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.ContentValues.TAG;
 
@@ -91,6 +67,7 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
         // Assign variable
         setHasOptionsMenu(true);
         binding = DataBindingUtil.inflate(inflater, R.layout.h_fragment_home_, container, false);
+
         hview = binding.getRoot();
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.topToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -124,53 +101,12 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
             @Override
             public void onChanged(List<AllVideo> allCategoryList) {
 
-                ArrayList<AllVideo> webseries = new ArrayList<>();
-                for (AllVideo al : allCategoryList) {
-                    if (al.getVideoType().equalsIgnoreCase("WEBSERIES")) {
-                        webseries.add(al);
-
-//                    } else if (al.getVideoType().equalsIgnoreCase("SORTMOVIE")) {
-//                        sortvideo.add(al);
-//                    } else if (al.getVideoType().equalsIgnoreCase("MOVIE")) {
-//                        movie.add(al);
-//                    } else if (al.getVideoType().equalsIgnoreCase("SINGLEVIDEO")) {
-//                        music.add(al);
-                    } else {
-//                        webseries.add(null);
-                        Log.d(TAG, "onChanged: data not found");
-
-                    }
-
-                }
-
-
-                List<VideoTypeItem> videoTypeItems = new ArrayList<>();
-                videoTypeItems.add(new VideoHeader("WEBSERIES"));
-                Log.d(TAG, "videoTypeItems: " + videoTypeItems);
-                videoTypeItems.add(new VideoHeaderItem(webseries, getContext()));
-                Log.d(TAG, "videoTypeItemswebseries: " + webseries.size());
-//                VideoArrayAdapter adapter = new VideoArrayAdapter(getContext(),videoTypeItems);
-//                setListAdapter(adapter);
-
-
             }
 
         });
-        iniViews(hview);
-
-
         iniSlider();
         return hview;
-
-
     }
-
-    private void iniViews(View view) {
-
-
-    }
-
-
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -204,17 +140,19 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.t_upcoming:
-//                startActivity(new Intent(getContext(), InitAuthSDKActivity.class));
+                startActivity(new Intent(getContext(), Upcoming_Activity.class));
+                Toast.makeText(getContext(), "click upcoming", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
 
     /* ToDo nested recycler view setMainCategoryRecycler */
@@ -270,10 +208,15 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (binding.sliderpager.getCurrentItem() < mhomeFragmentViewModel.getSlideData().getValue().size() - 1) {
-                            binding.sliderpager.setCurrentItem(binding.sliderpager.getCurrentItem() + 1);
-                        } else
-                            binding.sliderpager.setCurrentItem(0);
+                        try {
+                            if (binding.sliderpager.getCurrentItem() < mhomeFragmentViewModel.getSlideData().getValue().size() - 1) {
+                                binding.sliderpager.setCurrentItem(binding.sliderpager.getCurrentItem() + 1);
+                            } else {
+                                binding.sliderpager.setCurrentItem(0);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -281,6 +224,10 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
 
 
         }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
 

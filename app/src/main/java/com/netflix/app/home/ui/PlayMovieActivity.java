@@ -153,7 +153,7 @@ public class PlayMovieActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 binding.playerView.getSubtitleView().setVisibility(View.VISIBLE);
-                binding.subtitles.setVisibility(View.VISIBLE);
+//                binding.subtitles.setVisibility(View.VISIBLE);
                 Toast.makeText(PlayMovieActivity.this, "Click Subtitle view", Toast.LENGTH_SHORT).show();
 
             }
@@ -211,14 +211,14 @@ public class PlayMovieActivity extends AppCompatActivity {
         Tv_subtitle = findViewById(R.id.Tv_subtitle);
     }
 
-    public class ComponentListener implements TextRenderer.Output {
-        @Override
-        public void onCues(List<Cue> cues) {
-            if (binding.subtitles != null) {
-                binding.subtitles.onCues(cues);
-            }
-        }
-    }
+//    public class ComponentListener implements TextRenderer.Output {
+//        @Override
+//        public void onCues(List<Cue> cues) {
+//            if (binding.subtitles != null) {
+//                binding.subtitles.onCues(cues);
+//            }
+//        }
+//    }
 
     @Override
     protected void onStart() {

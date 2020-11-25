@@ -36,7 +36,7 @@ import com.netflix.app.videos.AllVideos_Fragment;
 import static com.netflix.app.home.ui.PlayMovieActivity.LAST_MINUTE_VIDEO_PLAYED;
 import static com.netflix.app.home.ui.PlayMovieActivity.LAST_VIDEO_PLAYED;
 
-public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
+public class Home_Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     HActivityHomeBinding binding;
     long mLastPosition;
@@ -47,8 +47,8 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this,R.layout.h_activity_home_);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.rl_fragment_container,new HomeFragment()).commit();
+
         SharedPrefs.getInstance().getLastActivePlayed(LAST_VIDEO_PLAYED,false);
         SharedPrefs.getInstance().getlastPositionVideo(LAST_MINUTE_VIDEO_PLAYED,mLastPosition);
         Log.d("TAG", "onCreate: "+SharedPrefs.getInstance().getLastActivePlayed(LAST_VIDEO_PLAYED,false));
@@ -167,14 +167,6 @@ public class Home_Activity extends AppCompatActivity implements NavigationView.O
     }
 
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        MovieAdapter adapter ;
-        return false;
-    }
+
 }
