@@ -18,8 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.netflix.app.R;
-import com.netflix.app.home.model.AllVideo;
-import com.netflix.app.home.model.SlidePojo;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.ui.PlayMovieActivity;
 import com.netflix.app.utlis.FavDB;
 import com.netflix.app.utlis.SharedPrefs;
@@ -29,7 +28,7 @@ import java.util.List;
 
 public class SliderPagerAdapter extends PagerAdapter {
     private Context mContext;
-    private List<AllVideo> list;
+    private List<AllDataPojo> list;
     private LayoutInflater layoutInflater;
     public static String VIDEO_BANNER = "bannervideo";
     public static String VIDEO_BANNER_Name = "bannervideoname";
@@ -40,7 +39,7 @@ public class SliderPagerAdapter extends PagerAdapter {
 
 
 
-    public SliderPagerAdapter(Context mContext, List<AllVideo> list)
+    public SliderPagerAdapter(Context mContext, List<AllDataPojo> list)
     {
         this.mContext = mContext;
         this.list = list;
@@ -67,7 +66,7 @@ public class SliderPagerAdapter extends PagerAdapter {
             public void onClick(View v) {
                 favDB  = new FavDB(mContext);
 
-                favDB.insertIntoTheDatabase("",list.get(position).getThumbs(),list.get(position).getLikes(),"1");
+                favDB.insertIntoTheDatabase("",list.get(position).getThumbs(),list.get(position).getThumbs(),"1");
 
                 Toast.makeText(mContext, "Favourite has been Saved  "+ position, Toast.LENGTH_SHORT).show();
 

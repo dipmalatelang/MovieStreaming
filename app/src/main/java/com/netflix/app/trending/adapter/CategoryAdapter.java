@@ -1,4 +1,4 @@
-package com.netflix.app.category.adapter;
+package com.netflix.app.trending.adapter;
 
 
 import android.content.Context;
@@ -18,7 +18,7 @@ import com.bumptech.glide.Glide;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.netflix.app.R;
 import com.netflix.app.home.adapter.MovieItemClickListener;
-import com.netflix.app.home.model.AllVideo;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.ui.PlayMovieActivity;
 import com.netflix.app.utlis.SharedPrefs;
 
@@ -30,12 +30,12 @@ import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
     Context mcontext ;
-    List<AllVideo> mlist ;
+    List<AllDataPojo> mlist ;
     MovieItemClickListener movieItemClickListener;
 
 
 
-    public CategoryAdapter(Context mcontext, List<AllVideo> mlist, MovieItemClickListener listener) {
+    public CategoryAdapter(Context mcontext, List<AllDataPojo> mlist, MovieItemClickListener listener) {
         this.mcontext = mcontext;
         this.mlist = mlist;
         movieItemClickListener = listener;

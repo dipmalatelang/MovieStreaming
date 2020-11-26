@@ -2,24 +2,21 @@ package com.netflix.app.home.ui;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,38 +24,47 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
 import com.netflix.app.R;
 
-import com.netflix.app.databinding.HFragmentHomeBinding;
-import com.netflix.app.home.adapter.MainRecyclerAdapter;
+
+import com.netflix.app.home.adapter.CatMusicVideoAdapter;
+import com.netflix.app.home.adapter.CatSingleVideoAdapter;
+import com.netflix.app.home.adapter.CatWebseriesAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
-import com.netflix.app.home.model.AllVideo;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.adapter.SliderPagerAdapter;
-import com.netflix.app.home.model.VideoTypePojo;
 import com.netflix.app.home.viewmodels.AllVideosFragmentViewModel;
 import com.netflix.app.home.viewmodels.HomeFragmentViewModel;
+
 import com.netflix.app.upcoming.Upcoming_Activity;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends ListFragment implements MovieItemClickListener {
-    private MainRecyclerAdapter mainRecyclerAdapter;
+public class HomeFragment extends Fragment implements MovieItemClickListener {
 
-    //Initialize HomeFragmentViewModel for Viewmodel class
     private HomeFragmentViewModel mhomeFragmentViewModel;
     private AllVideosFragmentViewModel mallVideosFragmentViewModel;
-
-    //Initialize variable
-    private HFragmentHomeBinding binding;
-    private View hview;
+    private ViewPager sliderpager;
+    private RecyclerView main_recycler,rec_singlevideo, rec_music;
+    private TabLayout indicator;
+    private TextView textView_WEBSERIES,textView_SINGLEVIDEO,textView_Music;
+    private ProgressBar progressBar;
+    private Toolbar toolbar;
+    private Button btn_singlevideo,btn_webseries, btn_music;
 
 
     @Override
@@ -66,13 +72,9 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
                              Bundle savedInstanceState) {
         // Assign variable
         setHasOptionsMenu(true);
-        binding = DataBindingUtil.inflate(inflater, R.layout.h_fragment_home_, container, false);
-
-        hview = binding.getRoot();
-        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.topToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        View view = inflater.inflate(R.layout.h_fragment_home_, container, false);
+        iniViews(view);
+        initToolbar();
 
         // Assign variable mhomeFragmentViewModel for HomeFragmentViewModel
         mhomeFragmentViewModel = ViewModelProviders.of(this).get(HomeFragmentViewModel.class);
@@ -81,15 +83,15 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
         mhomeFragmentViewModel.init();
         mallVideosFragmentViewModel.init();
         // observe the changes  getSlideData
-        mhomeFragmentViewModel.getSlideData().observe(this, new Observer<List<AllVideo>>() {
+        mhomeFragmentViewModel.getSlideData().observe(this, new Observer<List<AllDataPojo>>() {
             @Override
-            public void onChanged(List<AllVideo> allVideos) {
+            public void onChanged(List<AllDataPojo> allVideos) {
 //                Log.d(TAG, "onChanged: " + allVideos.size());
                 if (allVideos != null) {
                     SliderPagerAdapter sliderPagerAdapter = new SliderPagerAdapter(getContext(), mhomeFragmentViewModel.getSlideData().getValue());
 
-                    binding.sliderpager.setAdapter(sliderPagerAdapter);
-                    binding.progressBar.setVisibility(View.GONE);
+                    sliderpager.setAdapter(sliderPagerAdapter);
+                    progressBar.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getContext(), "Data not found", Toast.LENGTH_SHORT).show();
                 }
@@ -97,16 +99,121 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
             }
         });
 
-        mallVideosFragmentViewModel.getAllData().observe(this, new Observer<List<AllVideo>>() {
+        mallVideosFragmentViewModel.getAllData().observe(this, new Observer<List<AllDataPojo>>() {
             @Override
-            public void onChanged(List<AllVideo> allCategoryList) {
+            public void onChanged(List<AllDataPojo> allCategoryList) {
+
+                if(allCategoryList !=null){
+                    ArrayList<AllDataPojo> werbseries = new ArrayList<>();
+                    ArrayList<AllDataPojo> singlevideolist = new ArrayList<>();
+                    ArrayList<AllDataPojo> sortlist = new ArrayList<>();
+                    ArrayList<AllDataPojo> alvdo = new ArrayList<>(mallVideosFragmentViewModel.getAllData().getValue());
+                    ArrayList<AllDataPojo> allV = new ArrayList<>();
+                    for (int i = alvdo.size() - 1; i >= 0; i--) {
+                        allV.add(alvdo.get(i));
+                    }
+                    Iterator<AllDataPojo> it = allV.iterator();
+                    while (it.hasNext()) {
+                        AllDataPojo al = it.next();
+                        if (al.getVideoType().equalsIgnoreCase("WEBSERIES")) {
+                            werbseries.add(al);
+
+                        if (werbseries.size() == 0) {
+                            textView_WEBSERIES.setVisibility(View.GONE);
+                            btn_webseries.setVisibility(View.GONE);
+                            main_recycler.setVisibility(View.GONE);
+                        } else {
+
+                            textView_WEBSERIES.setVisibility(View.VISIBLE);
+                            btn_webseries.setVisibility(View.VISIBLE);
+                            main_recycler.setVisibility(View.VISIBLE);
+                        }
+                        }
+
+                        else if(al.getVideoType().equalsIgnoreCase("SINGLEVIDEO"))
+                        {
+                            singlevideolist.add(al);
+                        if (werbseries.size() == 0) {
+                            btn_singlevideo.setVisibility(View.GONE);
+                            textView_SINGLEVIDEO.setVisibility(View.GONE);
+                            rec_singlevideo.setVisibility(View.GONE);
+                        } else {
+                            btn_singlevideo.setVisibility(View.VISIBLE);
+                            textView_SINGLEVIDEO.setVisibility(View.VISIBLE);
+                            rec_singlevideo.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                        else if(al.getVideoType().equalsIgnoreCase("SORTMOVIE"))
+                        {
+                            sortlist.add(al);
+                            if (werbseries.size() == 0) {
+                                rec_music.setVisibility(View.GONE);
+                                textView_Music.setVisibility(View.GONE);
+                                btn_music.setVisibility(View.GONE);
+                            } else {
+                                rec_music.setVisibility(View.VISIBLE);
+                                textView_Music.setVisibility(View.VISIBLE);
+                                btn_music.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                    }
+
+                    CatWebseriesAdapter upcomingAdapter = new CatWebseriesAdapter(getContext(), werbseries,HomeFragment.this );
+                    main_recycler.setAdapter(upcomingAdapter);
+                    main_recycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+                    CatSingleVideoAdapter singleVideoAdapter = new CatSingleVideoAdapter(getContext(), singlevideolist,HomeFragment.this );
+                    rec_singlevideo.setAdapter(singleVideoAdapter);
+                    rec_singlevideo.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+                    CatMusicVideoAdapter catMusicVideoAdapter = new CatMusicVideoAdapter(getContext(), sortlist,HomeFragment.this );
+                    rec_music.setAdapter(catMusicVideoAdapter);
+                    rec_music.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+
+
+                }
+                else {
+                    Toast.makeText(getContext(), "Data Not found", Toast.LENGTH_SHORT).show();
+                }
 
             }
-
         });
+
+
+
         iniSlider();
-        return hview;
+
+
+        return view;
     }
+
+    private void initToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+    }
+
+    private void iniViews(View view) {
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        sliderpager = view.findViewById(R.id.sliderpager);
+        indicator = view.findViewById(R.id.indicator);
+        progressBar = view.findViewById(R.id.progressBar);
+        main_recycler = view.findViewById(R.id.main_recycler);
+        rec_singlevideo = view.findViewById(R.id.rec_singlevideo);
+        btn_singlevideo = view.findViewById(R.id.btn_singlevideo);
+        rec_music =view.findViewById(R.id.rec_music);
+        btn_webseries = view.findViewById(R.id.btn_webseries);
+        textView_WEBSERIES =view.findViewById(R.id.textView_WEBSERIES);
+        textView_SINGLEVIDEO = view.findViewById(R.id.textView_SINGLEVIDEO);
+        textView_Music =view.findViewById(R.id.textView_Music);
+        btn_music =view.findViewById(R.id.btn_music);
+    }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -115,7 +222,6 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
         MenuItem item = menu.findItem(R.id.action_search);
 
         SearchView searchView = new SearchView(((AppCompatActivity) getContext()).getSupportActionBar().getThemedContext());
-
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
         item.setActionView(searchView);
 
@@ -127,12 +233,16 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+
+
+                return true;
+
             }
         });
         searchView.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
+
                                           }
                                       }
         );
@@ -155,15 +265,6 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
 
 
 
-    /* ToDo nested recycler view setMainCategoryRecycler */
-    private void setMainCategoryRecycler(List<VideoTypePojo> alv) {
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        binding.mainRecycler.setLayoutManager(layoutManager);
-        mainRecyclerAdapter = new MainRecyclerAdapter(getContext(), alv, HomeFragment.this);
-        Log.d(TAG, "setMainCategoryRecycler: " + alv.get(0).getVideotype());
-        binding.mainRecycler.setAdapter(mainRecyclerAdapter);
-    }
-
 
     /* ToDo iniSlider setTimer for slide */
     private void iniSlider() {
@@ -171,22 +272,22 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
         // setup timer
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
-        binding.indicator.setupWithViewPager(binding.sliderpager, true);
+        indicator.setupWithViewPager(sliderpager, true);
     }
 
     @Override
-    public void onMovieClick(AllVideo video, ImageView movieImageView) {
+    public void onMovieClick(AllDataPojo video, ImageView movieImageView) {
 
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         // send movie information to deatilActivity
         intent.putExtra("title", video.getTitle());
         intent.putExtra("imgURL", video.getThumbs());
         intent.putExtra("imgDescription", video.getDescription());
-        intent.putExtra("imginfo", video.getCastModels());
+        intent.putExtra("imginfo", video.getCasts().get(0).getName());
         intent.putExtra("videourl", video.getVdoUrl());
 
 
-        Log.d(TAG, "onMovieClickclick: " + video.getTitle());
+        Log.d("TAG", "onMovieClickclick: " + video.getTitle());
 
         // lets crezte the animation
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(),
@@ -209,10 +310,10 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
                     @Override
                     public void run() {
                         try {
-                            if (binding.sliderpager.getCurrentItem() < mhomeFragmentViewModel.getSlideData().getValue().size() - 1) {
-                                binding.sliderpager.setCurrentItem(binding.sliderpager.getCurrentItem() + 1);
+                            if (sliderpager.getCurrentItem() < mhomeFragmentViewModel.getSlideData().getValue().size() - 1) {
+                                sliderpager.setCurrentItem(sliderpager.getCurrentItem() + 1);
                             } else {
-                                binding.sliderpager.setCurrentItem(0);
+                                sliderpager.setCurrentItem(0);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -225,6 +326,7 @@ public class HomeFragment extends ListFragment implements MovieItemClickListener
 
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

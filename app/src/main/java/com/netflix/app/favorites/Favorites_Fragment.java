@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,8 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.netflix.app.R;
 import com.netflix.app.databinding.HFavoriteFragmentBinding;
 import com.netflix.app.home.adapter.FavAdapter;
-import com.netflix.app.home.adapter.MovieItemClickListener;
-import com.netflix.app.home.model.CategoryItem;
 import com.netflix.app.home.viewmodels.FavoriteFragmentViewModel;
 import com.netflix.app.utlis.FavDB;
 import com.netflix.app.home.model.FavItem;
@@ -85,11 +82,11 @@ public class Favorites_Fragment extends Fragment  {
         Cursor cursor = favDB.select_all_favorite_list();
         try {
             while (cursor.moveToNext()) {
-//                String title = cursor.getString(cursor.getColumnIndex(FavDB.ITEM_TITLE));
+                String title = cursor.getString(cursor.getColumnIndex(FavDB.ITEM_TITLE));
                 String id = cursor.getString(cursor.getColumnIndex(FavDB.KEY_ID));
                 String image = cursor.getString(cursor.getColumnIndex(FavDB.ITEM_IMAGE));
-                FavItem favItem = new FavItem("Movie name", id, image);
-                Toast.makeText(getContext(), ""+image, Toast.LENGTH_SHORT).show();
+                FavItem favItem = new FavItem(title, id, image);
+                Toast.makeText(getContext(), "fabname"+title, Toast.LENGTH_SHORT).show();
                 favItemList.add(favItem);
             }
         } finally {

@@ -5,15 +5,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.netflix.app.home.model.AllVideo;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.repositories.AllVideoRepository;
-import com.netflix.app.home.repositories.SlideDataRepository;
 
 import java.util.List;
 
 public class AllVideosFragmentViewModel extends ViewModel {
 
-    private MutableLiveData<List<AllVideo>> mallvideoPojo;
+    private MutableLiveData<List<AllDataPojo>> mallvideoPojo;
 
     public  void init(){
 
@@ -25,7 +24,7 @@ public class AllVideosFragmentViewModel extends ViewModel {
     }
 
 
-    public LiveData<List<AllVideo>> getAllData(){
+    public LiveData<List<AllDataPojo>> getAllData(){
         return  mallvideoPojo;
     }
 }

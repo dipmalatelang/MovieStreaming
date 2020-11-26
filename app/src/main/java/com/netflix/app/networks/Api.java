@@ -1,9 +1,7 @@
 package com.netflix.app.networks;
 
 
-import com.netflix.app.home.model.AllVideo;
-import com.netflix.app.home.model.ChannelModel;
-import com.netflix.app.home.model.EpisodeModel;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.model.TransactionModel;
 import com.netflix.app.home.model.User;
 
@@ -29,25 +27,25 @@ public interface Api {
     Call<User> createUser(@Body User user);
 
     @GET("Video/getAllVideo")
-    Call<List<AllVideo>> getAllVideos();
+    Call<List<AllDataPojo>> getAllVideos();
 
     @GET("DashBoardController/getDashBoard")
-    Call<List<AllVideo>> getBanner();
+    Call<List<AllDataPojo>> getBanner();
 
     @GET("Channel/getChannelById/{id}")
-    Call<ChannelModel> getChannelById(@Path("id") Integer num);
+    Call<AllDataPojo> getChannelById(@Path("id") Integer num);
 
     @POST("User/getchechsum")
     Call<Checksum> getChecksum(@Body Checksum checksum);
 
     @GET("getVideoByChannel/")
-    Call<List<EpisodeModel>> getEpisode();
+    Call<List<AllDataPojo>> getEpisode();
 
     @GET("User/getUserByID/{id}/")
     Call<User> getU(@Path("id") String str);
 
     @GET("Video/getVideoByChannel/{id}/")
-    Call<List<AllVideo>> getVideoByChannelId(@Path("id") Integer num);
+    Call<List<AllDataPojo>> getVideoByChannelId(@Path("id") Integer num);
 
     @POST("Video/addLikes/{vodId}/{userId}")
     Call<Long> insertLike(@Path("vodId") String str, @Path("userId") String str2);

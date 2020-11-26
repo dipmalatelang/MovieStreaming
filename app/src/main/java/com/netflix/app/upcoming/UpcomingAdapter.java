@@ -1,6 +1,5 @@
 package com.netflix.app.upcoming;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,13 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.netflix.app.R;
 import com.netflix.app.home.adapter.MovieItemClickListener;
-import com.netflix.app.home.model.AllVideo;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.ui.PlayMovieActivity;
 import com.netflix.app.utlis.SharedPrefs;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,11 +34,11 @@ import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.MyViewHolder> {
 
     Context mcontext;
-    private ArrayList<AllVideo> mlist = new ArrayList<>();
+    private ArrayList<AllDataPojo> mlist = new ArrayList<>();
     MovieItemClickListener movieItemClickListener;
 
 
-    public UpcomingAdapter(Context mcontext, ArrayList<AllVideo> mlist, MovieItemClickListener listener) {
+    public UpcomingAdapter(Context mcontext, ArrayList<AllDataPojo> mlist, MovieItemClickListener listener) {
         this.mcontext = mcontext;
         this.mlist = mlist;
         movieItemClickListener = listener;

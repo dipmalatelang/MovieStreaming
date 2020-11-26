@@ -56,7 +56,8 @@ public class FavDB extends SQLiteOpenHelper {
         cv.put(KEY_ID, id);
         cv.put(FAVORITE_STATUS, fav_status);
         db.insert(TABLE_NAME,null, cv);
-        Log.d("FavDB Status", item_title + ", favstatus - "+fav_status+" - . " + cv);
+        Log.d("TAG", "insertIntoTheDatabase: "+item_title);
+        Log.d("FavDBStatus", item_title + ", favstatus - "+fav_status+" - . " + cv);
     }
 
     // read all data

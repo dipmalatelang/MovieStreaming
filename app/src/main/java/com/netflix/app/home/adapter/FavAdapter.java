@@ -1,5 +1,6 @@
 package com.netflix.app.home.adapter;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.favTextView.setText(favItemList.get(position).getItem_title());
+        Log.d("TAG", "onBindViewHoldername: "+favItemList.get(position).getItem_title());
         Glide.with(context).load(favItemList.get(position).getItem_image()).into(holder.favImageView);
     }
 

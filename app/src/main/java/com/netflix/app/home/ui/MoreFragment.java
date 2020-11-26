@@ -13,8 +13,7 @@ import com.netflix.app.R;
 import com.netflix.app.databinding.FragmentMoreBinding;
 import com.netflix.app.home.adapter.MoreAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
-import com.netflix.app.home.model.AllVideo;
-import com.netflix.app.home.model.CategoryItem;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.utlis.DataSources;
 
 
@@ -43,7 +42,7 @@ public class MoreFragment extends Fragment implements MovieItemClickListener {
 
 
     @Override
-    public void onMovieClick(AllVideo movie, ImageView movieImageView) {
+    public void onMovieClick(AllDataPojo movie, ImageView movieImageView) {
 
     }
 }

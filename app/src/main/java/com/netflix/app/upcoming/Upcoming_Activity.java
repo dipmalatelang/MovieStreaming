@@ -3,31 +3,26 @@ package com.netflix.app.upcoming;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.netflix.app.R;
-import com.netflix.app.home.adapter.MovieAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
-import com.netflix.app.home.model.AllVideo;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.ui.PlayMovieActivity;
 import com.netflix.app.home.viewmodels.AllVideosFragmentViewModel;
 import com.netflix.app.utlis.SharedPrefs;
-import com.netflix.app.videos.AllVideos_Fragment;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER;
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
 
@@ -47,20 +42,20 @@ public class Upcoming_Activity extends AppCompatActivity implements MovieItemCli
         mallVideosFragmentViewModel.init();
         // observe the changes  getSlideData
 
-        mallVideosFragmentViewModel.getAllData().observe(this, new Observer<List<AllVideo>>() {
+        mallVideosFragmentViewModel.getAllData().observe(this, new Observer<List<AllDataPojo>>() {
             @Override
-            public void onChanged(List<AllVideo> allVideos) {
+            public void onChanged(List<AllDataPojo> allVideos) {
 
                 if(allVideos !=null){
-                    ArrayList<AllVideo> garda = new ArrayList<>();
-                    ArrayList<AllVideo> alvdo = new ArrayList<>(mallVideosFragmentViewModel.getAllData().getValue());
-                    ArrayList<AllVideo> allV = new ArrayList<>();
+                    ArrayList<AllDataPojo> garda = new ArrayList<>();
+                    ArrayList<AllDataPojo> alvdo = new ArrayList<>(mallVideosFragmentViewModel.getAllData().getValue());
+                    ArrayList<AllDataPojo> allV = new ArrayList<>();
                     for (int i = alvdo.size() - 1; i >= 0; i--) {
                         allV.add(alvdo.get(i));
                     }
-                    Iterator<AllVideo> it = allV.iterator();
+                    Iterator<AllDataPojo> it = allV.iterator();
                     while (it.hasNext()) {
-                        AllVideo al = it.next();
+                        AllDataPojo al = it.next();
                         if (al.getVideoType().equalsIgnoreCase("MOVIE")) {
                             garda.add(al);
                         }
@@ -82,13 +77,13 @@ public class Upcoming_Activity extends AppCompatActivity implements MovieItemCli
     }
 
 
+
     @Override
-    public void onMovieClick(AllVideo movie, ImageView movieImageView) {
+    public void onMovieClick(AllDataPojo movie, ImageView movieImageView) {
         String bannerurl =movie.getVdoUrl();
         String  bannername = movie.getTitle();
         SharedPrefs.getInstance().addString(VIDEO_BANNER, bannerurl);
         SharedPrefs.getInstance().addString(VIDEO_BANNER_Name,bannername);
         startActivity(new Intent(this, PlayMovieActivity.class));
-
     }
 }

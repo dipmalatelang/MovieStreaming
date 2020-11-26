@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".category.Category_Fragment">
+        tools:context=".trending.Category_Fragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/allcategory_recyclerview"
@@ -29,6 +29,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
             android:text="Category"
+            android:visibility="gone"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

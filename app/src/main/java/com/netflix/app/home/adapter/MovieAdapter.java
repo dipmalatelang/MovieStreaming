@@ -11,29 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.netflix.app.R;
-import com.netflix.app.home.model.AllVideo;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.ui.MovieDetailActivity;
 
 
 import java.util.List;
 
-import static java.security.AccessController.getContext;
-
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
 
     Context mcontext;
-    List<AllVideo> mlist;
+    List<AllDataPojo> mlist;
     MovieItemClickListener movieItemClickListener;
 
 
-    public MovieAdapter(Context mcontext, List<AllVideo> mlist, MovieItemClickListener listener) {
+    public MovieAdapter(Context mcontext, List<AllDataPojo> mlist, MovieItemClickListener listener) {
         this.mcontext = mcontext;
         this.mlist = mlist;
         movieItemClickListener = listener;
@@ -80,12 +77,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
             super(itemView);
             TvTitle = itemView.findViewById(R.id.item_movie_title);
             ImgMovie = itemView.findViewById(R.id.item_movie_img);
-
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     movieItemClickListener.onMovieClick(mlist.get(getAdapterPosition()), ImgMovie);
                     Log.d("TAG", "getAdapterPosition: "+mlist.get(getAdapterPosition()));
                     Intent intent = new Intent(mcontext, MovieDetailActivity.class);
@@ -108,11 +102,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
 //                    Toast.makeText(getContext(), "item clicked : " + mlist.size(), Toast.LENGTH_LONG).show();
                     // it works great
-
-
-
                 }
             });
+
+
 
         }
     }

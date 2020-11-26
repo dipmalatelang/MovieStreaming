@@ -12,12 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.SearchView;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.netflix.app.R;
-import com.netflix.app.category.Category_Fragment;
+import com.netflix.app.trending.Category_Fragment;
 import com.netflix.app.databinding.HActivityHomeBinding;
 import com.netflix.app.drawer.PrimiumPlan_Activity;
 import com.netflix.app.drawer.PrivacyPolicy_Activity;
@@ -28,8 +27,6 @@ import com.netflix.app.favorites.Favorites_Fragment;
 
 import com.netflix.app.gallary.Gallary_Fragment;
 
-import com.netflix.app.home.adapter.MovieAdapter;
-import com.netflix.app.home.model.AllCategory;
 import com.netflix.app.utlis.SharedPrefs;
 import com.netflix.app.videos.AllVideos_Fragment;
 

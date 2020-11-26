@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
@@ -21,14 +20,9 @@ import com.netflix.app.R;
 import com.netflix.app.databinding.FragmentHomeDetailsBinding;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.adapter.MyAdapter;
-import com.netflix.app.home.model.AllVideo;
-import com.netflix.app.home.model.CategoryItem;
+import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.utlis.FavDB;
 import com.netflix.app.utlis.SharedPrefs;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER;
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
@@ -37,7 +31,7 @@ import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
 public class MovieDetailActivity extends AppCompatActivity implements MovieItemClickListener {
 
     FragmentHomeDetailsBinding binding;
-    String movieTitle, imagedesc, info, videoUrl, Genres, Director;
+    String movieTitle, imagedesc, info, videoUrl, Genres, Director ,duration;
     TextView detail_movie_title, Tv_Desc, Tv_info;
     ImageView detail_movie_img;
     String img;
@@ -131,8 +125,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         movieTitle = getIntent().getExtras().getString("title");
         imagedesc = getIntent().getExtras().getString("imgDescription");
         info = getIntent().getExtras().getString("imginfo");
-
-
+        duration =getIntent().getExtras().getString("duration");
         videoUrl = getIntent().getExtras().getString("videourl");
         Genres =getIntent().getExtras().getString("Genres");
         Director = getIntent().getExtras().getString("director");
@@ -140,17 +133,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
         Glide.with(this).load(img).into(detail_movie_img);
         Log.d("TAG", "OOOOOOO: "+info);
-
-
-
-
         detail_movie_title.setText(movieTitle);
-//        getSupportActionBar().setTitle(movieTitle);
-        Tv_info.setText("Description :" + imagedesc + "\n" +"Info :" + info);
-//        Tv_Desc.setText("GENERS :" + Genres + "\n" +"Director :" +Director);
-
-
-
+        Tv_info.setText("DESCRIPTION : " +imagedesc);
+        Tv_Desc.setText("DURATION : "+duration + "\n" +"GENERS : " + Genres + "\n" +"DIRECTOR : " +Director);
 
         // setup animation
         binding.detailMovieImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
@@ -181,8 +166,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     }
 
 
+
     @Override
-    public void onMovieClick(AllVideo movie, ImageView movieImageView) {
+    public void onMovieClick(AllDataPojo movie, ImageView movieImageView) {
 
     }
 }
