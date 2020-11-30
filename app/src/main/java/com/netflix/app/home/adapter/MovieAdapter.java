@@ -19,9 +19,12 @@ import com.bumptech.glide.Glide;
 import com.netflix.app.R;
 import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.ui.MovieDetailActivity;
+import com.netflix.app.utlis.SharedPrefs;
 
 
 import java.util.List;
+
+import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
 
@@ -42,7 +45,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
 
-        View view = LayoutInflater.from(mcontext).inflate(R.layout.item_movie, viewGroup, false);
+        View view = LayoutInflater.from(mcontext).inflate(R.layout.item_allvideos, viewGroup, false);
         return new MyViewHolder(view);
 
 
@@ -56,6 +59,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         String allimage = (mlist.get(i).getThumbs());
         Log.d("TAG", "onBindViewHolderthumbs: " + allimage);
         Glide.with(mcontext).load(mlist.get(i).getThumbs()).into(myViewHolder.ImgMovie);
+        SharedPrefs.getInstance().addString(VIDEO_BANNER_Name, mlist.get(i).getTitle());
 
 
     }

@@ -7,14 +7,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:background="@color/color_text_black"
         tools:context=".drawer.ReferEarn_Activity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/Tb_App"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/colorBackground"
+            android:background="@drawable/background_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

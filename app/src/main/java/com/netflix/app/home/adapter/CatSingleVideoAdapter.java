@@ -5,19 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.netflix.app.R;
 import com.netflix.app.home.model.AllDataPojo;
-import com.netflix.app.home.ui.HomeVideoPlay_Fragment;
 
 import java.util.List;
 
@@ -49,7 +45,7 @@ public class CatSingleVideoAdapter extends RecyclerView.Adapter<CatSingleVideoAd
         Glide.with(mcontext).load(mlist.get(position).getThumbs()).into(holder.item_image);
         Log.d("TAG", "NNNNNNNNNN: "+mlist.get(position).getThumbs());
 
-
+        Log.i("TAG", "VVVVVVVVVVVVVVVVVVVVV: "+mlist.get(position).getVideoType());
     }
 
     @Override

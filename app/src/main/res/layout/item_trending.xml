@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:background="@drawable/bottom_round_background"
+    android:background="@color/color_text_black"
     android:gravity="center">
 
     <androidx.cardview.widget.CardView
@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/black_overlay"
+            android:background="@color/color_text_black"
             android:orientation="vertical">
 
             <FrameLayout
@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="title"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/color_text_white"
                         android:textSize="12sp" />
 
                     <TextView
@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Android Studio Tutorial - How to Create Material Design Login and Signup Form"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/color_text_white"
                         android:textSize="12sp" />
                 </LinearLayout>
             </RelativeLayout>

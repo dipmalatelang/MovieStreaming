@@ -1,62 +1,89 @@
-package com.netflix.app.videos;
+package com.netflix.app.home.ui;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.netflix.app.R;
-import com.netflix.app.databinding.FragmentAllVideosBinding;
+import com.netflix.app.databinding.FragmentHomeVideoPlayBinding;
 import com.netflix.app.home.adapter.MovieAdapter;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.model.AllDataPojo;
-import com.netflix.app.home.ui.MovieDetailActivity;
 import com.netflix.app.home.viewmodels.AllVideosFragmentViewModel;
 
-import java.lang.reflect.GenericSignatureFormatError;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
-public class AllVideos_Fragment extends Fragment implements MovieItemClickListener {
-
-    private FragmentAllVideosBinding binding;
-    private AllVideosFragmentViewModel mallVideosFragmentViewModel;
+public class HomeWebseries_Fragment extends Fragment implements MovieItemClickListener {
+    private FragmentHomeVideoPlayBinding binding;
     private View view;
+    private AllVideosFragmentViewModel mallVideosFragmentViewModel;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_videos, container, false);
-        view = binding.getRoot();
-        // Assign variable mhomeFragmentViewModel for HomeFragmentViewModel
-        mallVideosFragmentViewModel = ViewModelProviders.of(this).get(AllVideosFragmentViewModel.class);
-        // init Retrive data from Repository SlideDataRepository
-        mallVideosFragmentViewModel.init();
-        // observe the changes  getSlideData
 
-        mallVideosFragmentViewModel.getAllData().observe(this, new Observer<List<AllDataPojo>>() {
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home_video_play_,container,false);
+        view = binding.getRoot();
+
+        mallVideosFragmentViewModel = ViewModelProviders.of(this).get(AllVideosFragmentViewModel .class);
+        mallVideosFragmentViewModel.init();
+
+
+            mallVideosFragmentViewModel.getAllData().observe(this, new Observer<List<AllDataPojo>>() {
             @Override
-            public void onChanged(List<AllDataPojo> allVideos) {
-                Log.d(TAG, "onChanged: " + allVideos.size());
-                if (allVideos != null) {
-                    iniAllVideos();
-                } else {
+            public void onChanged(List<AllDataPojo> allCategoryList) {
+
+                if(allCategoryList !=null){
+                    ArrayList<AllDataPojo> werbseries = new ArrayList<>();
+                    ArrayList<AllDataPojo> alvdo = new ArrayList<>(mallVideosFragmentViewModel.getAllData().getValue());
+                    ArrayList<AllDataPojo> allV = new ArrayList<>();
+                    for (int i = alvdo.size() - 1; i >= 0; i--) {
+                        allV.add(alvdo.get(i));
+                    }
+                    Iterator<AllDataPojo> it = allV.iterator();
+                    while (it.hasNext()) {
+                        AllDataPojo al = it.next();
+                        if (al.getVideoType().equalsIgnoreCase("WEBSERIES")) {
+                            werbseries.add(al);
+
+                            if (werbseries.size() == 0) {
+                                binding.allVideosRecyclerview.setVisibility(View.GONE);
+
+                            } else {
+
+                                binding.allVideosRecyclerview.setVisibility(View.VISIBLE);
+
+                            }
+                        }
+
+
+                    }
+
+                    MovieAdapter movieAdapter = new MovieAdapter(getContext(), werbseries, HomeWebseries_Fragment.this);
+                    binding.allVideosRecyclerview.setAdapter(movieAdapter);
+                    binding.allVideosRecyclerview.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
+
+
+
+                }
+                else {
                     Toast.makeText(getContext(), "Data Not found", Toast.LENGTH_SHORT).show();
                 }
 
@@ -64,23 +91,15 @@ public class AllVideos_Fragment extends Fragment implements MovieItemClickListen
         });
 
 
-
-        /* ToDo iniAllVideos to set all video in recycler view */
-
+        /*ToDo iniAllVideos for all video recycler view */
         return view;
     }
 
-    private void iniAllVideos() {
-        MovieAdapter movieAdapter = new MovieAdapter(getContext(), mallVideosFragmentViewModel.getAllData().getValue(), AllVideos_Fragment.this);
-        binding.allVideosRecyclerview.setAdapter(movieAdapter);
-        binding.allVideosRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
-    }
+
 
 
     @Override
     public void onMovieClick(AllDataPojo video, ImageView movieImageView) {
-        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
-        // send movie information to deatilActivity
         String cast = new String();
         for (int i = 0; i < video.getCasts().size(); i++) {
             cast = cast + video.getCasts().get(i).getName() + ",";
@@ -97,16 +116,18 @@ public class AllVideos_Fragment extends Fragment implements MovieItemClickListen
             System.out.println("cast" + video.getGenres().size());
         }
 
-
+        Intent intent = new Intent(getContext(), MovieDetailActivity.class);
+        // send movie information to deatilActivity
         intent.putExtra("title", video.getTitle());
         intent.putExtra("imgURL", video.getThumbs());
         intent.putExtra("imgDescription", video.getDescription());
         intent.putExtra("Cast", cast);
-        intent.putExtra("videourl", video.getVdoUrl());
-        intent.putExtra("Geners", gener);
         intent.putExtra("Directors", dir);
-        intent.putExtra("duration", (Bundle) video.getDuration());
-        Log.d(TAG, "onMovieClickclick: " + video.getThumbs());
+        intent.putExtra("Geners", gener);
+        intent.putExtra("videourl", video.getVdoUrl());
+
+
+        Log.d("TAG", "onMovieClickclick: " + video.getTitle());
 
         // lets crezte the animation
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(),
@@ -114,9 +135,11 @@ public class AllVideos_Fragment extends Fragment implements MovieItemClickListen
 
         startActivity(intent, options.toBundle());
         // i l make a simple test to see if the click works
-
         Toast.makeText(getContext(), "item clicked : " + video.getChannelId(), Toast.LENGTH_LONG).show();
         // it works great
+
+
+
 
     }
 }

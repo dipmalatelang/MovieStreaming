@@ -2,6 +2,7 @@ package com.netflix.app.networks;
 
 
 import com.netflix.app.home.model.AllDataPojo;
+import com.netflix.app.home.model.AllDataPojo.Ep;
 import com.netflix.app.home.model.TransactionModel;
 import com.netflix.app.home.model.User;
 
@@ -39,7 +40,7 @@ public interface Api {
     Call<Checksum> getChecksum(@Body Checksum checksum);
 
     @GET("getVideoByChannel/")
-    Call<List<AllDataPojo>> getEpisode();
+    Call<List<Ep>> getEpisode();
 
     @GET("User/getUserByID/{id}/")
     Call<User> getU(@Path("id") String str);

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.netflix.app.R;
 import com.netflix.app.databinding.FragmentHomeDetailsBinding;
@@ -31,10 +32,13 @@ import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
 public class MovieDetailActivity extends AppCompatActivity implements MovieItemClickListener {
 
     FragmentHomeDetailsBinding binding;
-    String movieTitle, imagedesc, info, videoUrl, Genres, Director ,duration;
+    public static String VIDEO_channelID = "channelID";
+    String movieTitle, imagedesc, cast, videoUrl, Genres, Director ,duration, channelid ;
     TextView detail_movie_title, Tv_Desc, Tv_info;
     ImageView detail_movie_img;
     String img;
+    FloatingActionButton play_fab;
+    int channelID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +61,17 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    Toast.makeText(MovieDetailActivity.this, "chceked", Toast.LENGTH_SHORT).show();
                     binding.btnFev.setBackgroundResource(R.drawable.ic_heart_shape_silhouette);
-                    FavDB favDB = new FavDB(MovieDetailActivity.this);
+//                    FavDB favDB = new FavDB(MovieDetailActivity.this);
 //                    String imageResourceId = String.valueOf(getIntent().getExtras().getInt("imgURL"));
 
 //                    favDB.insertIntoTheDatabase("",imageResourceId,"","1");
 
                     //Show "Saved to favourite" toast
                 } else {
-                    binding.btnFev.setBackgroundResource(R.drawable.ic_fav_unselected);
+                    binding.btnFev.setBackgroundResource(R.drawable.ic_heart_shape_silhouette);
+                    Toast.makeText(MovieDetailActivity.this, "unchceked", Toast.LENGTH_SHORT).show();
 
                     //Show "Removed from favourite" toast
                 }
@@ -121,28 +127,35 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         Tv_Desc = findViewById(R.id.Tv_Desc);
         Tv_info = findViewById(R.id.Tv_info);
         detail_movie_img = findViewById(R.id.detail_movie_img);
+        play_fab = findViewById(R.id.play_fab);
+
+
 
         movieTitle = getIntent().getExtras().getString("title");
         imagedesc = getIntent().getExtras().getString("imgDescription");
-        info = getIntent().getExtras().getString("imginfo");
+        cast = getIntent().getExtras().getString("Cast");
         duration =getIntent().getExtras().getString("duration");
         videoUrl = getIntent().getExtras().getString("videourl");
-        Genres =getIntent().getExtras().getString("Genres");
-        Director = getIntent().getExtras().getString("director");
+        Genres =getIntent().getExtras().getString("Geners");
+        Director = getIntent().getExtras().getString("Directors");
         img =getIntent().getExtras().getString("imgURL");
+        channelid =getIntent().getExtras().getString("channelID");
+
 
         Glide.with(this).load(img).into(detail_movie_img);
-        Log.d("TAG", "OOOOOOO: "+info);
+        Log.d("TAG", "OOOOOOO: "+cast);
         detail_movie_title.setText(movieTitle);
+        SharedPrefs.getInstance().addString(VIDEO_BANNER_Name, movieTitle);
+        SharedPrefs.getInstance().getInt(VIDEO_channelID, channelID);
         Tv_info.setText("DESCRIPTION : " +imagedesc);
-        Tv_Desc.setText("DURATION : "+duration + "\n" +"GENERS : " + Genres + "\n" +"DIRECTOR : " +Director);
+        Tv_Desc.setText("CAST : "+cast + "\n" +"GENERS : " + Genres + "\n" +"DIRECTOR : " +Director);
 
         // setup animation
         binding.detailMovieImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
-        binding.playFab.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
 
 
-        binding.playFab.setOnClickListener(new View.OnClickListener() {
+
+        play_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPrefs.getInstance().addString(VIDEO_BANNER, videoUrl);
@@ -151,7 +164,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
                 Intent intent = new Intent(MovieDetailActivity.this, PlayMovieActivity.class);
                 startActivity(intent);
                 Toast.makeText(MovieDetailActivity.this, "Click movie detail activity", Toast.LENGTH_SHORT).show();
-
 
             }
         });

@@ -10,7 +10,7 @@
         app:cardCornerRadius="6dp"
         android:layout_margin="1dp"
         android:id="@+id/constraintlayout"
-        android:background="@drawable/background"
+        android:background="@color/color_text_black"
         app:cardBackgroundColor="?attr/colorWhiteTransparent"
         tools:context=".drawer.DialogActivity">
 

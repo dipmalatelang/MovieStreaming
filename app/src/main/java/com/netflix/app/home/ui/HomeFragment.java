@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,6 +44,7 @@ import com.netflix.app.home.viewmodels.AllVideosFragmentViewModel;
 import com.netflix.app.home.viewmodels.HomeFragmentViewModel;
 
 import com.netflix.app.upcoming.Upcoming_Activity;
+import com.netflix.app.utlis.SharedPrefs;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
     private ProgressBar progressBar;
     private Toolbar toolbar;
     private Button btn_singlevideo,btn_webseries, btn_music;
+    public static String GETVIDEOTYPE = "videoType";
 
 
     @Override
@@ -160,7 +162,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
                     }
 
-                    CatWebseriesAdapter upcomingAdapter = new CatWebseriesAdapter(getContext(), werbseries,HomeFragment.this );
+                    CatWebseriesAdapter upcomingAdapter = new CatWebseriesAdapter(getContext(), werbseries,HomeFragment.this);
                     main_recycler.setAdapter(upcomingAdapter);
                     main_recycler.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
@@ -181,7 +183,39 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
             }
         });
+        btn_webseries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new HomeWebseries_Fragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.rl_fragment_container, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
 
+            }
+        });
+        btn_singlevideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new HomeSinglevideo_Fragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.rl_fragment_container, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+
+            }
+        });
+        btn_music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment someFragment = new HomeSortmovies_Fragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.rl_fragment_container, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+
+            }
+        });
 
 
         iniSlider();
@@ -278,12 +312,31 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
     @Override
     public void onMovieClick(AllDataPojo video, ImageView movieImageView) {
 
+        String cast = new String();
+        for (int i = 0; i < video.getCasts().size(); i++) {
+            cast = cast + video.getCasts().get(i).getName() + ",";
+            System.out.println("cast" + video.getCasts().size());
+        }
+        String dir = new String();
+        for (int i2 = 0; i2 < video.getDirectors().size(); i2++) {
+            dir = dir + video.getDirectors().get(i2).getDirName() + ",";
+            System.out.println("cast" + video.getDirectors().size());
+        }
+        String gener = new String();
+        for (int i3 = 0; i3 < video.getGenres().size(); i3++) {
+            gener = gener + video.getGenres().get(i3).getGenreName() + ",";
+            System.out.println("cast" + video.getGenres().size());
+        }
+
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         // send movie information to deatilActivity
         intent.putExtra("title", video.getTitle());
         intent.putExtra("imgURL", video.getThumbs());
         intent.putExtra("imgDescription", video.getDescription());
-        intent.putExtra("imginfo", video.getCasts().get(0).getName());
+        intent.putExtra("Cast", cast);
+        intent.putExtra("Directors", dir);
+        intent.putExtra("channelID", video.getChannelId());
+        intent.putExtra("Geners", gener);
         intent.putExtra("videourl", video.getVdoUrl());
 
 
@@ -296,6 +349,9 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         startActivity(intent, options.toBundle());
         // i l make a simple test to see if the click works
         Toast.makeText(getContext(), "item clicked : " + video.getChannelId(), Toast.LENGTH_LONG).show();
+
+        SharedPrefs.getInstance().addString(GETVIDEOTYPE, video.getVideoType());
+        Log.i("TAG", "VVVVVVVVVVVVVVVVVVVVVHome: "+video.getVideoType());
         // it works great
 
 

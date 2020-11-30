@@ -16,6 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+
         <ImageView
             android:id="@+id/item_image"
             android:layout_width="match_parent"
@@ -23,6 +25,26 @@
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_launcher_background" />
     </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/play_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:backgroundTint="#33000000"
+        android:clickable="true"
+        android:foregroundTint="@color/colorBackgroundlight"
+        android:outlineSpotShadowColor="@color/colorWhiteTrans"
+        android:src="@drawable/ic_play_arrow_black_24dp"
+        android:tint="@color/colorWhite"
+        app:borderWidth="1dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView" />
+
 
     <TextView
         android:id="@+id/textView_title"

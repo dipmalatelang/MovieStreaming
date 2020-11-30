@@ -32,8 +32,11 @@ public class SliderPagerAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     public static String VIDEO_BANNER = "bannervideo";
     public static String VIDEO_BANNER_Name = "bannervideoname";
+    public static String VIDEO_channelID;
+
     String bannerurl;
     String bannername;
+    int channelid;
 
     private FavDB favDB;
 
@@ -99,6 +102,22 @@ public class SliderPagerAdapter extends PagerAdapter {
 
             }
         });
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.get(position).getVdoUrl();
+
+                bannerurl =list.get(position).getVdoUrl();
+                bannername = list.get(position).getTitle();
+                SharedPrefs.getInstance().addString(VIDEO_BANNER, bannerurl);
+                SharedPrefs.getInstance().addString(VIDEO_BANNER_Name,bannername);
+                Log.d("TAG", "onClickvideo: "+bannername);
+                mContext.startActivity(new Intent(mContext, PlayMovieActivity.class));
+
+            }
+        });
+
+
 
         ViewPager viewPager=(ViewPager)container;
         viewPager.addView(view);

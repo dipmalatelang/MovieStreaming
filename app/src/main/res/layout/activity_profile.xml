@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:background="@color/color_text_black"
         tools:context=".drawer.Profile_Activity">
 
 
@@ -19,57 +19,58 @@
                 android:id="@+id/Tb_App"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:background="@drawable/background_black"
                 app:title="@string/app_name"
-                app:titleTextColor="@color/color_text_white"
-                android:background="@color/colorBackground" />
+                app:titleTextColor="@color/color_text_white" />
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textField_Name"
-                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                app:helperTextEnabled="true"
+                android:hint="@string/name"
                 app:errorEnabled="true"
-                android:hint="Name">
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Et_Name"
                     android:layout_width="match_parent"
-                    android:textColor="@color/color_text_white"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_black"
                     android:inputType="text"
-                    android:text="Test"
-                    android:textColorHint="@color/colorWhite"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="@string/test"
+                    android:textColor="@color/color_text_white"
+                    android:textColorHint="@color/colorWhite" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textField_Email"
-                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:helperTextEnabled="true"
-                app:errorEnabled="true"
                 android:layout_below="@+id/textField_Name"
-                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
-                android:hint="Email ID">
+                android:layout_marginEnd="10dp"
+                android:hint="@string/email_id"
+                app:errorEnabled="true"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Et_Email"
                     android:layout_width="match_parent"
-                    android:textColor="@color/color_text_white"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_black"
                     android:inputType="textEmailAddress"
-                    android:text="Test@gmail.com"
+                    android:maxLines="1"
+                    android:text="@string/test_gmail_com"
+
+                    android:textColor="@color/color_text_white"
                     android:textColorHighlight="@color/colorWhite"
-                    android:textColorHint="@color/colorWhite"
-                    android:maxLines="1" />
+                    android:textColorHint="@color/colorWhite" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,74 +78,78 @@
                 android:id="@+id/textField_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:helperTextEnabled="true"
-                app:errorEnabled="true"
+                android:layout_below="@+id/textField_Email"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:hint="@string/mobile_number"
                 app:counterEnabled="true"
                 app:counterMaxLength="10"
-                android:layout_below="@+id/textField_Email"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                style="@style/TextInputLayoutStyle"
-                android:hint="Mobile Number">
+                app:errorEnabled="true"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Et_Mobile"
                     android:layout_width="match_parent"
-                    android:textColor="@color/color_text_white"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_black"
                     android:inputType="phone"
-                    android:text="9765848598"
-                    android:textColorHint="@color/colorWhite"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="@string/_9765848598"
+
+                    android:textColor="@color/color_text_white"
+                    android:textColorHint="@color/colorWhite" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textField_Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:helperTextEnabled="true"
-                app:errorEnabled="true"
+                android:layout_below="@+id/textField_mobile"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:hint="@string/password"
                 app:counterEnabled="true"
                 app:counterMaxLength="6"
-                android:layout_below="@+id/textField_mobile"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
                 app:endIconMode="password_toggle"
-                style="@style/TextInputLayoutStyle"
-                android:hint="Password">
+                app:endIconTint="@color/color_text_white"
+                app:errorEnabled="true"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Et_Password"
                     android:layout_width="match_parent"
-                    android:textColor="@color/color_text_white"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_black"
                     android:inputType="textPassword"
-                    android:textColorHint="@color/colorWhite"
-
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:text="123456"
+                    android:textColor="@color/color_text_white"
+                    android:textColorHint="@color/colorWhite" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textField_DOB"
-                style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:helperTextEnabled="true"
-                app:errorEnabled="true"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
                 android:layout_below="@+id/textField_Password"
-                android:hint="Date of Birth">
+                android:backgroundTint="@color/color_text_white"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:hint="@string/date_of_birth"
+                app:errorEnabled="true"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Et_DOB"
                     android:layout_width="match_parent"
-                    android:textColor="@color/color_text_white"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_black"
                     android:inputType="date"
+                    android:maxLines="1"
                     android:text="03-03-1996"
-                    android:textColorHint="@color/colorWhite"
-                    android:maxLines="1" />
+
+                    android:textColor="@color/color_text_white"
+                    android:textColorHint="@color/colorWhite" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,9 +157,9 @@
                 android:id="@+id/TV_Gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="20dp"
                 android:layout_below="@+id/textField_DOB"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/gender" />
 
 
@@ -162,10 +167,10 @@
                 android:id="@+id/radiogroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="1dp"
                 android:layout_below="@+id/TV_Gender"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="1dp"
                 android:textColor="@color/colorWhite">
 
                 <RadioButton
@@ -198,7 +203,6 @@
                 android:padding="5dp"
                 android:text="No Premium Plan is Active"
                 android:textAlignment="center"
-
                 android:textColor="@color/color_text_white"
                 app:drawableStartCompat="@drawable/ic_premium_icon"
                 app:errorEnabled="true"
@@ -208,6 +212,7 @@
                 android:id="@+id/Btn_apply"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
+                android:layout_below="@+id/TV_text"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="40dp"
@@ -216,8 +221,6 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="Save Changes"
-                android:layout_below="@+id/TV_text"
-
                 android:textColor="@color/color_text_black" />
 
 

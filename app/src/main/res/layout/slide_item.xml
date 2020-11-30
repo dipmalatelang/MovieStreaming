@@ -16,27 +16,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:clickable="true"
-            android:tint="@color/colorWhite"
-            app:borderWidth="1dp"
-            app:elevation="6dp"
-            app:fabSize="normal"
-
-        android:foregroundTint="@color/colorBackgroundlight"
-            android:backgroundTint="#33000000"
-            android:outlineSpotShadowColor="@color/colorWhiteTrans"
-            app:layout_constraintBottom_toBottomOf="@+id/slide_img"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/slide_img"
-            app:layout_constraintTop_toTopOf="@+id/slide_img"
-            android:src="@drawable/ic_play_arrow_black_24dp" />
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:backgroundTint="#33000000"
+        android:clickable="true"
+        android:visibility="gone"
+        android:foregroundTint="@color/background_text_color"
+        android:outlineSpotShadowColor="@color/colorWhiteTrans"
+        android:src="@drawable/ic_play_arrow_black_24dp"
+        android:tint="@color/colorWhite"
+        app:borderWidth="1dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/slide_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/slide_img"
+        app:layout_constraintTop_toTopOf="@+id/slide_img" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -47,6 +47,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/gradient_bg" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
