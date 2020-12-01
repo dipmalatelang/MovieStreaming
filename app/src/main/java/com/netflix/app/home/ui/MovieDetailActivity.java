@@ -34,11 +34,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     FragmentHomeDetailsBinding binding;
     public static String VIDEO_channelID = "channelID";
     String movieTitle, imagedesc, cast, videoUrl, Genres, Director ,duration, channelid ;
-    TextView detail_movie_title, Tv_Desc, Tv_info;
-    ImageView detail_movie_img;
     String img;
-    FloatingActionButton play_fab;
     int channelID;
+    private FavDB favDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,62 +46,22 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         binding = DataBindingUtil.setContentView(this, R.layout.fragment_home_details_);
         iniViews();
         tabView();
-
-        binding.btnAddback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MovieDetailActivity.this, Home_Activity.class);
-                startActivity(i);
-
-            }
-        });
-
-        binding.btnFev.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Toast.makeText(MovieDetailActivity.this, "chceked", Toast.LENGTH_SHORT).show();
-                    binding.btnFev.setBackgroundResource(R.drawable.ic_heart_shape_silhouette);
-//                    FavDB favDB = new FavDB(MovieDetailActivity.this);
-//                    String imageResourceId = String.valueOf(getIntent().getExtras().getInt("imgURL"));
-
-//                    favDB.insertIntoTheDatabase("",imageResourceId,"","1");
-
-                    //Show "Saved to favourite" toast
-                } else {
-                    binding.btnFev.setBackgroundResource(R.drawable.ic_heart_shape_silhouette);
-                    Toast.makeText(MovieDetailActivity.this, "unchceked", Toast.LENGTH_SHORT).show();
-
-                    //Show "Removed from favourite" toast
-                }
-            }
-        });
-
-
     }
 
     void tabView() {
-        TabLayout.Tab open = binding.tabLayoutMovie.newTab();
-        open.setText("Episodes");
-        binding.tabLayoutMovie.addTab(open);
-
-
+        TabLayout.Tab episode = binding.tabLayoutMovie.newTab();
+        episode.setText("Episodes");
+        binding.tabLayoutMovie.addTab(episode);
         TabLayout.Tab favorites = binding.tabLayoutMovie.newTab();
         favorites.setText("More Like This");
-
-
         binding.tabLayoutMovie.addTab(favorites);
         binding.tabLayoutMovie.setTabGravity(TabLayout.GRAVITY_FILL);
-//        ((ViewGroup) binding.tabLayoutMovie.getChildAt(0)).getChildAt(0).setVisibility(View.GONE);
-//        TabLayout.Tab tab = binding.tabLayoutMovie.getTabAt(1);
-//        tab.select();
+
 
 
         final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), binding.tabLayoutMovie.getTabCount());
         binding.vpMovie.setAdapter(adapter);
-
         binding.vpMovie.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabLayoutMovie));
-
         binding.tabLayoutMovie.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -123,14 +82,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
     }
 
     void iniViews()  {
-        detail_movie_title = findViewById(R.id.detail_movie_title);
-        Tv_Desc = findViewById(R.id.Tv_Desc);
-        Tv_info = findViewById(R.id.Tv_info);
-        detail_movie_img = findViewById(R.id.detail_movie_img);
-        play_fab = findViewById(R.id.play_fab);
-
-
-
         movieTitle = getIntent().getExtras().getString("title");
         imagedesc = getIntent().getExtras().getString("imgDescription");
         cast = getIntent().getExtras().getString("Cast");
@@ -142,20 +93,20 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         channelid =getIntent().getExtras().getString("channelID");
 
 
-        Glide.with(this).load(img).into(detail_movie_img);
+        Glide.with(this).load(img).into(binding.detailMovieImg);
         Log.d("TAG", "OOOOOOO: "+cast);
-        detail_movie_title.setText(movieTitle);
+        binding.detailMovieTitle.setText(movieTitle);
         SharedPrefs.getInstance().addString(VIDEO_BANNER_Name, movieTitle);
         SharedPrefs.getInstance().getInt(VIDEO_channelID, channelID);
-        Tv_info.setText("DESCRIPTION : " +imagedesc);
-        Tv_Desc.setText("CAST : "+cast + "\n" +"GENERS : " + Genres + "\n" +"DIRECTOR : " +Director);
+        binding.TvInfo.setText("DESCRIPTION : " +imagedesc);
+        binding.TvDesc.setText("CAST : "+cast + "\n" +"GENERS : " + Genres + "\n" +"DIRECTOR : " +Director);
 
         // setup animation
         binding.detailMovieImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
 
 
 
-        play_fab.setOnClickListener(new View.OnClickListener() {
+        binding.playFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPrefs.getInstance().addString(VIDEO_BANNER, videoUrl);
@@ -168,14 +119,44 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
             }
         });
 
+        binding.btnFev.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Toast.makeText(MovieDetailActivity.this, "chceked", Toast.LENGTH_SHORT).show();
+                    binding.btnFev.setBackgroundResource(R.drawable.ic_heart_shape_silhouette);
+                    favDB  = new FavDB(MovieDetailActivity.this);
+                    String favimg =getIntent().getExtras().getString("imgURL");
+                    favDB.insertIntoTheDatabase("",favimg,favimg,"1");
+                    Log.i("TAG", "ffffffffffffffff: "+favimg);
+                    Toast.makeText(MovieDetailActivity.this, "Favourite has been Saved  "+ favimg, Toast.LENGTH_SHORT).show();
+                } else {
+                    binding.btnFev.setBackgroundResource(R.drawable.ic_fav_unselected);
+                    Toast.makeText(MovieDetailActivity.this, "unchceked", Toast.LENGTH_SHORT).show();
+
+                    //Show "Removed from favourite" toast
+                }
+            }
+        });
+
+        binding.btnAddback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent i = new Intent(MovieDetailActivity.this, Home_Activity.class);
+//                startActivity(i);
+
+            }
+        });
+
+
 
     }
 
-    @Override
-    public void onBackPressed() {
-        // code here to show dialog
-        super.onBackPressed();  // optional depending on your needs
-    }
+//    @Override
+//    public void onBackPressed() {
+//        // code here to show dialog
+//        super.onBackPressed();  // optional depending on your needs
+//    }
 
 
 

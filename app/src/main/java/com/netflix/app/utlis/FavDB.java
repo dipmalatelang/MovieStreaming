@@ -70,7 +70,7 @@ public class FavDB extends SQLiteOpenHelper {
     // remove line from database
     public void remove_fav(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "UPDATE " + TABLE_NAME + " SET  "+ FAVORITE_STATUS+" ='0' WHERE "+KEY_ID+"="+id+"";
+        String sql = "UPDATE " + TABLE_NAME + " SET  "+ FAVORITE_STATUS+" ='0' WHERE "+KEY_ID+"="+"id"+"";
         db.execSQL(sql);
         Log.d("remove", id);
 
