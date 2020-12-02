@@ -4,6 +4,10 @@
     package="com.netflix.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -17,9 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemestyle"
         android:usesCleartextTraffic="true">
-        <activity android:name=".upcoming.Upcoming_Activity"
-            android:theme="@style/AppThemestyle"
-            android:exported="true">
+        <activity
+            android:name=".upcoming.Upcoming_Activity"
+            android:exported="true"
+            android:theme="@style/AppThemestyle">
 
         </activity>
         <activity
@@ -31,13 +36,17 @@
         <activity
             android:name=".home.ui.Home_Activity"
             android:theme="@style/AppThemestyle">
+
+        </activity>
+        <activity android:name=".main.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity" />
+
         <activity android:name=".home.ui.MovieDetailActivity" />
         <activity android:name=".home.ui.Gallary_Activity" />
         <activity android:name=".drawer.PrimiumPlan_Activity" />
@@ -47,7 +56,25 @@
         <activity android:name=".drawer.ReferEarn_Activity" />
         <activity android:name=".drawer.Profile_Activity" />
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
+        <activity android:name=".login.LoginActivity">
+
+        </activity>
+        <activity android:name=".register.RegisterActivity" />
+
+        <activity android:name=".LoginScreen"/>
+        <activity android:name=".auth.ForgotPasswordActivity"/>
+        <activity android:name=".auth.OtpVerificationActivity"/>
+        <receiver
+            android:name=".MySMSBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

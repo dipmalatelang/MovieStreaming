@@ -24,7 +24,7 @@ public class PrimiumPlan_Activity extends BaseActivity {
     ActivityPrimiumPlanBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_primium_plan_);
 

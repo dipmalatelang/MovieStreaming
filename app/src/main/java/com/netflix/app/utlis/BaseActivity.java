@@ -3,8 +3,11 @@ package com.netflix.app.utlis;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.netflix.app.R;
 
@@ -15,6 +18,11 @@ import com.netflix.app.R;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
 
     /*TODO Create Sharedprefrence for Storing Data*/
     private SharedPreferences getPrefData(Context context) {
@@ -40,7 +48,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
 
-
+    public void toggleProgress(boolean flag) {
+        ConstraintLayout progressLayout = (ConstraintLayout) findViewById(R.id.layout_progress_bar);
+        if (flag) {
+            progressLayout.setVisibility(View.VISIBLE);
+        } else {
+            progressLayout.setVisibility(View.GONE);
+        }
+    }
 
 
 

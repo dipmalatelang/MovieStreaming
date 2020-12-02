@@ -14,6 +14,36 @@
     <string name="email_id">Email ID</string>
     <string name="test">Test</string>
     <string name="name">Name</string>
+    <string name="entring_number">Enter Number</string>
+    <string name="phone">Enter Phone</string>
+    <string name="continue_txt">Continue</string>
+    <string name="skip">Skip</string>
+    <string name="enter_your_credential">Please enter your credentials to proceed</string>
+    <string name="email">Email</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="code_verification">Code Verification</string>
+    <string name="otp_message">Please wait while we automatically verify your number. if auto verification is not working you can enter the code received as well</string>
+    <string name="enter_six_digit_code">Enter the 6 digit code we sent to</string>
+    <string name="verify">Verify</string>
+    <string name="resend">Resend</string>
+    <string name="sign_up_optional_msg">First, give us a few basic details about yourself an optional profile pic</string>
+    <string name="fullname">Fullname</string>
+    <string name="set_password">Reset Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="check_user_login">You need to login your credentials and enjoy OTT APP</string>
+    <string name="submit">Submit</string>
+    <string name="password_update">Password Updated</string>
+    <string name="pass_success_msg">Your Password Has Been Updated</string>
+    <string name="field_can_not_be_empty_tag">Field can not be empty</string>
+    <string name="pass_not_match">Enterted password does not match</string>
+    <string name="login_successful_tag">Loign Successful</string>
+    <string name="login_unsuccessful_tag">Please check credentials and try again</string>
+    <string name="register_successful_tag">Register Successful</string>
+    <string name="mobile_number_exits">Mobile Number Allready Exits</string>
+
 
     <string-array name="Season">
         <item>Season 1</item>
@@ -21,5 +51,11 @@
         <item>Season 3</item>
         <item>Season 4</item>
     </string-array>
+
+
+
+
+
+
 
 </resources>

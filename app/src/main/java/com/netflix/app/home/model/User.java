@@ -45,6 +45,9 @@ public class User {
         this.userType = userType2;
     }
 
+    public User(String valueOf, String toString, String toString1, String toString2, String mobile, String s, String toString3, String toString4, String toString5, UserPayment userPayment, String basic, String s1) {
+    }
+
     public String getId() {
         return this.f4402id;
     }

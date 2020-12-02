@@ -23,7 +23,7 @@ public class Profile_Activity extends BaseActivity implements View.OnClickListen
     ActivityProfileBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_profile);

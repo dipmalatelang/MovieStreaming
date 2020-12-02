@@ -37,6 +37,7 @@ public class MoreAdapter extends RecyclerView.Adapter<MoreAdapter.MyViewHolder>{
 
     Context mcontext ;
     List<AllDataPojo> mlist ;
+    String bannerurl, bannername ;
 
     public MoreAdapter(Context mcontext, List<AllDataPojo> mlist, MovieItemClickListener movieItemClickListener) {
         this.mcontext = mcontext;
@@ -45,10 +46,6 @@ public class MoreAdapter extends RecyclerView.Adapter<MoreAdapter.MyViewHolder>{
     }
 
     MovieItemClickListener movieItemClickListener;
-
-
-
-
 
     @NonNull
     @Override
@@ -87,28 +84,38 @@ public class MoreAdapter extends RecyclerView.Adapter<MoreAdapter.MyViewHolder>{
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    movieItemClickListener.onMovieClick(mlist.get(getAdapterPosition()), ImgMovie);
-                    Log.d("TAG", "getAdapterPosition: " + mlist.get(getAdapterPosition()));
-                    Intent intent = new Intent(mcontext, MovieDetailActivity.class);
-                    // send movie information to deatilActivity
-                    intent.putExtra("title", mlist.get(getAdapterPosition()));
-                    intent.putExtra("imgURL", mlist.get(getAdapterPosition()));
-                    intent.putExtra("imgDescription", mlist.get(getAdapterPosition()));
-                    intent.putExtra("imginfo", mlist.get(getAdapterPosition()));
-                    intent.putExtra("videourl", mlist.get(getAdapterPosition()));
-                    intent.putExtra("genres", mlist.get(getAdapterPosition()));
-                    intent.putExtra("director", mlist.get(getAdapterPosition()));
 
-                    Log.d("TAG", "imgURL: " + mlist.get(getAdapterPosition()));
+                    mlist.get(getAdapterPosition()).getVdoUrl();
+                    bannerurl = mlist.get(getAdapterPosition()).getVdoUrl();
+                    bannername = mlist.get(getAdapterPosition()).getTitle();
+                    SharedPrefs.getInstance().addString(VIDEO_BANNER, bannerurl);
+                    SharedPrefs.getInstance().addString(VIDEO_BANNER_Name, bannername);
+                    Log.d("TAG", "onClickvideo: " + bannername);
+                    mcontext.startActivity(new Intent(mcontext, PlayMovieActivity.class));
 
-                    // lets crezte the animation
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) mcontext,
-                            ImgMovie, "sharedName");
-                    mcontext.startActivity(intent, options.toBundle());
-                    // i l make a simple test to see if the click works
-
-//                    Toast.makeText(getContext(), "item clicked : " + mlist.size(), Toast.LENGTH_LONG).show();
-                    // it works great
                 }
+//                    movieItemClickListener.onMovieClick(mlist.get(getAdapterPosition()), ImgMovie);
+//                    Log.d("TAG", "getAdapterPosition: " + mlist.get(getAdapterPosition()));
+//                    Intent intent = new Intent(mcontext, MovieDetailActivity.class);
+//                    // send movie information to deatilActivity
+//                    intent.putExtra("title", mlist.get(getAdapterPosition()));
+//                    intent.putExtra("imgURL", mlist.get(getAdapterPosition()));
+//                    intent.putExtra("imgDescription", mlist.get(getAdapterPosition()));
+//                    intent.putExtra("imginfo", mlist.get(getAdapterPosition()));
+//                    intent.putExtra("videourl", mlist.get(getAdapterPosition()));
+//                    intent.putExtra("genres", mlist.get(getAdapterPosition()));
+//                    intent.putExtra("director", mlist.get(getAdapterPosition()));
+//
+//                    Log.d("TAG", "imgURL: " + mlist.get(getAdapterPosition()));
+//
+//                    // lets crezte the animation
+//                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) mcontext,
+//                            ImgMovie, "sharedName");
+//                    mcontext.startActivity(intent, options.toBundle());
+//                    // i l make a simple test to see if the click works
+//
+////                    Toast.makeText(getContext(), "item clicked : " + mlist.size(), Toast.LENGTH_LONG).show();
+//                    // it works great
+//                }
             });
         }}}
