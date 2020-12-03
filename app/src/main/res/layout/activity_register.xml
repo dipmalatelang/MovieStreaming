@@ -1,209 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ConstraintLayout"
+    tools:ignore="NamespaceTypo"
+    tools:context=".loginregister.RegisterActivity">
 
-    <RelativeLayout
-
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_text_white">
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"
+        android:tint="#83000000"/>
 
-        <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="15dp"
+        android:background="@drawable/login_transparent_round">
+
+        <ImageView
+            android:id="@+id/imgLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingTop="16dp"
-            android:paddingRight="20dp">
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/ic_launcher" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/asap"
-                android:gravity="center"
-                android:text="@string/sign_up_optional_msg"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="gone" />
+        <TextView
+            android:id="@+id/tv_login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:fontFamily="serif"
+            android:text="Registration"
+            android:layout_below="@+id/imgLogo"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorWhite"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"/>
 
-            <RelativeLayout
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_gravity="center"
-                android:visibility="gone">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_login_text"
+            android:layout_marginBottom="10dp"
+            android:theme="@style/TextInputLayoutStyle">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/user_photo"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/user" />
-
-                <ImageView
-                    android:id="@+id/select_image"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/cirecle_round_btn"
-                    android:backgroundTint="@color/color_text_white"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_camera_alt_black"
-                    android:tint="@color/color_text_black" />
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:src="@drawable/applogo" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/fullname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <EditText
+                android:id="@+id/Et_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="@string/fullname"
-                android:textColorHint="@color/colorPrimaryDark"
-                app:boxStrokeColor="@color/colorPrimaryDark"
-                app:boxStrokeWidthFocused="2dp"
-                app:endIconTint="@color/colorPrimaryDark"
-                app:startIconDrawable="@drawable/ic_baseline_person"
-                app:startIconTint="@color/colorPrimaryDark">
+                android:drawableStart="@drawable/ic_account_box_white_24dp"
+                android:drawablePadding="5dp"
+                android:hint="Name"
+                android:inputType="textCapWords"
+                android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/asap"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/color_text_white" />
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textInput_name"
+            android:layout_marginBottom="10dp"
+            android:theme="@style/TextInputLayoutStyle">
+
+            <EditText
+                android:id="@+id/Et_Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:hint="@string/email"
-                android:textColorHint="@color/colorPrimaryDark"
-                app:boxStrokeColor="@color/colorPrimaryDark"
-                app:boxStrokeWidthFocused="2dp"
-                app:endIconTint="@color/colorPrimaryDark"
-                app:startIconDrawable="@drawable/ic_baseline_person"
-                app:startIconTint="@color/colorPrimaryDark">
+                android:drawableStart="@drawable/ic_account_box_white_24dp"
+                android:drawablePadding="5dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/asap"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/color_text_white" />
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textInput_email"
+            android:layout_marginBottom="10dp"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorWhite"
+            app:theme="@style/TextInputLayoutStyle">
+
+            <EditText
+                android:id="@+id/Et_Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:hint="@string/password"
-                android:textColorHint="@color/colorPrimaryDark"
-                app:boxStrokeColor="@color/colorPrimaryDark"
-                app:boxStrokeWidthFocused="2dp"
-                app:endIconTint="@color/colorPrimaryDark"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorPrimaryDark"
-                app:startIconDrawable="@drawable/ic_baseline_lock"
-                app:startIconTint="@color/colorPrimaryDark">
+                android:drawablePadding="5dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                app:endIconMode="password_toggle"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/asap"
-                    android:inputType="textPassword"
-                    android:textColor="@color/color_text_white" />
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:hint="@string/phone"
-                android:textColorHint="@color/colorPrimaryDark"
-                android:visibility="visible"
-                app:boxStrokeColor="@color/colorPrimaryDark"
-                app:boxStrokeWidthFocused="2dp"
-                app:startIconDrawable="@drawable/ic_baseline_call"
-                app:startIconTint="@color/colorPrimaryDark">
+        <Button
+            android:id="@+id/Btn_Signup"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_below="@+id/textInput_password"
+            android:background="@drawable/ripple_primary_color"
+            android:text="Sign up"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:textColor="@drawable/color_white_to_black"
+            android:fontFamily="serif"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/number"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:enabled="false"
-                    android:fontFamily="@font/asap"
-                    android:inputType="phone"
-                    android:textColor="@color/color_text_white" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.hbb20.CountryCodePicker
-                android:id="@+id/ccp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/corner_circle"
-                android:gravity="center"
-                android:visibility="gone"
-                app:ccp_countryPreference="in,us"
-                app:ccp_showFullName="true"
-                app:ccp_showNameCode="true"
-                app:ccp_showPhoneCode="true" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/registerBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/curved_grey_medicl"
-                android:backgroundTint="@color/colorYellow"
-                android:fontFamily="@font/asap"
-                android:onClick="mainPage"
-                android:text="@string/create_account"
-                android:textAllCaps="false"
-                android:textColor="@color/color_text_black"
-                android:textSize="16sp" />
-
-            <Button
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/asap"
-                android:onClick="loginPage"
-                android:text="@string/login"
-                android:textColor="@color/color_text_black"
-                android:textStyle="bold"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/shape_circle"
-            android:backgroundTint="@color/color_text_white"
-            android:indeterminateTint="@color/color_text_black"
-            android:padding="20dp"
-            android:visibility="gone" />
     </RelativeLayout>
 
-</androidx.core.widget.NestedScrollView>
+</RelativeLayout>

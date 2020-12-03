@@ -56,25 +56,9 @@
         <activity android:name=".drawer.ReferEarn_Activity" />
         <activity android:name=".drawer.Profile_Activity" />
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+    <activity android:name=".loginregister.LoginActivity"/>
+        <activity android:name=".loginregister.RegisterActivity"/>
 
-        <activity android:name=".login.LoginActivity">
-
-        </activity>
-        <activity android:name=".register.RegisterActivity" />
-
-        <activity android:name=".LoginScreen"/>
-        <activity android:name=".auth.ForgotPasswordActivity"/>
-        <activity android:name=".auth.OtpVerificationActivity"/>
-        <receiver
-            android:name=".MySMSBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

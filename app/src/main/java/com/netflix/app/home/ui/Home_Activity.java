@@ -41,10 +41,10 @@ public class Home_Activity extends BaseActivity implements NavigationView.OnNavi
     HActivityHomeBinding binding;
     long mLastPosition;
 
-    User user = SharedPrefManager.getInstance(this).getUser();
-    private String user_id;
+//    User user = SharedPrefManager.getInstance(this).getUser();
+//    private String user_id;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this,R.layout.h_activity_home_);

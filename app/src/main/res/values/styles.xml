@@ -25,13 +25,15 @@
         <item name="android:textSize">12sp</item>
 
     </style>
-    <style name="TextInputLayoutStyle" parent="TextAppearance.AppCompat.Widget.Button.Borderless.Colored">
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/color_text_white</item>
         <item name="android:textColorHint">@color/color_text_grey</item>
         <item name="counterTextAppearance">@color/colorWhite</item>
         <item name="endIconTint">@color/colorWhite</item>
         <item name="tint">@color/colorWhite</item>
         <item name="android:textColor">@color/color_text_white</item>
+        <item name="android:textColorHighlight">@color/color_text_grey</item>
+        <item name="android:textColorLink">@color/colorPrimary</item>
     </style>
 
     <style name="MySeekBar" parent="Widget.AppCompat.SeekBar">

@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.netflix.app.LoginScreen;
 import com.netflix.app.R;
-import com.netflix.app.home.ui.Home_Activity;
+import com.netflix.app.loginregister.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     public  static  int SPLASH_TIME_OUT =4000;
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(MainActivity.this, LoginScreen.class);
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }
