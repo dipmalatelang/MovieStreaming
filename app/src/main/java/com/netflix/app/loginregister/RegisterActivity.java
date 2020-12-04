@@ -21,16 +21,27 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.netflix.app.R;
+import com.netflix.app.home.model.UserPayment;
 import com.netflix.app.home.ui.Home_Activity;
+import com.netflix.app.main.MainActivity;
 import com.netflix.app.utlis.BaseActivity;
+import com.netflix.app.utlis.RegisterMvpView;
+import com.netflix.app.utlis.RegisterPresenter;
+import com.netflix.app.utlis.SharedPrefManager;
 
-public class RegisterActivity extends BaseActivity {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+
+public class RegisterActivity extends BaseActivity implements RegisterMvpView {
     private static final String TAG = "";
-    private EditText Et_Name,Et_Email,Et_Password;
+    private EditText Et_Name, Et_Email, Et_Password;
     private Button Btn_Signup;
     private String username, email, password;
     private FirebaseAuth mAuth;
     private RelativeLayout ConstraintLayout;
+    private RegisterPresenter mPresenter;
 
 
     @Override
@@ -45,33 +56,34 @@ public class RegisterActivity extends BaseActivity {
         Et_Password = findViewById(R.id.Et_Password);
         Button btn_Signup = findViewById(R.id.Btn_Signup);
         ConstraintLayout = findViewById(R.id.ConstraintLayout);
-
+        this.mPresenter = new RegisterPresenter(this);
         mAuth = FirebaseAuth.getInstance();
-
 
 
         btn_Signup.setOnClickListener(v -> {
 //            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
 //                    && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE))
 //            {
-                username = Et_Name.getText().toString();
-                email = Et_Email.getText().toString();
-                password = Et_Password.getText().toString();
+            username = Et_Name.getText().toString();
+            email = Et_Email.getText().toString();
+            password = Et_Password.getText().toString();
 
-                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                    snackBar(ConstraintLayout, "All fileds are required");
+            if (TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                snackBar(ConstraintLayout, "All fileds are required");
 
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    snackBar(ConstraintLayout, "please enter valid email address");
-                } else if (password.length() < 6) {
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                snackBar(ConstraintLayout, "please enter valid email address");
+            } else if (password.length() < 6) {
 
-                    snackBar(ConstraintLayout, "password must be at least 6 characters");
-                } else {
-                    registration(username, email, password);
-                }
+                snackBar(ConstraintLayout, "password must be at least 6 characters");
+            } else {
+                registration(username, email, password);
+                com.netflix.app.home.model.User user = new com.netflix.app.home.model.User(String.valueOf((int) (((Math.random() * 90.0d) + 1000.0d) / 1000.0d)), username, email, password, "", "", new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), (UserPayment) null, "BASIC", "");
+                mPresenter.addUserAccount(user);
 
 
 
+            }
 
 
         });
@@ -189,6 +201,33 @@ public class RegisterActivity extends BaseActivity {
         Uri uri = Uri.fromParts("package", getPackageName(), null);
         intent.setData(uri);
         startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+    }
+
+    @Override
+    public void allreadyExits(String str) {
+
+    }
+
+    @Override
+    public void registerUsers(com.netflix.app.home.model.User user) {
+
+        System.out.println(user.toString());
+        dismissProgressDialog();
+        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+//        DeviceUtils.showToastMessage(this, getString(R.string.register_successful_tag));
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
+        dismissProgressDialog();
+        if (user != null) {
+            SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+//            DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+            return;
+        }
+//        DeviceUtils.showToastMessage(this, getString(C1734R.string.login_unsuccessful_tag));
+
+
     }
 
 //    @Override

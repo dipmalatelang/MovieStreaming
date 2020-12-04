@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.netflix.app.R;
 import com.netflix.app.home.model.User;
@@ -66,8 +67,6 @@ public class Home_Activity extends BaseActivity implements NavigationView.OnNavi
 
 
     void initoolbar(){
-
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,binding.drawerlayout,binding.toolbar,R.string.open, R.string.close);
         binding.drawerlayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -158,6 +157,7 @@ public class Home_Activity extends BaseActivity implements NavigationView.OnNavi
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 break;
             case R.id.m_logout:
+                FirebaseAuth.getInstance().signOut();
                 finish();
                 break;
 

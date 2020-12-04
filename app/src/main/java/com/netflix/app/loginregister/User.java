@@ -1,5 +1,7 @@
 package com.netflix.app.loginregister;
 
+import com.netflix.app.home.model.UserPayment;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -8,6 +10,9 @@ public class User implements Serializable {
     private String username;
 
     public User(String uid, String username, String toLowerCase, String s, String s1, String s2) {
+    }
+
+    public User(String valueOf, String username, String email, String password, String s, String s1, String toString, String toString1, String toString2, UserPayment userPayment, String basic, String s2) {
     }
 
     public String getId() {

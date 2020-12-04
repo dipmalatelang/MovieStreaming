@@ -17,26 +17,43 @@ import androidx.annotation.NonNull;
 
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.netflix.app.R;
+import com.netflix.app.home.ui.Home_Activity;
 import com.netflix.app.utlis.BaseActivity;
 
+import com.netflix.app.utlis.LoginMvpView;
+import com.netflix.app.utlis.LoginPresenter;
+import com.netflix.app.utlis.RetrofitClient;
+import com.netflix.app.utlis.SharedPrefManager;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
+public class LoginActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, LoginMvpView {
     private RelativeLayout ConstraintLayout;
     private EditText Et_Email, Et_Password;
     private String TAG = "AKAKAKA";
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
+    private LoginPresenter mPresenter;
+
 //    private LoginBlutton fblogin;
 //    private CallbackManager mCallbackManager;
 
@@ -48,7 +65,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+        mPresenter = new LoginPresenter(this);
         ConstraintLayout = findViewById(R.id.ConstraintLayout);
         Et_Email = findViewById(R.id.Et_Email);
         Et_Password = findViewById(R.id.Et_Password);
@@ -96,15 +117,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 //        });
 
 
-
-
         btn_gmail.setOnClickListener(this);
         btn_Login.setOnClickListener(this);
         btn_phone.setOnClickListener(this);
         Btn_fb.setOnClickListener(this);
         tv_ForgotPassword.setOnClickListener(this);
         tv_Signup.setOnClickListener(this);
-
 
 
     }
@@ -132,8 +150,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 } else {
                     showProgressDialog();
                     emailLogin(email, password);
+                    mPresenter.checkLoginCredentials(email, password);
                     setPref(this, "username", email);
                 }
+
                 break;
             case R.id.Btn_phone:
 //                startActivity(new Intent(this, PhoneActivity.class));
@@ -153,12 +173,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
-
-
-
-
-
 
     /*TODO Login with Email*/
     private void emailLogin(final String txt_email, final String txt_password) {
@@ -208,23 +222,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 //        mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-//        if (requestCode == RC_SIGN_IN) {
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            try {
-//                GoogleSignInAccount account = task.getResult(ApiException.class);
-//                if (account != null) {
-//                    firebaseAuthWithGoogle(account);
-//                    setPref(this, "username", account.getDisplayName());
-//                } else {
-//                    snackBar(ConstraintLayout, "Google sign in Failed");
-//                }
-//
-//            } catch (ApiException e) {
-//                dismissProgressDialog();
-//                snackBar(ConstraintLayout, "Google sign in failed");
-//                Log.w(TAG, "Google sign in failed", e);
-//            }
-//        }
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                if (account != null) {
+                    firebaseAuthWithGoogle(account);
+                    setPref(this, "username", account.getDisplayName());
+                } else {
+                    snackBar(ConstraintLayout, "Google sign in Failed");
+                }
+
+            } catch (ApiException e) {
+                dismissProgressDialog();
+                snackBar(ConstraintLayout, "Google sign in failed");
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
 
 
     }
@@ -287,9 +301,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
+    @Override
+    public void loginSuccess(com.netflix.app.home.model.User user) {
+        toggleProgress(false);
+        if (user != null) {
+
+            startActivity(new Intent(getApplicationContext(), Home_Activity.class));
+            finish();
+            return;
+        }
+
+    }
 
 
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
-
+    }
 }
