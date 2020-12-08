@@ -43,6 +43,36 @@
         <item name="thumbColor">#A6A6A6</item>
         <item name="thumbTint">#D5D3D3</item>
     </style>
+    <style name="text_view_style" parent="TextAppearance.AppCompat.Light.SearchResult.Title">
+        <item name="android:fontFamily">@font/asap</item>
+        <item name="android:gravity">start</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:textColor">@color/color_text_white</item>
+        <item name="android:background">@drawable/ripple_transparent</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
+    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@style/ErrorText</item>
+        <item name="android:textColor">@color/color_text_white</item>
+        <item name="android:textColorHint">@color/color_text_white</item>
+        <item name="colorControlNormal">@color/color_text_white</item>
+        <item name="colorControlActivated">@color/color_text_white</item>
+        <item name="colorControlHighlight">@color/color_text_white</item>
+        <item name="android:fontFamily">@font/asap</item>
+    </style>
+    <style name="ErrorText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#F44336</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 
+    <style name="HintText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_text_white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

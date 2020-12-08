@@ -1,7 +1,7 @@
 package com.netflix.app.utlis;
 
 
-import com.netflix.app.home.model.User;
+import com.netflix.app.home.model.UsersResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,8 +17,8 @@ public class LoginPresenter {
 
 
     public void checkLoginCredentials(String email, String password) {
-        RetrofitClient.getInstance().getApi().checkLoginCredentials(email, password).enqueue(new Callback<User>() {
-            public void onResponse(Call<User> call, Response<User> response) {
+        RetrofitClient.getInstance().getApi().checkLoginCredentials(email, password).enqueue(new Callback<UsersResponse>() {
+            public void onResponse(Call<UsersResponse> call, Response<UsersResponse> response) {
                 try {
                     LoginPresenter.this.mView.loginSuccess(response.body());
                 } catch (Exception e) {
@@ -26,7 +26,7 @@ public class LoginPresenter {
                 }
             }
 
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UsersResponse> call, Throwable t) {
             }
         });
     }

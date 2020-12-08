@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
+
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.netflix.app.R;
 import com.netflix.app.utlis.FavDB;
 import com.netflix.app.home.model.FavItem;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -28,9 +30,9 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
         this.favItemList = favItemList;
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fav_item,
                 parent, false);
         favDB = new FavDB(context);
@@ -39,7 +41,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
         holder.favTextView.setText(favItemList.get(position).getItem_title());
         Log.d("TAG", "onBindViewHoldername: "+favItemList.get(position).getItem_title());
         Glide.with(context).load(favItemList.get(position).getItem_image()).into(holder.favImageView);
@@ -56,7 +58,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
         Button favBtn;
         ImageView favImageView;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NotNull View itemView) {
             super(itemView);
             favTextView = itemView.findViewById(R.id.favTextView);
             favBtn = itemView.findViewById(R.id.favBtn);

@@ -2,7 +2,6 @@ package com.netflix.app.home.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -17,7 +16,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.netflix.app.R;
-import com.netflix.app.home.model.User;
 import com.netflix.app.trending.Category_Fragment;
 import com.netflix.app.databinding.HActivityHomeBinding;
 import com.netflix.app.drawer.PrimiumPlan_Activity;
@@ -30,7 +28,6 @@ import com.netflix.app.favorites.Favorites_Fragment;
 import com.netflix.app.gallary.Gallary_Fragment;
 
 import com.netflix.app.utlis.BaseActivity;
-import com.netflix.app.utlis.SharedPrefManager;
 import com.netflix.app.utlis.SharedPrefs;
 import com.netflix.app.videos.AllVideos_Fragment;
 
@@ -45,7 +42,7 @@ public class Home_Activity extends BaseActivity implements NavigationView.OnNavi
 //    User user = SharedPrefManager.getInstance(this).getUser();
 //    private String user_id;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this,R.layout.h_activity_home_);
@@ -60,9 +57,6 @@ public class Home_Activity extends BaseActivity implements NavigationView.OnNavi
         initoolbar();
         /*TODO Create bottomMenu for  bottom menu bar*/
         bottomMenu();
-
-
-
     }
 
 

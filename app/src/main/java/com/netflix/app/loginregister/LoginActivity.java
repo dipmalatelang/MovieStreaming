@@ -31,19 +31,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.netflix.app.R;
+import com.netflix.app.home.model.User;
+import com.netflix.app.home.model.UsersResponse;
 import com.netflix.app.home.ui.Home_Activity;
 import com.netflix.app.utlis.BaseActivity;
 
 import com.netflix.app.utlis.LoginMvpView;
 import com.netflix.app.utlis.LoginPresenter;
-import com.netflix.app.utlis.RetrofitClient;
 import com.netflix.app.utlis.SharedPrefManager;
-
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, LoginMvpView {
@@ -60,7 +55,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private static final int RC_SIGN_IN = 9001;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -156,7 +151,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
                 break;
             case R.id.Btn_phone:
-//                startActivity(new Intent(this, PhoneActivity.class));
+                startActivity(new Intent(LoginActivity.this, PhoneActivity.class));
                 break;
             case R.id.Tv_ForgotPassword:
 //                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
@@ -302,9 +297,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
 
     @Override
-    public void loginSuccess(com.netflix.app.home.model.User user) {
+    public void loginSuccess(UsersResponse usersResponse) {
         toggleProgress(false);
-        if (user != null) {
+        if (usersResponse != null) {
 
             startActivity(new Intent(getApplicationContext(), Home_Activity.class));
             finish();

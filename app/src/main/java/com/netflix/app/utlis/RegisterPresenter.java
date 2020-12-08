@@ -1,6 +1,7 @@
 package com.netflix.app.utlis;
 
-import com.netflix.app.home.model.User;
+
+import com.netflix.app.home.model.Userpojo;
 
 import java.io.PrintStream;
 
@@ -12,14 +13,15 @@ public class RegisterPresenter {
 
     public RegisterMvpView mView;
 
+
     public RegisterPresenter(RegisterMvpView mView2) {
         this.mView = mView2;
     }
 
 
-    public void addUserAccount(User userProfile) {
-        RetrofitClient.getInstance().getApi().createUser(userProfile).enqueue(new Callback<User>() {
-            public void onResponse(Call<User> call, Response<User> response) {
+    public void addUserAccount(Userpojo userpojo) {
+        RetrofitClient.getInstance().getApi().createUser(userpojo).enqueue(new Callback<Userpojo>() {
+            public void onResponse(Call<Userpojo> call, Response<Userpojo> response) {
                 try {
                     PrintStream printStream = System.out;
                     printStream.println("response all ready" + response.body());
@@ -27,7 +29,7 @@ public class RegisterPresenter {
                     printStream2.println("response status ready" + response.code());
                     if (response.code() == 409) {
                         RegisterPresenter.this.mView.allreadyExits("");
-                    } else if (response.code() == 201) {
+                    } else if (response.code() == 200) {
                         System.out.println(response);
                         RegisterPresenter.this.mView.registerUsers(response.body());
                     }
@@ -36,7 +38,7 @@ public class RegisterPresenter {
                 }
             }
 
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<Userpojo> call, Throwable t) {
             }
         });
     }

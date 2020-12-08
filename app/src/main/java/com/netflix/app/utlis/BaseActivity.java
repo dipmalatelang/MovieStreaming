@@ -4,7 +4,6 @@ package com.netflix.app.utlis;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -19,8 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.netflix.app.R;
+
+import com.netflix.app.home.model.User;
 import com.netflix.app.home.ui.Home_Activity;
-import com.netflix.app.loginregister.User;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -87,6 +87,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
 
     }
+    public void setPhoneNumber(String id, String mobile, String mobileCode)
+    {
+        UserInstance.child(id).child("phone").setValue(mobile);
+        UserInstance.child(id).child("mobileCode").setValue(mobileCode);
+    }
 
     private void saveDetails(User user) {
         dismissProgressDialog();
@@ -127,12 +132,5 @@ public abstract class BaseActivity extends AppCompatActivity {
             progressLayout.setVisibility(View.GONE);
         }
     }
-
-
-
-
-
-
-
 
 }

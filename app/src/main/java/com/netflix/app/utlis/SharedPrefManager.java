@@ -3,7 +3,8 @@ package com.netflix.app.utlis;
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
-import com.netflix.app.home.model.User;
+import com.netflix.app.home.model.Userpojo;
+import com.netflix.app.home.model.UsersResponse;
 
 
 public class SharedPrefManager {
@@ -27,16 +28,16 @@ public class SharedPrefManager {
         return sharedPrefManager;
     }
 
-    public boolean update(User user) {
+    public boolean update(UsersResponse usersResponse) {
         SharedPreferences.Editor editor = mCtx.getSharedPreferences(SHARED_PREF_NAME, 0).edit();
-        editor.putString("id", new Gson().toJson((Object) user));
+        editor.putString("id", new Gson().toJson((Object) usersResponse));
         editor.commit();
         return true;
     }
 
-    public boolean userLogin(User user) {
+    public boolean userLogin(Userpojo usersResponse) {
         SharedPreferences.Editor editor = mCtx.getSharedPreferences(SHARED_PREF_NAME, 0).edit();
-        editor.putString("id", new Gson().toJson((Object) user));
+        editor.putString("id", new Gson().toJson((Object) usersResponse));
         editor.apply();
         return true;
     }
@@ -48,8 +49,8 @@ public class SharedPrefManager {
         return false;
     }
 
-    public User getUser() {
-        return (User) new Gson().fromJson(mCtx.getSharedPreferences(SHARED_PREF_NAME, 0).getString("id", (String) null), User.class);
+    public UsersResponse getUser() {
+        return (UsersResponse) new Gson().fromJson(mCtx.getSharedPreferences(SHARED_PREF_NAME, 0).getString("id", (String) null), UsersResponse.class);
     }
 
     public boolean logout() {

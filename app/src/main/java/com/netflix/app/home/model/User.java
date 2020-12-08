@@ -1,142 +1,194 @@
 package com.netflix.app.home.model;
 
-import com.google.gson.annotations.SerializedName;
 
-public class User {
-    @SerializedName("createdAt")
-    private String createdAt;
-    @SerializedName("email")
-    private String email;
-    @SerializedName("id")
 
-    /* renamed from: id */
-    private String f4402id;
-    @SerializedName("name")
-    private String name;
-    @SerializedName("password")
-    private String password;
-    @SerializedName("payments")
-    private UserPayment payments;
-    @SerializedName("phone")
-    private String phone;
-    @SerializedName("profileUri")
-    private String profileUri;
-    @SerializedName("suscriptionDate")
-    private String suscriptionDate;
-    @SerializedName("updatedAt")
-    private String updatedAt;
-    @SerializedName("userType")
-    private String userType;
+import java.io.Serializable;
 
-    public User(String string) {
+
+public class User implements Serializable {
+
+
+    public String getExpdate() {
+        return expdate;
     }
 
-    public User(String id, String name2, String email2, String password2, String phone2, String profileUri2, String createdAt2, String updatedAt2, String suscriptionDate2, UserPayment userPayments, String userType2) {
-        this.f4402id = id;
-        this.name = name2;
-        this.email = email2;
-        this.password = password2;
-        this.phone = phone2;
-        this.profileUri = profileUri2;
-        this.createdAt = createdAt2;
-        this.updatedAt = updatedAt2;
-        this.suscriptionDate = suscriptionDate2;
-        this.payments = userPayments;
-        this.userType = userType2;
-    }
-
-    public User(String valueOf, String toString, String toString1, String toString2, String mobile, String s, String toString3, String toString4, String toString5, UserPayment userPayment, String basic, String s1) {
-    }
-
-    public String getId() {
-        return this.f4402id;
-    }
-
-    public void setId(String id) {
-        this.f4402id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name2) {
-        this.name = name2;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email2) {
-        this.email = email2;
-    }
-
-    public String getPhone() {
-        return this.phone;
-    }
-
-    public void setPhone(String phone2) {
-        this.phone = phone2;
-    }
-
-    public String getProfileUri() {
-        return this.profileUri;
-    }
-
-    public void setProfileUri(String profileUri2) {
-        this.profileUri = profileUri2;
-    }
-
-    public String getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public void setCreatedAt(String createdAt2) {
-        this.createdAt = createdAt2;
-    }
-
-    public String getUpdatedAt() {
-        return this.updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt2) {
-        this.updatedAt = updatedAt2;
-    }
-
-    public String getSuscriptionDate() {
-        return this.suscriptionDate;
-    }
-
-    public void setSuscriptionDate(String suscriptionDate2) {
-        this.suscriptionDate = suscriptionDate2;
-    }
-
-    public UserPayment getUserPayments() {
-        return this.payments;
-    }
-
-    public void setUserPayments(UserPayment userPayments) {
-        this.payments = userPayments;
-    }
-
-    public String getUserType() {
-        return this.userType;
-    }
-
-    public void setUserType(String userType2) {
-        this.userType = userType2;
+    public void setExpdate(String expdate) {
+        this.expdate = expdate;
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
-    public void setPassword(String password2) {
-        this.password = password2;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getProfileUri() {
+        return profileUri;
+    }
+
+    public void setProfileUri(String profileUri) {
+        this.profileUri = profileUri;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getSuscriptionDate() {
+        return suscriptionDate;
+    }
+
+    public void setSuscriptionDate(String suscriptionDate) {
+        this.suscriptionDate = suscriptionDate;
+    }
+
+    public UserPayment getPayments() {
+        return payments;
+    }
+
+    public void setPayments(UserPayment payments) {
+        this.payments = payments;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGmail() {
+        return gmail;
+    }
+
+    public void setGmail(String gmail) {
+        this.gmail = gmail;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getMobilecode() {
+        return mobilecode;
+    }
+
+    public void setMobilecode(String mobilecode) {
+        this.mobilecode = mobilecode;
+    }
+
+    private  String expdate;
+    private  String password;
+    private String profileUri;
+    private  String createdAt;
+    private String updatedAt;
+    private String suscriptionDate;
+    private UserPayment payments;
+    private String userType;
+
+
+    private String id;
+    private String username;
+    private String email;
+    private String gmail;
+    private String name;
+    private String phone;
+
+    public User(String uid, String username, String toLowerCase, String s, String s1, String s2) {
+    }
+
+
+
+
+
+    public User(String id, String username, String email, String gmail, String name, String phone, String mobilecode) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.gmail = gmail;
+        this.name = name;
+        this.phone = phone;
+        this.mobilecode = mobilecode;
+    }
+
+    private String mobilecode;
+
+    public User(){
+
+    }
+
+
+    public User(String id, String name, String email, String password, String phone, String profileUri, String createdAt, String updatedAt, String suscriptionDate, UserPayment userPayments, String userType, String expdate) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.profileUri = profileUri;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.suscriptionDate = suscriptionDate;
+        this.payments = userPayments;
+        this.userType = userType;
+        this.expdate = expdate;
     }
 
     public String toString() {
-        return "User{id='" + this.f4402id + '\'' + ", name='" + this.name + '\'' + ", email='" + this.email + '\'' + ", phone='" + this.phone + '\'' + ", profileUri='" + this.profileUri + '\'' + ", createdAt='" + this.createdAt + '\'' + ", updatedAt='" + this.updatedAt + '\'' + ", suscriptionDate='" + this.suscriptionDate + '\'' + ", userPayments=" + this.payments + ", userType='" + this.userType + '\'' + '}';
+        return "User{id='" + this.id + '\'' + ", name='" + this.name + '\'' + ", email='" + this.email + '\'' + ", phone='" + this.phone + '\'' + ", profileUri='" + this.profileUri + '\'' + ", createdAt='" + this.createdAt + '\'' + ", updatedAt='" + this.updatedAt + '\'' + ", suscriptionDate='" + this.suscriptionDate + '\'' + ", userPayments=" + this.payments + ", userType='" + this.userType + '\'' + ", expdate='" + this.expdate + '\'' + '}';
     }
+
+
+
+
 }

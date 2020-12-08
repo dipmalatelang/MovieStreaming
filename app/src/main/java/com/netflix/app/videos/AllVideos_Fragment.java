@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.netflix.app.R;
 import com.netflix.app.databinding.FragmentAllVideosBinding;
 import com.netflix.app.home.adapter.MovieAdapter;
+
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.ui.MovieDetailActivity;
@@ -75,6 +76,8 @@ public class AllVideos_Fragment extends Fragment implements MovieItemClickListen
         binding.allVideosRecyclerview.setAdapter(movieAdapter);
         binding.allVideosRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
     }
+
+
 
 
     @Override

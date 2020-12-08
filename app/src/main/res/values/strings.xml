@@ -26,7 +26,7 @@
     <string name="code_verification">Code Verification</string>
     <string name="otp_message">Please wait while we automatically verify your number. if auto verification is not working you can enter the code received as well</string>
     <string name="enter_six_digit_code">Enter the 6 digit code we sent to</string>
-    <string name="verify">Verify</string>
+    <string name="verify">Verify Number</string>
     <string name="resend">Resend</string>
     <string name="sign_up_optional_msg">First, give us a few basic details about yourself an optional profile pic</string>
     <string name="fullname">Fullname</string>
@@ -49,6 +49,9 @@
     <string name="sign_in_with_google">Sign In with Google</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="add_phone">Enter Phone Number</string>
+    <string name="phone_verify">Verify Phone Number</string>
 
 
     <string-array name="Season">

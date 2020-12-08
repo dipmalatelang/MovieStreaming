@@ -12,8 +12,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,17 +21,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.netflix.app.R;
+
+import com.netflix.app.home.model.User;
 import com.netflix.app.home.model.UserPayment;
+import com.netflix.app.home.model.Userpojo;
 import com.netflix.app.home.ui.Home_Activity;
 import com.netflix.app.main.MainActivity;
+
 import com.netflix.app.utlis.BaseActivity;
 import com.netflix.app.utlis.RegisterMvpView;
 import com.netflix.app.utlis.RegisterPresenter;
 import com.netflix.app.utlis.SharedPrefManager;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 
 public class RegisterActivity extends BaseActivity implements RegisterMvpView {
@@ -41,8 +46,8 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
     private String username, email, password;
     private FirebaseAuth mAuth;
     private RelativeLayout ConstraintLayout;
-    private RegisterPresenter mPresenter;
 
+    private RegisterPresenter mPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,16 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
         Button btn_Signup = findViewById(R.id.Btn_Signup);
         ConstraintLayout = findViewById(R.id.ConstraintLayout);
         this.mPresenter = new RegisterPresenter(this);
+
         mAuth = FirebaseAuth.getInstance();
+//        mregisterViewModel = ViewModelProviders.of(this).get(RegisterViewModel.class);
+//        mregisterViewModel.init();
+//        mregisterViewModel.getUserData().observe(this, new Observer<UsersResponse>() {
+//            @Override
+//            public void onChanged(UsersResponse usersResponse) {
+//
+//            }
+//        });
 
 
         btn_Signup.setOnClickListener(v -> {
@@ -78,15 +92,11 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
                 snackBar(ConstraintLayout, "password must be at least 6 characters");
             } else {
                 registration(username, email, password);
-                com.netflix.app.home.model.User user = new com.netflix.app.home.model.User(String.valueOf((int) (((Math.random() * 90.0d) + 1000.0d) / 1000.0d)), username, email, password, "", "", new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), (UserPayment) null, "BASIC", "");
-                mPresenter.addUserAccount(user);
+                Userpojo userpojo = new Userpojo(String.valueOf((int) (((Math.random() * 90.0d) + 1000.0d) / 1000.0d)), username, email, password, "mobile", "", new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), (UserPayment) null, "BASIC", "");
+                mPresenter.addUserAccount(userpojo);
+                Log.i(TAG, "onCreateasasaaaaaa: " + userpojo.getEmail());
 
-
-
-            }
-
-
-        });
+            } });
     }
 
     private void registration(final String username, final String email, String password) {
@@ -94,7 +104,7 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NotNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             snackBar(ConstraintLayout, "Register Successfully..!");
                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -103,7 +113,6 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
                                 User user = new User(firebaseUser.getUid(), username, email, username.toLowerCase(), "", "", "");
                                 UserInstance.child(userid).setValue(user);
                                 startActivity(new Intent(RegisterActivity.this, Home_Activity.class));
-                                Log.d(TAG, "onComplete: homeactivity");
                             }
 
                         } else {
@@ -112,7 +121,7 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
                             } else {
                                 snackBar(ConstraintLayout, "Registeration Failed");
                             }
-                            dismissProgressDialog();
+//                            dismissProgressDialog();
                         }
 
                     }
@@ -205,30 +214,42 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
 
     @Override
     public void allreadyExits(String str) {
+        Toast.makeText(this, "User Already Exits", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
 
     }
 
-    @Override
-    public void registerUsers(com.netflix.app.home.model.User user) {
-
+    public void registerUsers(Userpojo user) {
         System.out.println(user.toString());
-        dismissProgressDialog();
+//        this.progressBar.setVisibility(8);
         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-//        DeviceUtils.showToastMessage(this, getString(R.string.register_successful_tag));
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//        DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
+        startActivity(new Intent(getApplicationContext(), Home_Activity.class));
         finish();
-        dismissProgressDialog();
+//        this.progressBar.setVisibility(8);
         if (user != null) {
             SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 //            DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), Home_Activity.class));
             finish();
             return;
         }
 //        DeviceUtils.showToastMessage(this, getString(C1734R.string.login_unsuccessful_tag));
+    }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+//    public void allreadyExits(String toString) {
+//        Log.d(TAG, "allreadyExits: "+getString(R.string.mobile_number_exits));
+////        this.progressBar.setVisibility(8);
+////        Toast.makeText(this, getString(R.string.app_name), Toast.LENGTH_SHORT).show();
+//    }
+}
+
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -240,4 +261,6 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
 //            }
 //        }
 //    }
-}
+
+
+

@@ -4,7 +4,8 @@ package com.netflix.app.networks;
 import com.netflix.app.home.model.AllDataPojo;
 import com.netflix.app.home.model.AllDataPojo.Ep;
 import com.netflix.app.home.model.TransactionModel;
-import com.netflix.app.home.model.User;
+import com.netflix.app.home.model.Userpojo;
+import com.netflix.app.home.model.UsersResponse;
 
 import java.util.List;
 import java.util.zip.Checksum;
@@ -22,10 +23,10 @@ public interface Api {
     Call<String> addFollow(@Path("channelId") Integer num, @Query("userId") String str);
 
     @GET("User/getValidateUser/{name}/{password}")
-    Call<User> checkLoginCredentials(@Path("name") String str, @Path("password") String str2);
+    Call<UsersResponse> checkLoginCredentials(@Path("name") String str, @Path("password") String str2);
 
     @POST("User/createUser")
-    Call<User> createUser(@Body User user);
+    Call<Userpojo> createUser(@Body Userpojo userpojo);
 
     @GET("Video/getAllVideo")
     Call<List<AllDataPojo>> getAllVideos();
@@ -43,7 +44,7 @@ public interface Api {
     Call<List<Ep>> getEpisode();
 
     @GET("User/getUserByID/{id}/")
-    Call<User> getU(@Path("id") String str);
+    Call<UsersResponse> getU(@Path("id") String str);
 
     @GET("Video/getVideoByChannel/{id}/")
     Call<List<AllDataPojo>> getVideoByChannelId(@Path("id") Integer num);
@@ -55,5 +56,7 @@ public interface Api {
     Call<String> unFollow(@Path("channelId") Integer num, @Query("userId") String str);
 
     @POST("User/addTransction")
-    Call<User> userTransaction(@Body TransactionModel transactionModel);
+    Call<UsersResponse> userTransaction(@Body TransactionModel transactionModel);
+
+    Call<UsersResponse> createUser();
 }
