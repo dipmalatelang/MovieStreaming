@@ -9,7 +9,6 @@ public class User {
     @SerializedName("email")
     private String email;
     @SerializedName("id")
-
     private String id;
     @SerializedName("name")
     private String name;

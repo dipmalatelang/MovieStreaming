@@ -1,6 +1,8 @@
 package com.netflix.app.loginregister;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,8 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 
 import com.google.android.gms.auth.api.Auth;
@@ -60,10 +64,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        }
+//        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+//        }
         mPresenter = new LoginPresenter(this);
         ConstraintLayout = findViewById(R.id.ConstraintLayout);
         Et_Email = findViewById(R.id.Et_Email);
@@ -126,7 +130,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.Btn_gmail:
-                showProgressDialog();
+//                showProgressDialog();
                 signIn();
                 break;
 
@@ -179,7 +183,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         updateUI(mAuth.getCurrentUser());
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         if (firebaseUser != null) {
-
                             saveLoginDetails(txt_email, txt_password);
                         }
                     } else {
@@ -210,26 +213,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     /*TODO Gmail Sign In*/
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
 //        mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 if (account != null) {
+                    Log.d("GALALAL",""+account.getDisplayName());
                     firebaseAuthWithGoogle(account);
-                    setPref(this, "username", account.getDisplayName());
+
                 } else {
                     snackBar(ConstraintLayout, "Google sign in Failed");
                 }
 
             } catch (ApiException e) {
-                dismissProgressDialog();
                 snackBar(ConstraintLayout, "Google sign in failed");
                 Log.w(TAG, "Google sign in failed", e);
             }
@@ -266,30 +267,60 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 //    }
 
     /*TODO Gmail Login*/
+//    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+//        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+//        mAuth.signInWithCredential(credential)
+//                .addOnCompleteListener(this, task -> {
+//                    if (task.isSuccessful()) {
+//                        Log.d(TAG, "createUserWithEmail:success");
+//                        FirebaseUser fuser = mAuth.getCurrentUser();
+//                        if (fuser != null) {
+//                            User user = new User(fuser.getUid(), fuser.getDisplayName(), fuser.getEmail().toLowerCase(), fuser.getEmail(), fuser.getDisplayName().toLowerCase(), fuser.getPhoneNumber(), fuser.getProviderId());
+//                            UserInstance.child(fuser.getUid()).setValue(user);
+//                            updateUI(fuser);
+//                            dismissProgressDialog();
+//                        }
+//
+//                    } else {
+//                        dismissProgressDialog();
+//                        snackBar(ConstraintLayout, "Sign In Failed");
+//                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+//                        updateUI(null);
+//                    }
+//
+//                });
+//    }
+
+
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "createUserWithEmail:success");
-
                         FirebaseUser fuser = mAuth.getCurrentUser();
                         if (fuser != null) {
                             User user = new User(fuser.getUid(), fuser.getDisplayName(), fuser.getEmail().toLowerCase(), fuser.getEmail(), fuser.getDisplayName().toLowerCase(), fuser.getPhoneNumber(), fuser.getProviderId());
                             UserInstance.child(fuser.getUid()).setValue(user);
                             updateUI(fuser);
-                            dismissProgressDialog();
+//                            if (!getPref(this,"username").equalsIgnoreCase(fuser.getDisplayName())){
+//                                setPref(this,"firstinstall","null");
+//                            }
+                            setPref(this, "username", fuser.getDisplayName());
+                            setPref(this,"LoginSuccess","true");
+
+                            startActivity(new Intent(this, Home_Activity.class));
+                            this.finish();
                         }
 
                     } else {
-                        dismissProgressDialog();
                         snackBar(ConstraintLayout, "Sign In Failed");
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
-//                        updateUI(null);
                     }
 
                 });
     }
+
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
