@@ -71,7 +71,7 @@ public class SliderPagerAdapter extends PagerAdapter {
 
                 favDB.insertIntoTheDatabase("",list.get(position).getThumbs(),list.get(position).getThumbs(),"1");
 
-                Toast.makeText(mContext, "Favourite has been Saved  "+ position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Favourite has been Saved  ", Toast.LENGTH_SHORT).show();
 
             }
         });

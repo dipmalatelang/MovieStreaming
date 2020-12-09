@@ -118,7 +118,7 @@ public class AllVideos_Fragment extends Fragment implements MovieItemClickListen
         startActivity(intent, options.toBundle());
         // i l make a simple test to see if the click works
 
-        Toast.makeText(getContext(), "item clicked : " + video.getChannelId(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), "item clicked : " + video.getChannelId(), Toast.LENGTH_LONG).show();
         // it works great
 
     }

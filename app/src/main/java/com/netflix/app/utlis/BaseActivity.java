@@ -14,10 +14,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.work.Data;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
+
 
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.snackbar.Snackbar;
@@ -145,9 +142,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                .build();
 //        WorkManager.getInstance(this).enqueue(workRequest);
 //    }
-    private Data createInputData(String value) {
-        return new Data.Builder().putString("keyUserName", value).build();
-    }
+
     public void sendDataToClass(String mobile_no, String code, Class nextClass, String activityName) {
 
 //            saveContacts(mobile_no);

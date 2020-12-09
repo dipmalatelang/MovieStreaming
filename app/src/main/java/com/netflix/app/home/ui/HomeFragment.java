@@ -289,7 +289,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         switch (item.getItemId()) {
             case R.id.t_upcoming:
                 startActivity(new Intent(getContext(), Upcoming_Activity.class));
-                Toast.makeText(getContext(), "click upcoming", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "click upcoming", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -348,7 +348,7 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
 
         startActivity(intent, options.toBundle());
         // i l make a simple test to see if the click works
-        Toast.makeText(getContext(), "item clicked : " + video.getChannelId(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), "item clicked : " + video.getChannelId(), Toast.LENGTH_LONG).show();
 
         SharedPrefs.getInstance().addString(GETVIDEOTYPE, video.getVideoType());
         Log.i("TAG", "VVVVVVVVVVVVVVVVVVVVVHome: "+video.getVideoType());

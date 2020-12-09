@@ -114,7 +114,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
                 Log.d("TAG", "onClickvideo: " + videoUrl);
                 Intent intent = new Intent(MovieDetailActivity.this, PlayMovieActivity.class);
                 startActivity(intent);
-                Toast.makeText(MovieDetailActivity.this, "Click movie detail activity", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -123,16 +122,16 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Toast.makeText(MovieDetailActivity.this, "chceked", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MovieDetailActivity.this, "chceked", Toast.LENGTH_SHORT).show();
                     binding.btnFev.setBackgroundResource(R.drawable.ic_heart_shape_silhouette);
                     favDB  = new FavDB(MovieDetailActivity.this);
                     String favimg =getIntent().getExtras().getString("imgURL");
                     favDB.insertIntoTheDatabase("",favimg,favimg,"1");
                     Log.i("TAG", "ffffffffffffffff: "+favimg);
-                    Toast.makeText(MovieDetailActivity.this, "Favourite has been Saved  "+ favimg, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MovieDetailActivity.this, "Favourite has been Saved  "+ favimg, Toast.LENGTH_SHORT).show();
                 } else {
                     binding.btnFev.setBackgroundResource(R.drawable.ic_fav_unselected);
-                    Toast.makeText(MovieDetailActivity.this, "unchceked", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MovieDetailActivity.this, "unchceked", Toast.LENGTH_SHORT).show();
 
                     //Show "Removed from favourite" toast
                 }

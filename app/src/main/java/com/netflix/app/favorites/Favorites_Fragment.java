@@ -86,7 +86,7 @@ public class Favorites_Fragment extends Fragment  {
                 String id = cursor.getString(cursor.getColumnIndex(FavDB.KEY_ID));
                 String image = cursor.getString(cursor.getColumnIndex(FavDB.ITEM_IMAGE));
                 FavItem favItem = new FavItem(title, id, image);
-                Toast.makeText(getContext(), "fabname"+title, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "fabname"+title, Toast.LENGTH_SHORT).show();
                 favItemList.add(favItem);
             }
         } finally {

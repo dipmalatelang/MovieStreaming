@@ -97,7 +97,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.MyViewHo
                     SharedPrefs.getInstance().addString(VIDEO_BANNER_Name,bannername);
                     mcontext.startActivity(new Intent(mcontext, PlayMovieActivity.class));
                     Log.d("TAG", "onClickvideo: "+bannername);
-                    Toast.makeText(mcontext, "Click "+mlist.get(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mcontext, "Click "+mlist.get(getAdapterPosition()), Toast.LENGTH_SHORT).show();
 
                 }
             });
