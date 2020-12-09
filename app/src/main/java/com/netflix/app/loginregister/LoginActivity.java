@@ -197,9 +197,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     /*TODO Check User Status*/
-    private void updateUI(FirebaseUser currentUser) {
+    public void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            showProgressDialog();
+//            showProgressDialog();
             retriveUserDetails(currentUser);
         }
     }

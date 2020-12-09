@@ -1,10 +1,9 @@
 package com.netflix.app.loginregister;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,131 +21,60 @@ import com.netflix.app.utlis.BaseActivity;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
-
 public class PhoneActivity extends BaseActivity {
-
-
-    EditText edNumber;
-    Button btnSub;
-    Spinner spinner;
+    private Spinner Sp_CountryCode;
+    private EditText Et_PhoneNumber;
     private String code;
-
-    String mobile,mobileCode;
-    ArrayAdapter<State> StateAdapter;
-    State[] StateSpinner;
-
+    private ArrayAdapter<State> StateAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_phone);
-        spinner  = findViewById(R.id.spinner);
-        btnSub = findViewById(R.id.btn_sub);
-        edNumber = findViewById(R.id.ed_number);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_phone);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_phone);
+        Sp_CountryCode = findViewById(R.id.Sp_CountryCode);
+        Et_PhoneNumber = findViewById(R.id.Et_PhoneNumber);
+        Button btn_Next = findViewById(R.id.Btn_Next);
 
-        StateSpinner = new State[]{
+        State[] stateSpinner = new State[]{
                 new State("+91", "India"),
 
         };
-
         setPopup1();
 
-        StateAdapter = new ArrayAdapter<>(this, R.layout.spinner_text, StateSpinner);
+        StateAdapter = new ArrayAdapter<>(this, R.layout.spinner_text, stateSpinner);
         StateAdapter.setDropDownViewResource(R.layout.spinner_text);
-        spinner.setAdapter(StateAdapter);
+        Sp_CountryCode.setAdapter(StateAdapter);
 
-
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Sp_CountryCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
-                // Here you get the current item (a User object) that is selected by its position
                 State user = StateAdapter.getItem(position);
-                // Here you can do the action you want to...
-                code=user.getCode();
-                ((TextView) view).setText(user.getCode());
-                ((TextView) view).setTextColor(getResources().getColor(R.color.color_text_white));
-//                Toast.makeText(EditPhoneActivity.this, ""+user.getCode(), Toast.LENGTH_SHORT).show();
-
+                if (user != null){
+                    code=user.getCode();
+                    ((TextView) view).setText(user.getCode());
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.colorWhite));
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapter) {  }
         });
-        btnSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String mobile = edNumber.getText().toString().trim();
 
-                if (mobile.isEmpty() || mobile.length() < 10) {
-                    edNumber.setError("Enter a valid mobile");
-                    edNumber.requestFocus();
-                    return;
-                }
-
-                Intent intent = new Intent(PhoneActivity.this, VerifyPhoneActivity.class);
-                intent.putExtra("mobileCode",code);
-                intent.putExtra("mobile", mobile);
-                startActivity(intent);
-                finish();
+        btn_Next.setOnClickListener(v -> {
+            String mobile_no = Et_PhoneNumber.getText().toString();
+            if (mobile_no.isEmpty() || mobile_no.length() < 10) {
+                Et_PhoneNumber.setError("Enter Valid Mobile Number");
+                Et_PhoneNumber.requestFocus();
+                return;
             }
+            sendDataToClass(mobile_no,code,VerifyPhoneActivity.class,"PhoneActivity");
         });
-
-        SharedPreferences sharedPreferences = getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
-
-        if (sharedPreferences.contains("Phone")) {
-            mobile = (sharedPreferences.getString("Phone", ""));
-            mobileCode=sharedPreferences.getString("mobileCode","");
-            if (!mobile.equalsIgnoreCase("")) {
-                edNumber.setEnabled(false);
-                spinner.setEnabled(false);
-                btnSub.setClickable(false);
-                edNumber.setText(mobile);
-                spinner.setSelection(getPos(mobileCode));
-
-            } else {
-                edNumber.setEnabled(true);
-                spinner.setEnabled(true);
-                btnSub.setClickable(true);
-            }
-
-        }
-
-
-
     }
-
-    int pos=0;
-    private int getPos(String s) {
-        for(int i=0;i<StateSpinner.length;i++)
-        {
-            if(StateSpinner[i].getCode().equalsIgnoreCase(s))
-            {
-                pos=i;
-            }
-        }
-        return pos;
-    }
-
-    private void setPopup1() {
-        Field popup1;
-        try {
-            popup1 = Spinner.class.getDeclaredField("mPopup");
-            popup1.setAccessible(true);
-
-            ListPopupWindow StatepopupWindow = (ListPopupWindow) popup1.get(spinner);
-
-            Objects.requireNonNull(StatepopupWindow).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        } catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
-
-        }
-    }
-
-
-
 
     private class State {
         private String code;
@@ -168,6 +96,21 @@ public class PhoneActivity extends BaseActivity {
         @Override
         public String toString() {
             return this.statename;
+
+        }
+    }
+
+    private void setPopup1() {
+        Field popup1;
+        try {
+            popup1 = Spinner.class.getDeclaredField("mPopup");
+            popup1.setAccessible(true);
+
+            ListPopupWindow StatepopupWindow = (ListPopupWindow) popup1.get(Sp_CountryCode);
+
+            Objects.requireNonNull(StatepopupWindow).setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        } catch (NoClassDefFoundError | ClassCastException | NoSuchFieldException | IllegalAccessException e) {
 
         }
     }

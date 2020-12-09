@@ -1,17 +1,30 @@
 package com.netflix.app.utlis;
 
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
+import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +33,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.netflix.app.R;
 import com.netflix.app.home.model.User;
 import com.netflix.app.home.ui.Home_Activity;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -121,7 +138,116 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         }
     }
+//    private void saveContacts(String user) {
+//        OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(ContactWork.class)
+//                .setInputData(createInputData(user))
+//                .setInitialDelay(2, TimeUnit.SECONDS)
+//                .build();
+//        WorkManager.getInstance(this).enqueue(workRequest);
+//    }
+    private Data createInputData(String value) {
+        return new Data.Builder().putString("keyUserName", value).build();
+    }
+    public void sendDataToClass(String mobile_no, String code, Class nextClass, String activityName) {
 
+//            saveContacts(mobile_no);
+            if (!getPref(this,"username").equalsIgnoreCase(mobile_no)){
+                setPref(this,"firstinstall","null");
+            }
+            setPref(this, "username", mobile_no);
+
+            Intent intent = new Intent(this, nextClass);
+            intent.putExtra("mobileCode", code);
+            intent.putExtra("mobile", mobile_no);
+            intent.putExtra("activityName", activityName);
+            startActivity(intent);
+            finish();
+
+    }
+
+    public void sendVerificationCode(String mobile, String mobileCode, PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                mobileCode + mobile,
+                60,
+                TimeUnit.SECONDS,
+                this,
+                mCallbacks);
+
+        Log.d("FALALA", "Sent");
+    }
+    public void verifyVerificationCode(FirebaseAuth mAuth, String mVerificationId, String code, String mobileCode, String mobile, ViewGroup Cl_Verify, String activityName) {
+        //creating the credential
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+        Log.d(TAG, "verifyVerificationCode: " + activityName);
+        if (activityName.equalsIgnoreCase("Codeactivity")) {
+            SharedPreferences shared = getSharedPreferences("LoginDetails", MODE_PRIVATE);
+            SharedPreferences.Editor editor = shared.edit();
+            editor.putString("Phone", mobile);
+            editor.putString("phoneCode", mobileCode);
+            editor.putString("securityType", "2Auth");
+            editor.putString("securityCode", "");
+            editor.apply();
+        }
+
+        phoneLogin(mAuth, credential, mobile, Cl_Verify, activityName);
+    }
+    private void phoneLogin(FirebaseAuth mAuth, PhoneAuthCredential credential, String mobile, ViewGroup Cl_Verify, String activityName) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+
+                        setPref(this, "LoginSuccess", "true");
+                        setPref(this, "NormalLogin", "false");
+                        startActivity(new Intent(this, Home_Activity.class));
+                        this.finishAffinity();
+                        Log.d(TAG, "phoneLogin: " + activityName);
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+                        if (firebaseUser != null) {
+                            Log.d("GAHHAA", "" + mobile);
+                            User user = new User(firebaseUser.getUid(),"", firebaseUser.getEmail(), "", mobile, currentDateTimeString, "", "2Auth", "");
+                           UserInstance.child(firebaseUser.getUid()).setValue(user);
+                        }
+
+                        Log.d(TAG, "phoneLogin: " + task.isSuccessful());
+
+
+                        if (task.getResult() != null) {
+                            FirebaseUser user = task.getResult().getUser();
+
+                            if (user != null) {
+                                UserInstance.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
+                                        if (!dataSnapshot.exists()) {
+                                            updateUI(user);
+                                        } else {
+                                            updateUI(user);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        }
+
+
+                    } else {
+                        if (task.getException() != null) {
+                            snackBar(Cl_Verify, "" + task.getException().getMessage());
+                        }
+                    }
+                });
+    }
+
+    public void updateUI(FirebaseUser currentUser) {
+        if (currentUser != null) {
+            retriveUserDetails(currentUser);
+        }
+    }
 
     public void toggleProgress(boolean flag) {
         ConstraintLayout progressLayout = (ConstraintLayout) findViewById(R.id.layout_progress_bar);
