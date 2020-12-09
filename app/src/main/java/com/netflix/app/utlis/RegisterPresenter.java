@@ -1,9 +1,9 @@
 package com.netflix.app.utlis;
 
 
-import com.netflix.app.home.model.Userpojo;
+import android.util.Log;
 
-import java.io.PrintStream;
+import com.netflix.app.home.model.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,29 +17,49 @@ public class RegisterPresenter {
     public RegisterPresenter(RegisterMvpView mView2) {
         this.mView = mView2;
     }
+    public void adduser(User user) {
+        RetrofitClient.getInstance().getApi().createUser(user).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.code() == 200) {
+                    RegisterPresenter.this.mView.registerUsers(response.body());
+                    Log.d("TAG", "onResponse: " + response.code());
 
-
-    public void addUserAccount(Userpojo userpojo) {
-        RetrofitClient.getInstance().getApi().createUser(userpojo).enqueue(new Callback<Userpojo>() {
-            public void onResponse(Call<Userpojo> call, Response<Userpojo> response) {
-                try {
-                    PrintStream printStream = System.out;
-                    printStream.println("response all ready" + response.body());
-                    PrintStream printStream2 = System.out;
-                    printStream2.println("response status ready" + response.code());
-                    if (response.code() == 409) {
-                        RegisterPresenter.this.mView.allreadyExits("");
-                    } else if (response.code() == 200) {
-                        System.out.println(response);
-                        RegisterPresenter.this.mView.registerUsers(response.body());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } else if (response.code() == 409){
+                    RegisterPresenter.this.mView.allreadyExits("");
+                    Log.d("TAG", "onResponse: " + response.code());
                 }
             }
 
-            public void onFailure(Call<Userpojo> call, Throwable t) {
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("TAG", "onFailure: " + t);
             }
         });
     }
+
+
+//    public void addUserAccount(Userpojo userpojo) {
+//        RetrofitClient.getInstance().getApi().createUser(userpojo).enqueue(new Callback<Userpojo>() {
+//            public void onResponse(Call<Userpojo> call, Response<Userpojo> response) {
+//                try {
+//                    PrintStream printStream = System.out;
+//                    printStream.println("response all ready" + response.body());
+//                    PrintStream printStream2 = System.out;
+//                    printStream2.println("response status ready" + response.code());
+//                    if (response.code() == 409) {
+//                        RegisterPresenter.this.mView.allreadyExits("");
+//                    } else if (response.code() == 200) {
+//                        System.out.println(response);
+//                        RegisterPresenter.this.mView.registerUsers(response.body());
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            public void onFailure(Call<Userpojo> call, Throwable t) {
+//            }
+//        });
+//    }
 }

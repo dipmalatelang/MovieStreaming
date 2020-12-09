@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.netflix.app.R;
-
 import com.netflix.app.home.model.User;
 import com.netflix.app.home.ui.Home_Activity;
 

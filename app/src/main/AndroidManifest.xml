@@ -61,6 +61,8 @@
         <activity android:name=".loginregister.PhoneActivity"/>
         <activity android:name=".loginregister.VerifyPhoneActivity"/>
 
+
+
     </application>
 
 </manifest>

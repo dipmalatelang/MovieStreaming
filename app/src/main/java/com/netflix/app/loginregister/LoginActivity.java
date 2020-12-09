@@ -32,7 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.netflix.app.R;
 import com.netflix.app.home.model.User;
-import com.netflix.app.home.model.UsersResponse;
+
 import com.netflix.app.home.ui.Home_Activity;
 import com.netflix.app.utlis.BaseActivity;
 
@@ -145,8 +145,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 } else {
                     showProgressDialog();
                     emailLogin(email, password);
-                    mPresenter.checkLoginCredentials(email, password);
+                    mPresenter.LoginCredentials(email, password);
                     setPref(this, "username", email);
+
                 }
 
                 break;
@@ -176,7 +177,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     if (task.isSuccessful()) {
                         dismissProgressDialog();
                         updateUI(mAuth.getCurrentUser());
-
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         if (firebaseUser != null) {
 
@@ -271,11 +271,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+                        Log.d(TAG, "createUserWithEmail:success");
+
                         FirebaseUser fuser = mAuth.getCurrentUser();
                         if (fuser != null) {
                             User user = new User(fuser.getUid(), fuser.getDisplayName(), fuser.getEmail().toLowerCase(), fuser.getEmail(), fuser.getDisplayName().toLowerCase(), fuser.getPhoneNumber(), fuser.getProviderId());
                             UserInstance.child(fuser.getUid()).setValue(user);
-
                             updateUI(fuser);
                             dismissProgressDialog();
                         }
@@ -284,6 +285,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         dismissProgressDialog();
                         snackBar(ConstraintLayout, "Sign In Failed");
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
+//                        updateUI(null);
                     }
 
                 });
@@ -296,22 +298,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    @Override
-    public void loginSuccess(UsersResponse usersResponse) {
-        toggleProgress(false);
-        if (usersResponse != null) {
-
-            startActivity(new Intent(getApplicationContext(), Home_Activity.class));
-            finish();
-            return;
-        }
-
-    }
 
 
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    public void loginSuccess(User usersResponse) {
+        dismissProgressDialog();
+        if (usersResponse != null) {
+            startActivity(new Intent(getApplicationContext(), Home_Activity.class));
+            finish();
+            return;
+       }
     }
 }

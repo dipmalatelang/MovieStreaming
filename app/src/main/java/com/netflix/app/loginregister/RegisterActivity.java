@@ -21,22 +21,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.netflix.app.R;
-
 import com.netflix.app.home.model.User;
-import com.netflix.app.home.model.UserPayment;
-import com.netflix.app.home.model.Userpojo;
 import com.netflix.app.home.ui.Home_Activity;
 import com.netflix.app.main.MainActivity;
-
 import com.netflix.app.utlis.BaseActivity;
 import com.netflix.app.utlis.RegisterMvpView;
 import com.netflix.app.utlis.RegisterPresenter;
 import com.netflix.app.utlis.SharedPrefManager;
 
-import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.jetbrains.annotations.NotNull;
 
 
 public class RegisterActivity extends BaseActivity implements RegisterMvpView {
@@ -92,9 +86,14 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
                 snackBar(ConstraintLayout, "password must be at least 6 characters");
             } else {
                 registration(username, email, password);
-                Userpojo userpojo = new Userpojo(String.valueOf((int) (((Math.random() * 90.0d) + 1000.0d) / 1000.0d)), username, email, password, "mobile", "", new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), (UserPayment) null, "BASIC", "");
-                mPresenter.addUserAccount(userpojo);
-                Log.i(TAG, "onCreateasasaaaaaa: " + userpojo.getEmail());
+//                Userpojo userpojo = new Userpojo(String.valueOf((int) (((Math.random() * 90.0d) + 1000.0d) / 1000.0d)), username, email, password, "mobile", "", new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), (UserPayment) null, "BASIC", "");
+//                mPresenter.addUserAccount(userpojo);
+
+                User user = new User("", username, email, password, "mobile", "", "", "", "", null, "BASIC");
+
+                mPresenter.adduser(user);
+
+                Log.i(TAG, "onCreateasasaaaaaa: " + user.getEmail());
 
             } });
     }
@@ -220,14 +219,36 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
 
     }
 
-    public void registerUsers(Userpojo user) {
-        System.out.println(user.toString());
-//        this.progressBar.setVisibility(8);
+//    public void registerUsers(User user) {
+//        System.out.println(user.toString());
+////        this.progressBar.setVisibility(8);
+//        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+////        DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
+//        startActivity(new Intent(getApplicationContext(), Home_Activity.class));
+//        finish();
+////        this.progressBar.setVisibility(8);
+//        if (user != null) {
+//            SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+////            DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
+//            startActivity(new Intent(getApplicationContext(), Home_Activity.class));
+//            finish();
+//            return;
+//        }
+////        DeviceUtils.showToastMessage(this, getString(C1734R.string.login_unsuccessful_tag));
+//    }
+
+
+
+    @Override
+    public void registerUsers(User user) {
+
+        Toast.makeText(this, "successfully", Toast.LENGTH_SHORT).show();
+//        dismissProgressDialog();
         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-//        DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
+//        DeviceUtils.showToastMessage(this, getString(R.string.register_successful_tag));
         startActivity(new Intent(getApplicationContext(), Home_Activity.class));
         finish();
-//        this.progressBar.setVisibility(8);
+//        dismissProgressDialog();
         if (user != null) {
             SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
 //            DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
@@ -236,10 +257,7 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
             return;
         }
 //        DeviceUtils.showToastMessage(this, getString(C1734R.string.login_unsuccessful_tag));
-    }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
@@ -251,16 +269,6 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
 }
 
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_PERMISSION_SETTING) {
-//            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-//                    && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)) {
-//                Toast.makeText(this, "Thank You For Permission", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 
 
 

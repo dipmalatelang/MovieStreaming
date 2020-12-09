@@ -1,7 +1,10 @@
 package com.netflix.app.utlis;
 
 
-import com.netflix.app.home.model.UsersResponse;
+import android.util.Log;
+
+import com.netflix.app.home.model.User;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,18 +19,24 @@ public class LoginPresenter {
     }
 
 
-    public void checkLoginCredentials(String email, String password) {
-        RetrofitClient.getInstance().getApi().checkLoginCredentials(email, password).enqueue(new Callback<UsersResponse>() {
-            public void onResponse(Call<UsersResponse> call, Response<UsersResponse> response) {
-                try {
+    public void LoginCredentials(String email, String password){
+        RetrofitClient.getInstance().getApi().checkLoginCredentials(email , password).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+
+                if(response.code() == 200){
+                    Log.d("TAG", "onResponseLoging: "+response.code());
                     LoginPresenter.this.mView.loginSuccess(response.body());
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }
+                else {
+                    Log.d("TAG", "onResponseLoging: "+response.code());
                 }
             }
 
-            public void onFailure(Call<UsersResponse> call, Throwable t) {
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("TAG", "onResponseLoging: "+t);
             }
         });
-    }
-}
+    }}
