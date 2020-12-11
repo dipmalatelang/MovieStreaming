@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.netflix.app.R;
@@ -172,7 +173,7 @@ public class VerifyPhoneActivity extends BaseActivity {
                         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                         if (firebaseUser != null) {
                             User user = new User(firebaseUser.getUid(), firebaseUser.getEmail(), "", mobile, currentDateTimeString, "", "2Auth", "", "");
-                            UserInstance.child(firebaseUser.getUid()).setValue(user);
+                            UsersInstance.child(firebaseUser.getUid()).setValue(user);
 //                            DeviceDetails deviceDetails = new DeviceDetails(AndroidId, DeviceId, IMEI, meid, serialNumber, networkCountryIso, simCountryIso, networkOperatorName, simOperatorName, line1Number, model, device, brand_Id, manufacturer, product, type, host, hardware, base_OS, codename, release, security_Patch, incrimental);
 //                            GlobalConstants.DeviceDetailsInstance.child(firebaseUser.getUid()).setValue(deviceDetails);
                         }
@@ -181,9 +182,9 @@ public class VerifyPhoneActivity extends BaseActivity {
                             FirebaseUser user = task.getResult().getUser();
 
                             if (user != null) {
-                                UserInstance.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                UsersInstance.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
-                                    public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (!dataSnapshot.exists()) {
                                             updateUI(user);
                                         } else {

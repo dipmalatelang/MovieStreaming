@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "75231649097",
-    "firebase_url": "https://videostreamingapp-8258b.firebaseio.com",
-    "project_id": "videostreamingapp-8258b",
-    "storage_bucket": "videostreamingapp-8258b.appspot.com"
+    "project_number": "785488910149",
+    "firebase_url": "https://rtfs-4a754-default-rtdb.firebaseio.com",
+    "project_id": "rtfs-4a754",
+    "storage_bucket": "rtfs-4a754.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:75231649097:android:5ca5b853b9b573bc6e4e98",
+        "mobilesdk_app_id": "1:785488910149:android:e6efa1d45b1e447de0502c",
         "android_client_info": {
           "package_name": "com.netflix.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "75231649097-cskhu5q039n3i3i3m5rn0rbj2s6lhtbm.apps.googleusercontent.com",
+          "client_id": "785488910149-jmo5102tg209n66cm31ov3c4mt6jv6gm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.netflix.app",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "75231649097-v7cs204o9b6etne98crtrp5snbpd8ldl.apps.googleusercontent.com",
+          "client_id": "785488910149-fhbm90quf74hta9ed3ppe6tacsig3mqt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCZFcUXtqiba5zptrMzo7HLtwec29JkAu0"
+          "current_key": "AIzaSyAxuNzJcOSslkyY-SRIPZAq6CrFFngzS4s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "75231649097-v7cs204o9b6etne98crtrp5snbpd8ldl.apps.googleusercontent.com",
+              "client_id": "785488910149-fhbm90quf74hta9ed3ppe6tacsig3mqt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

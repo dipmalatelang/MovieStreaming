@@ -58,6 +58,7 @@ public class Profile_Activity extends BaseActivity implements View.OnClickListen
                 String password = binding.EtPassword.getText().toString().trim();
                 String email = binding.EtEmail.getText().toString().trim();
 
+
                 if(TextUtils.isEmpty(binding.EtName.getText().toString().trim())){
                     snackBar(binding.relativeLayoutProfile,"Enter your Name");
                 }

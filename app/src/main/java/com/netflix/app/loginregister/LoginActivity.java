@@ -64,10 +64,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-//        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-//            startActivity(new Intent(this, LoginActivity.class));
-//            finish();
-//        }
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
         mPresenter = new LoginPresenter(this);
         ConstraintLayout = findViewById(R.id.ConstraintLayout);
         Et_Email = findViewById(R.id.Et_Email);
@@ -130,7 +130,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.Btn_gmail:
-//                showProgressDialog();
                 signIn();
                 break;
 
@@ -199,7 +198,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     /*TODO Check User Status*/
     public void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-//            showProgressDialog();
+            showProgressDialog();
             retriveUserDetails(currentUser);
         }
     }
@@ -267,29 +266,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 //    }
 
     /*TODO Gmail Login*/
-//    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-//        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, task -> {
-//                    if (task.isSuccessful()) {
-//                        Log.d(TAG, "createUserWithEmail:success");
-//                        FirebaseUser fuser = mAuth.getCurrentUser();
-//                        if (fuser != null) {
-//                            User user = new User(fuser.getUid(), fuser.getDisplayName(), fuser.getEmail().toLowerCase(), fuser.getEmail(), fuser.getDisplayName().toLowerCase(), fuser.getPhoneNumber(), fuser.getProviderId());
-//                            UserInstance.child(fuser.getUid()).setValue(user);
-//                            updateUI(fuser);
-//                            dismissProgressDialog();
-//                        }
-//
-//                    } else {
-//                        dismissProgressDialog();
-//                        snackBar(ConstraintLayout, "Sign In Failed");
-//                        Log.w(TAG, "signInWithCredential:failure", task.getException());
-//                        updateUI(null);
-//                    }
-//
-//                });
-//    }
+
 
 
 
@@ -298,10 +275,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
+
+
                         FirebaseUser fuser = mAuth.getCurrentUser();
+                        String userid = fuser.getUid();
                         if (fuser != null) {
                             User user = new User(fuser.getUid(), fuser.getDisplayName(), fuser.getEmail().toLowerCase(), fuser.getEmail(), fuser.getDisplayName().toLowerCase(), fuser.getPhoneNumber(), fuser.getProviderId());
-                            UserInstance.child(fuser.getUid()).setValue(user);
+                            UsersInstance.child(userid).setValue(user);
+                            Log.d(TAG, "firebaseAuthWithGooglevalue: "+fuser.getUid());
                             updateUI(fuser);
 //                            if (!getPref(this,"username").equalsIgnoreCase(fuser.getDisplayName())){
 //                                setPref(this,"firstinstall","null");
@@ -328,10 +309,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         Log.d(TAG, "onConnectionFailed: " + connectionResult);
     }
 
-
-
-
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -346,4 +323,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             return;
        }
     }
+
 }

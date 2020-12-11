@@ -110,7 +110,7 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
                             if (firebaseUser != null) {
                                 String userid = firebaseUser.getUid();
                                 User user = new User(firebaseUser.getUid(), username, email, username.toLowerCase(), "", "", "");
-                                UserInstance.child(userid).setValue(user);
+                                UsersInstance.child(userid).setValue(user);
                                 startActivity(new Intent(RegisterActivity.this, Home_Activity.class));
                             }
 
@@ -214,7 +214,7 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
     @Override
     public void allreadyExits(String str) {
         Toast.makeText(this, "User Already Exits", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), Home_Activity.class));
 
 
     }

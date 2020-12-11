@@ -58,5 +58,5 @@ public interface Api {
     @POST("User/addTransction")
     Call<User> userTransaction(@Body TransactionModel transactionModel);
 
-    Call<User> createUser();
+
 }

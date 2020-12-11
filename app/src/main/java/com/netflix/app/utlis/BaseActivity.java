@@ -1,12 +1,10 @@
 package com.netflix.app.utlis;
 
 
-import android.Manifest;
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
-import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,11 +36,15 @@ import java.util.concurrent.TimeUnit;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
-    public DatabaseReference UserInstance = FirebaseDatabase.getInstance().getReference("Users");
+    public DatabaseReference UsersInstance = FirebaseDatabase.getInstance().getReference("UsersDetails");
     public DatabaseReference UserDataInstance = FirebaseDatabase.getInstance().getReference("UserData");
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+
+
+
+//
 //    public void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //    }
@@ -72,7 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     public void showProgressDialog() {
         if (!isFinishing()) {
-            ProgressActivity.showDialog(this);
+            ProgressActivity.showDialog(BaseActivity.this);
         }
     }
 
@@ -85,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public  void retriveUserDetails(FirebaseUser fUser){
-        UserInstance.child(fUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        UsersInstance.child(fUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
@@ -100,11 +101,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
 
     }
-    public void setPhoneNumber(String id, String mobile, String mobileCode)
-    {
-        UserInstance.child(id).child("phone").setValue(mobile);
-        UserInstance.child(id).child("mobileCode").setValue(mobileCode);
-    }
+//    public void setPhoneNumber(String id, String mobile, String mobileCode)
+//    {
+//        UserInstance.child(id).child("phone").setValue(mobile);
+//        UserInstance.child(id).child("mobileCode").setValue(mobileCode);
+//    }
 
     private void saveDetails(User user) {
         dismissProgressDialog();
@@ -201,7 +202,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         if (firebaseUser != null) {
                             Log.d("GAHHAA", "" + mobile);
                             User user = new User(firebaseUser.getUid(),"", firebaseUser.getEmail(), "", mobile, currentDateTimeString, "", "2Auth", "");
-                           UserInstance.child(firebaseUser.getUid()).setValue(user);
+                            UsersInstance.child(firebaseUser.getUid()).setValue(user);
                         }
 
                         Log.d(TAG, "phoneLogin: " + task.isSuccessful());
@@ -211,15 +212,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                             FirebaseUser user = task.getResult().getUser();
 
                             if (user != null) {
-                                UserInstance.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                UsersInstance.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
-                                    public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (!dataSnapshot.exists()) {
                                             updateUI(user);
                                         } else {
                                             updateUI(user);
                                         }
                                     }
+
+
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
