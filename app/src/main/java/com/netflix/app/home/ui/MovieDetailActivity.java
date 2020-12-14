@@ -1,4 +1,4 @@
-package com.netflix.app.home.ui;
+ package com.netflix.app.home.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +8,15 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.netflix.app.R;
-import com.netflix.app.databinding.FragmentHomeDetailsBinding;
+
+import com.netflix.app.databinding.ActivityMovieDetailsBinding;
 import com.netflix.app.home.adapter.MovieItemClickListener;
 import com.netflix.app.home.adapter.MyAdapter;
 import com.netflix.app.home.model.AllDataPojo;
@@ -27,31 +25,41 @@ import com.netflix.app.utlis.SharedPrefs;
 
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER;
 import static com.netflix.app.home.adapter.SliderPagerAdapter.VIDEO_BANNER_Name;
+import static com.netflix.app.home.ui.HomeFragment.GETVIDEOTYPE;
 
 
-public class MovieDetailActivity extends AppCompatActivity implements MovieItemClickListener {
+ public class MovieDetailActivity extends AppCompatActivity implements MovieItemClickListener {
 
-    FragmentHomeDetailsBinding binding;
     public static String VIDEO_channelID = "channelID";
-    String movieTitle, imagedesc, cast, videoUrl, Genres, Director ,duration, channelid ;
+    String movieTitle, imagedesc, cast, videoUrl, Genres, Director ,duration, channelid,videoType ;
     String img;
     int channelID;
     private FavDB favDB;
+    private ActivityMovieDetailsBinding binding;
+    private static final String TAG = "MovieDetailActivity";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        binding = DataBindingUtil.setContentView(this, R.layout.fragment_home_details_);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
         iniViews();
         tabView();
+
     }
 
     void tabView() {
-        TabLayout.Tab episode = binding.tabLayoutMovie.newTab();
-        episode.setText("Episodes");
-        binding.tabLayoutMovie.addTab(episode);
+        Log.d("TAG", "tabView: startinggggggggg");
+        if (videoType.equals("WEBSERIES")) {
+            TabLayout.Tab episode = binding.tabLayoutMovie.newTab();
+            episode.setText("Episodes");
+            binding.tabLayoutMovie.addTab(episode);
+        }
+
+//        TabLayout.Tab episode = binding.tabLayoutMovie.newTab();
+//        episode.setText("Episodes");
+//        binding.tabLayoutMovie.addTab(episode);
         TabLayout.Tab favorites = binding.tabLayoutMovie.newTab();
         favorites.setText("More Like This");
         binding.tabLayoutMovie.addTab(favorites);
@@ -78,6 +86,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 
             }
         });
+        Log.d("TAG", "tabView: endinggggggggg");
 
     }
 
@@ -91,6 +100,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
         Director = getIntent().getExtras().getString("Directors");
         img =getIntent().getExtras().getString("imgURL");
         channelid =getIntent().getExtras().getString("channelID");
+        videoType =getIntent().getExtras().getString("videotype");
 
 
         Glide.with(this).load(img).into(binding.detailMovieImg);
@@ -158,6 +168,35 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieItemC
 //    }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: enterd");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: enterd");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: enterd");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart: enterd");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: enterd");
+    }
 
     @Override
     public void onMovieClick(AllDataPojo movie, ImageView movieImageView) {

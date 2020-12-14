@@ -338,8 +338,9 @@ public class HomeFragment extends Fragment implements MovieItemClickListener {
         intent.putExtra("channelID", video.getChannelId());
         intent.putExtra("Geners", gener);
         intent.putExtra("videourl", video.getVdoUrl());
+        intent.putExtra("videotype", video.getVideoType());
 
-
+        Log.d("TAG", "onMovieClickclick: " + video.getVideoType());
         Log.d("TAG", "onMovieClickclick: " + video.getTitle());
 
         // lets crezte the animation

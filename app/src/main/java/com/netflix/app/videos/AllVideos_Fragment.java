@@ -109,6 +109,7 @@ public class AllVideos_Fragment extends Fragment implements MovieItemClickListen
         intent.putExtra("Geners", gener);
         intent.putExtra("Directors", dir);
         intent.putExtra("duration", (Bundle) video.getDuration());
+        intent.putExtra("videotype", video.getVideoType());
         Log.d(TAG, "onMovieClickclick: " + video.getThumbs());
 
         // lets crezte the animation

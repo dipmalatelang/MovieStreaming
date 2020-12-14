@@ -1,8 +1,6 @@
 package com.netflix.app.loginregister;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -48,6 +46,7 @@ import com.netflix.app.utlis.SharedPrefManager;
 public class LoginActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, LoginMvpView {
     private RelativeLayout ConstraintLayout;
     private EditText Et_Email, Et_Password;
+
     private String TAG = "AKAKAKA";
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;

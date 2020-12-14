@@ -47,7 +47,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".home.ui.MovieDetailActivity" />
+        <activity android:name=".home.ui.MovieDetailActivity"
+            android:theme="@style/AppThemestyle"
+            android:launchMode = "singleInstance"/>
         <activity android:name=".home.ui.Gallary_Activity" />
         <activity android:name=".drawer.PrimiumPlan_Activity" />
         <activity android:name=".drawer.PrivacyPolicy_Activity" />
