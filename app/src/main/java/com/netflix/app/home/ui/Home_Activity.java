@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.netflix.app.R;
+import com.netflix.app.loginregister.LoginActivity;
 import com.netflix.app.trending.Category_Fragment;
 import com.netflix.app.databinding.HActivityHomeBinding;
 import com.netflix.app.drawer.PrimiumPlan_Activity;
@@ -152,7 +153,8 @@ public class Home_Activity extends BaseActivity implements NavigationView.OnNavi
                 break;
             case R.id.m_logout:
                 FirebaseAuth.getInstance().signOut();
-                finish();
+                Intent logout = new Intent(this, LoginActivity.class);
+                startActivity(logout);
                 break;
 
 
