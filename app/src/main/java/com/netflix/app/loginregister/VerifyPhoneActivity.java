@@ -64,17 +64,14 @@ public class VerifyPhoneActivity extends BaseActivity {
         mobileCode = intent.getStringExtra("mobileCode");
         sendVerificationCode(mobile, mobileCode, mCallbacks);
         startCounter();
-
         btn_Continue.setOnClickListener(v -> {
             String code = pinView.getText().toString().trim();
             if (code.isEmpty() || code.length() < 6) {
                 pinView.setError("Enter valid code");
                 pinView.requestFocus();
                 return;
-            } else {
-                verifyNumber(mAuth, mVerificationId, code, mobileCode, mobile, Cl_Verify, "VerifyPhoneActivity");
             }
-
+            verifyVerificationCode(code);
         });
 
         Tv_ResendCode.setOnClickListener(v -> {
@@ -141,7 +138,7 @@ public class VerifyPhoneActivity extends BaseActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        update_UI(currentUser);
     }
 
     public void verifyNumber(FirebaseAuth mAuth, String mVerificationId, String code, String mobileCode, String mobile, ViewGroup Cl_Verify, String activityName) {
@@ -157,10 +154,16 @@ public class VerifyPhoneActivity extends BaseActivity {
             editor.apply();
         }
 
-        phoneLogin(mAuth, credential, mobile, Cl_Verify, activityName);
+        verifyVerificationCode(code);
     }
 
-    private void phoneLogin(FirebaseAuth mAuth, PhoneAuthCredential credential, String mobile, ViewGroup Cl_Verify, String activityName) {
+    private void verifyVerificationCode(String code) {
+        //creating the credential
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+        phoneLogin(credential);
+    }
+
+    private void phoneLogin(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -170,12 +173,9 @@ public class VerifyPhoneActivity extends BaseActivity {
                         startActivity(new Intent(this, Home_Activity.class));
                         this.finishAffinity();
                         FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                         if (firebaseUser != null) {
-                            User user = new User(firebaseUser.getUid(), firebaseUser.getEmail(), "", mobile, currentDateTimeString, "", "2Auth", "", "");
+                            User user = new User(firebaseUser.getUid(), "Test", "", "", "", mobile, mobileCode);
                             UsersInstance.child(firebaseUser.getUid()).setValue(user);
-//                            DeviceDetails deviceDetails = new DeviceDetails(AndroidId, DeviceId, IMEI, meid, serialNumber, networkCountryIso, simCountryIso, networkOperatorName, simOperatorName, line1Number, model, device, brand_Id, manufacturer, product, type, host, hardware, base_OS, codename, release, security_Patch, incrimental);
-//                            GlobalConstants.DeviceDetailsInstance.child(firebaseUser.getUid()).setValue(deviceDetails);
                         }
 
                         if (task.getResult() != null) {
@@ -186,9 +186,9 @@ public class VerifyPhoneActivity extends BaseActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (!dataSnapshot.exists()) {
-                                            updateUI(user);
+                                            update_UI(user);
                                         } else {
-                                            updateUI(user);
+                                            update_UI(user);
                                         }
                                     }
 

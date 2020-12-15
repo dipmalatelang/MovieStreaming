@@ -54,15 +54,16 @@ public class PhoneActivity extends BaseActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view,
                                        int position, long id) {
                 State user = StateAdapter.getItem(position);
-                if (user != null){
-                    code=user.getCode();
+                if (user != null) {
+                    code = user.getCode();
                     ((TextView) view).setText(user.getCode());
                     ((TextView) view).setTextColor(getResources().getColor(R.color.colorWhite));
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapter) {  }
+            public void onNothingSelected(AdapterView<?> adapter) {
+            }
         });
 
         btn_Next.setOnClickListener(v -> {
@@ -72,7 +73,7 @@ public class PhoneActivity extends BaseActivity {
                 Et_PhoneNumber.requestFocus();
                 return;
             }
-            sendDataToClass(mobile_no,code,VerifyPhoneActivity.class,"PhoneActivity");
+            sendDataToClass(mobile_no, code, VerifyPhoneActivity.class, "PhoneActivity");
         });
     }
 

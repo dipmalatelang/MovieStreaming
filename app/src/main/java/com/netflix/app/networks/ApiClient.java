@@ -7,6 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /*TODO Create ApiCall  for Slider image url to get APi Data*/
+
 public class ApiClient {
     public static final String BASE_API = "http://35.224.23.178:8886/";
     public static Retrofit retrofit = null;
@@ -18,7 +19,7 @@ public class ApiClient {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        return  new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl(BASE_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)

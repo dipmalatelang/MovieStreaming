@@ -30,8 +30,7 @@ public class User {
 
     }
 
-    public User(String uid, String username, String email, String toLowerCase, String s1, String s, String string) {
-    }
+
 
     public User(String id, String name2, String email2, String password2, String phone2, String profileUri2, String createdAt2, String updatedAt2, String suscriptionDate2, UserPayment userPayments, String userType2) {
         this.id = id;
@@ -48,9 +47,15 @@ public class User {
     }
 
 
-    public User(String uid, String s, String email, String s1, String mobile, String currentDateTimeString, String s2, String s3, String s4) {
+    public User(String id, String username, String email, String gmail, String name, String phone, String mobileCode) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.gmail = gmail;
+        this.phone = phone;
+        this.mobileCode = mobileCode;
     }
-
 
 
     public String getGmail() {
@@ -71,6 +76,9 @@ public class User {
 
     String mobilecode;
     String gmail;
+    private String username;
+    private String mobileCode;
+
 
     public User(String gmail, String mobilecode) {
         this.gmail = gmail;

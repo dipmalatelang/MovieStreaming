@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
+import com.google.android.gms.tasks.TaskExecutors;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.netflix.app.R;
 import com.netflix.app.home.model.User;
 import com.netflix.app.home.ui.Home_Activity;
+
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -52,9 +54,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /*TODO Create Sharedprefrence for Storing Data*/
     private SharedPreferences getPrefData(Context context) {
-        return context.getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE);
+        return context.getSharedPreferences("SkyLiveLine", Context.MODE_PRIVATE);
     }
-
     /*TODO Get Data from Sharedprefrence*/
     public String getPref(Context context, String key) {
         return getPrefData(context).getString(key, "null");
@@ -86,28 +87,29 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public  void retriveUserDetails(FirebaseUser fUser){
-        UsersInstance.child(fUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        GlobalConstants.UsersInstance.child(fUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if(user !=null)
-                    saveDetails(user);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User userd = dataSnapshot.getValue(User.class);
+                if (userd != null)
+                    saveDetailsLater(userd);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
     }
+
 //    public void setPhoneNumber(String id, String mobile, String mobileCode)
 //    {
 //        UserInstance.child(id).child("phone").setValue(mobile);
 //        UserInstance.child(id).child("mobileCode").setValue(mobileCode);
 //    }
 
-    private void saveDetails(User user) {
+    private void saveDetailsLater(User user) {
         dismissProgressDialog();
         startActivity(new Intent(this, Home_Activity.class));
         finish();
@@ -115,38 +117,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.putString("Id", user.getId());
-        editor.putString("Name", user.getName());
-        editor.putString("Email", user.getEmail());
-        editor.putString("Phone", user.getPhone());
-        editor.putString("gmail", user.getGmail());
-        editor.putString("mobileCode", user.getMobilecode());
+        editor.putString("Name",  user.getName());
+        editor.putString("Email",user.getEmail());
+        editor.putString("Phone",user.getPhone());
+        editor.putString("gmail",user.getGmail());
+        editor.putString("mobileCode",user.getMobilecode());
         editor.apply();
-
     }
 
-    public void saveLoginDetails(String email, String password){
-
-
-        sharedPreferences = getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
-        {
+        public void saveLoginDetails(String email, String password) {
+            sharedPreferences = getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
             editor.putString("Email", email);
             editor.putString("Password", password);
-            editor.commit();
 
+            editor.commit();
         }
-    }
-//    private void saveContacts(String user) {
-//        OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(ContactWork.class)
-//                .setInputData(createInputData(user))
-//                .setInitialDelay(2, TimeUnit.SECONDS)
-//                .build();
-//        WorkManager.getInstance(this).enqueue(workRequest);
-//    }
+
 
     public void sendDataToClass(String mobile_no, String code, Class nextClass, String activityName) {
 
-//            saveContacts(mobile_no);
             if (!getPref(this,"username").equalsIgnoreCase(mobile_no)){
                 setPref(this,"firstinstall","null");
             }
@@ -161,7 +151,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void sendVerificationCode(String mobile, String mobileCode, PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks) {
+//    public void sendVerificationCode(String mobile, String mobileCode, PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks) {
+//        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+//                mobileCode + mobile,
+//                60,
+//                TimeUnit.SECONDS,
+//                this,
+//                mCallbacks);
+//
+//        Log.d("FALALA", "Sent");
+//    }
+
+    public void sendVerificationCode(String mobile, String mobileCode,PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 mobileCode + mobile,
                 60,
@@ -169,8 +170,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 this,
                 mCallbacks);
 
-        Log.d("FALALA", "Sent");
+        Log.d("FALALA","Sent");
     }
+
     public void verifyVerificationCode(FirebaseAuth mAuth, String mVerificationId, String code, String mobileCode, String mobile, ViewGroup Cl_Verify, String activityName) {
         //creating the credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
@@ -185,9 +187,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             editor.apply();
         }
 
-        phoneLogin(mAuth, credential, mobile, Cl_Verify, activityName);
+        phoneLogin(mAuth, credential, mobile, mobileCode, activityName);
     }
-    private void phoneLogin(FirebaseAuth mAuth, PhoneAuthCredential credential, String mobile, ViewGroup Cl_Verify, String activityName) {
+    private void phoneLogin(FirebaseAuth mAuth, PhoneAuthCredential credential, String mobile, String mobileCode, String activityName) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -201,7 +203,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                         if (firebaseUser != null) {
                             Log.d("GAHHAA", "" + mobile);
-                            User user = new User(firebaseUser.getUid(),"", firebaseUser.getEmail(), "", mobile, currentDateTimeString, "", "2Auth", "");
+                            User user = new User(firebaseUser.getUid(), "Test", "", "", "", mobile, mobileCode);
                             UsersInstance.child(firebaseUser.getUid()).setValue(user);
                         }
 
@@ -216,9 +218,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if (!dataSnapshot.exists()) {
-                                            updateUI(user);
+                                            update_UI(user);
                                         } else {
-                                            updateUI(user);
+                                            update_UI(user);
                                         }
                                     }
 
@@ -235,17 +237,33 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                     } else {
                         if (task.getException() != null) {
-                            snackBar(Cl_Verify, "" + task.getException().getMessage());
+//                            snackBar(Cl_Verify, "" + task.getException().getMessage());
                         }
                     }
                 });
     }
 
-    public void updateUI(FirebaseUser currentUser) {
+    public void update_UI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            retriveUserDetails(currentUser);
+            retrieveUserDetail(currentUser);
         }
     }
+    public void retrieveUserDetail(FirebaseUser fUser) {
+        UsersInstance.child(fUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user != null)
+                    saveDetailsLater(user);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     public void toggleProgress(boolean flag) {
         ConstraintLayout progressLayout = (ConstraintLayout) findViewById(R.id.layout_progress_bar);

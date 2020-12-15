@@ -76,26 +76,26 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
             email = Et_Email.getText().toString();
             password = Et_Password.getText().toString();
 
-            if (TextUtils.isEmpty(username) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                snackBar(ConstraintLayout, "All fileds are required");
 
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                snackBar(ConstraintLayout, "please enter valid email address");
+            if(TextUtils.isEmpty(username)){
+                Et_Name.setError(getString(R.string.field_can_not_be_empty_tag));
+            }
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Et_Email.setError(getString(R.string.field_can_not_be_empty_tag));
+//                snackBar(ConstraintLayout, "please enter valid email address");
             } else if (password.length() < 6) {
-
-                snackBar(ConstraintLayout, "password must be at least 6 characters");
-            } else {
+                Et_Password.setError(getString(R.string.field_can_not_be_empty_tag));
+//                snackBar(ConstraintLayout, "password must be at least 6 characters");
+            }
+            else {
                 registration(username, email, password);
-//                Userpojo userpojo = new Userpojo(String.valueOf((int) (((Math.random() * 90.0d) + 1000.0d) / 1000.0d)), username, email, password, "mobile", "", new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString(), (UserPayment) null, "BASIC", "");
-//                mPresenter.addUserAccount(userpojo);
-
                 User user = new User("", username, email, password, "mobile", "", "", "", "", null, "BASIC");
-
                 mPresenter.adduser(user);
 
                 Log.i(TAG, "onCreateasasaaaaaa: " + user.getEmail());
 
-            } });
+            }
+        });
     }
 
     private void registration(final String username, final String email, String password) {
@@ -129,114 +129,13 @@ public class RegisterActivity extends BaseActivity implements RegisterMvpView {
     }
 
 
-//    private Data createInputData(String key, String value) {
-//        return new Data.Builder().putString(key, value).build();
-//    }
-
-//    private final int MULTIPLE_PERMISSIONS = 10;
-
-//    private void checkPermissions() {
-//        int result;
-//        List<String> listPermissionsNeeded = new ArrayList<>();
-//        for (String p : permissions) {
-//            result = ContextCompat.checkSelfPermission(this, p);
-//            if (result != PackageManager.PERMISSION_GRANTED) {
-//                listPermissionsNeeded.add(p);
-//            }
-//        }
-//        if (listPermissionsNeeded.size() != 0) {
-//            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[0]), MULTIPLE_PERMISSIONS);
-//        }
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//
-//        if (requestCode == MULTIPLE_PERMISSIONS) {
-//            if (grantResults.length > 0) {
-//                ArrayList<String> permissionsDenied = new ArrayList<>();
-//                for (String per : permissions) {
-//                    if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-//                        permissionsDenied.add(per);
-//                    }
-//                }
-//
-//                if (permissionsDenied.size() > 0) {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                        if (shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) || shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)) {
-//                            alertDialogPermission(true);
-//                        } else {
-//                            alertDialogPermission(false);
-//                        }
-//                    }
-//                }
-//            }
-//
-//        } else {
-//            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        }
-//    }
-
-    private void alertDialogPermission(boolean check) {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-        builder.setTitle("Need Permission");
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setCancelable(false);
-
-        if (check) {
-            builder.setMessage("Please Allow Permission,\nWhich will help us to Improve your App Experience");
-            builder.setPositiveButton("Grant", (dialog, id) -> {
-
-                dialog.cancel();
-            });
-        } else {
-            builder.setMessage("App Need Contact Permission,\nGrant Permission in Setting➟Permissions");
-            builder.setPositiveButton("Grant", (dialog, id) -> {
-                sendToSetting();
-                dialog.cancel();
-            });
-        }
-
-        builder.setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
-        android.app.AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    int REQUEST_PERMISSION_SETTING = 27;
-
-    private void sendToSetting() {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", getPackageName(), null);
-        intent.setData(uri);
-        startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
-    }
-
     @Override
     public void allreadyExits(String str) {
-        Toast.makeText(this, "User Already Exits", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "User Already Exits", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), Home_Activity.class));
 
 
     }
-
-//    public void registerUsers(User user) {
-//        System.out.println(user.toString());
-////        this.progressBar.setVisibility(8);
-//        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-////        DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
-//        startActivity(new Intent(getApplicationContext(), Home_Activity.class));
-//        finish();
-////        this.progressBar.setVisibility(8);
-//        if (user != null) {
-//            SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-////            DeviceUtils.showToastMessage(this, getString(C1734R.string.register_successful_tag));
-//            startActivity(new Intent(getApplicationContext(), Home_Activity.class));
-//            finish();
-//            return;
-//        }
-////        DeviceUtils.showToastMessage(this, getString(C1734R.string.login_unsuccessful_tag));
-//    }
-
 
 
     @Override

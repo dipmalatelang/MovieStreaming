@@ -39,27 +39,5 @@ public class RegisterPresenter {
     }
 
 
-//    public void addUserAccount(Userpojo userpojo) {
-//        RetrofitClient.getInstance().getApi().createUser(userpojo).enqueue(new Callback<Userpojo>() {
-//            public void onResponse(Call<Userpojo> call, Response<Userpojo> response) {
-//                try {
-//                    PrintStream printStream = System.out;
-//                    printStream.println("response all ready" + response.body());
-//                    PrintStream printStream2 = System.out;
-//                    printStream2.println("response status ready" + response.code());
-//                    if (response.code() == 409) {
-//                        RegisterPresenter.this.mView.allreadyExits("");
-//                    } else if (response.code() == 200) {
-//                        System.out.println(response);
-//                        RegisterPresenter.this.mView.registerUsers(response.body());
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            public void onFailure(Call<Userpojo> call, Throwable t) {
-//            }
-//        });
-//    }
+
 }

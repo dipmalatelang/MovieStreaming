@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 
 import com.google.android.gms.auth.api.Auth;
@@ -26,21 +25,29 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.netflix.app.R;
 import com.netflix.app.home.model.User;
 
+import com.netflix.app.home.model.UserDetails;
 import com.netflix.app.home.ui.Home_Activity;
+import com.netflix.app.utlis.GlobalConstants;
 import com.netflix.app.utlis.BaseActivity;
 
 import com.netflix.app.utlis.LoginMvpView;
 import com.netflix.app.utlis.LoginPresenter;
-import com.netflix.app.utlis.SharedPrefManager;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, LoginMvpView {
@@ -51,6 +58,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private LoginPresenter mPresenter;
+
+    String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
 //    private LoginBlutton fblogin;
 //    private CallbackManager mCallbackManager;
@@ -63,10 +72,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        }
+//        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+//            startActivity(new Intent(this, LoginActivity.class));
+//            finish();
+//        }
         mPresenter = new LoginPresenter(this);
         ConstraintLayout = findViewById(R.id.ConstraintLayout);
         Et_Email = findViewById(R.id.Et_Email);
@@ -93,28 +102,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 .build();
 
 
-        //fb login code
-
-//        mCallbackManager = CallbackManager.Factory.create();
-//        fblogin.setReadPermissions("email", "public_profile");
-//        fblogin.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                handleFacebookAccessToken(loginResult.getAccessToken());
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Log.d("Cancel", "facebook:onCancel");
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-////                Toasty.error(LoginActivity.this, "" + error, Toasty.LENGTH_LONG).show();
-//            }
-//        });
-
-
         btn_gmail.setOnClickListener(this);
         btn_Login.setOnClickListener(this);
         btn_phone.setOnClickListener(this);
@@ -131,21 +118,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.Btn_gmail:
                 signIn();
                 break;
-
-            case R.id.Btn_fb:
-//                fblogin.performClick();
-                break;
-
             case R.id.Btn_Login:
                 String email = Et_Email.getText().toString();
                 String password = Et_Password.getText().toString();
 
-                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                    snackBar(ConstraintLayout, "All fields are required !");
+                if (TextUtils.isEmpty(email)) {
+                    Et_Email.setError(getString(R.string.field_can_not_be_empty_tag));
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    snackBar(ConstraintLayout, "enter valid email address");
+                    Et_Password.setError(getString(R.string.field_can_not_be_empty_tag));
+
                 } else {
-                    showProgressDialog();
+//                    showProgressDialog();
                     emailLogin(email, password);
                     mPresenter.LoginCredentials(email, password);
                     setPref(this, "username", email);
@@ -173,32 +156,41 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     /*TODO Login with Email*/
+
     private void emailLogin(final String txt_email, final String txt_password) {
+
         mAuth.signInWithEmailAndPassword(txt_email, txt_password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        dismissProgressDialog();
-                        updateUI(mAuth.getCurrentUser());
-                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                        if (firebaseUser != null) {
-                            saveLoginDetails(txt_email, txt_password);
-                        }
-                    } else {
-                        if (task.getException() != null) {
-                            snackBar(ConstraintLayout, "" + task.getException().getMessage());
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                            updateUI(firebaseUser);
+                            if (firebaseUser != null) {
+                                saveLoginDetails(txt_email, txt_password);
+                                startActivity(new Intent(LoginActivity.this, Home_Activity.class));
+                            }
                         } else {
-                            snackBar(ConstraintLayout, "Login Failed");
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            updateUI(null);
                         }
-                        dismissProgressDialog();
+
+                        // ...
                     }
                 });
+
     }
 
     /*TODO Check User Status*/
-    public void updateUI(FirebaseUser currentUser) {
+    private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
             showProgressDialog();
-            retriveUserDetails(currentUser);
+            retrieveUserDetail(currentUser);
         }
     }
 
@@ -210,18 +202,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         updateUI(currentUser);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: login");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart: resTART");
+    }
+
     /*TODO Gmail Sign In*/
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 if (account != null) {
-                    Log.d("GALALAL",""+account.getDisplayName());
+                    Log.d("GALALAL", "" + account.getDisplayName());
                     firebaseAuthWithGoogle(account);
 
                 } else {
@@ -237,37 +240,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-//    private void handleFacebookAccessToken(AccessToken token) {
-//        showProgressDialog();
-//        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-//        Log.d("Tiger", "" + credential);
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        Log.d("Tiger", "handleFacebookAccessToken:" + task.isSuccessful());
-//                        if (task.isSuccessful()) {
-//                            FirebaseUser fuser = mAuth.getCurrentUser();
-//                            if (fuser != null) {
-//                                User user = new User(fuser.getUid(), fuser.getDisplayName(), fuser.getEmail().toLowerCase(), fuser.getEmail(), fuser.getDisplayName().toLowerCase(), fuser.getPhoneNumber(), fuser.getProviderId());
-//                                UserInstance.child(fuser.getUid()).setValue(user);
-//                                updateUI(fuser);
-//                                dismissProgressDialog();
-//                            }
-//                        } else {
-//                            dismissProgressDialog();
-//                            LoginManager.getInstance().logOut();
-//                            snackBar(ConstraintLayout, "" + task.getException().getMessage());
-//                            Log.d("AGAGAGAG", "" + task.getException().getMessage());
-//                        }
-//                    }
-//                });
-//    }
-
-    /*TODO Gmail Login*/
-
-
-
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -275,19 +247,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
 
-
+//                        dismissProgressDialog();
+                        updateUI(mAuth.getCurrentUser());
                         FirebaseUser fuser = mAuth.getCurrentUser();
                         String userid = fuser.getUid();
                         if (fuser != null) {
                             User user = new User(fuser.getUid(), fuser.getDisplayName(), fuser.getEmail().toLowerCase(), fuser.getEmail(), fuser.getDisplayName().toLowerCase(), fuser.getPhoneNumber(), fuser.getProviderId());
                             UsersInstance.child(userid).setValue(user);
-                            Log.d(TAG, "firebaseAuthWithGooglevalue: "+fuser.getUid());
+                            Log.d(TAG, "firebaseAuthWithGooglevalue: " + fuser.getUid());
                             updateUI(fuser);
-//                            if (!getPref(this,"username").equalsIgnoreCase(fuser.getDisplayName())){
-//                                setPref(this,"firstinstall","null");
-//                            }
+
                             setPref(this, "username", fuser.getDisplayName());
-                            setPref(this,"LoginSuccess","true");
+                            setPref(this, "LoginSuccess", "true");
 
                             startActivity(new Intent(this, Home_Activity.class));
                             this.finish();
@@ -313,14 +284,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    @Override
-    public void loginSuccess(User usersResponse) {
-        dismissProgressDialog();
-        if (usersResponse != null) {
-            startActivity(new Intent(getApplicationContext(), Home_Activity.class));
+
+    public void loginSuccess(User user) {
+        toggleProgress(false);
+        if (user != null) {
+//            DeviceUtils.showToastMessage(this, getString(R.string.login_successful_tag));
+            Intent i = new Intent(LoginActivity.this, Home_Activity.class);
+            startActivity(i);
             finish();
             return;
-       }
+        }
+//        DeviceUtils.showToastMessage(this, getString(R.string.login_unsuccessful_tag));
     }
 
 }
